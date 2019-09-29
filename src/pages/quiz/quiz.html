@@ -1,0 +1,46 @@
+<ion-content>
+
+  <div [ngClass]="{'welcome': landing.active, 'welcome-inactive': landing.inactive}">
+    <div class="head">
+        <img  id="bg" src="../../assets/imgs/header.svg" alt="">
+    </div>
+    <div class="butt">
+      <div>
+          <img src="../../assets/imgs/whitelogo.svg">
+          <h4>Recap Quiz</h4>
+          <button (click)="start()">Start Quiz</button>
+          <button id="cancel" (click)="cancel()">Quit</button>
+      </div>
+    </div>
+    <div class="foot">
+        <img  id="bg" src="../../assets/imgs/header.svg" alt="">
+    </div>
+  </div>
+  <div class="header">
+    <img  id="bg" src="../../assets/imgs/header.svg" alt="">
+  </div>
+  <div class="container">
+    <form>
+      <ion-slides #slide>
+          <ion-slide  *ngFor="let q of questions; let i = index">
+            <h5> {{i+1}}. {{q.question}}</h5>
+            <div *ngFor="let s of q.suggestions; let f = index">
+              <p  style="padding: 5px 30px; font-size: 4vw; text-align: left;">{{f+1}}. {{s}}</p>
+            </div>
+            <img src="{{q.image}}">
+            <ion-list >
+                <ion-item *ngFor="let o of q.options"  >
+                    <ion-label style="font-size: 3vw;">{{o.option}}</ion-label>
+                      <ion-radio (click)="checkAnswer(o.correct)" ></ion-radio>
+                </ion-item>
+            </ion-list>
+          </ion-slide>
+        </ion-slides>
+    </form>
+  </div>
+  <div class="footer">
+    <img  id="bg" src="../../assets/imgs/header.svg" alt="">
+</div>
+</ion-content>
+
+

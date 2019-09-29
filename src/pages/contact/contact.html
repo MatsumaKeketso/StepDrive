@@ -1,0 +1,45 @@
+<ion-content class="no-scroll">
+  <div (click)="cancelBooking()" class="cancel">
+    <button><ion-icon name="close"></ion-icon></button>
+  </div>
+  <div [ngClass]="{'done': showMap, 'done-hide': !showMap}">
+    <button [disabled]="!addressokay" *ngIf="showMap" (click)="displayMap()">Find Me here</button>
+  </div>
+  <div #map [ngClass]="{'map': showMap, 'map-hide': !showMap}"></div>
+    <!-- <div class="logo">
+        <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">
+      </div> -->
+  <div class="container">
+    <div class="form">
+
+      <div>
+<p *ngIf="request.package.number">Requesting {{request.package.number}} lessons for R{{request.package.amount}}.00</p>
+<p *ngIf="!request.package.number">Requested {{request.package.number}} lessons for R{{request.package.amount}}.00</p>
+        <div class="input">
+          <p>Start Date</p>
+          <ion-datetime [(ngModel)]="request.datein" style="border: solid 1px white;border-radius: 200px;" displayFormat="YYYY-MM-DD" pickerFormat="DD MMMM YYYY"  min="{{dateNow}}"></ion-datetime>
+        </div>
+        <div class="input">
+            <p>Start Time</p>
+            <ion-datetime [disabled]="!request.datein" [(ngModel)]="request.time" style="border: solid 1px white;border-radius: 200px;" displayFormat="HH:mm" pickerFormat="HH:mm" min="{{school.open}}" max="{{school.closed}}"></ion-datetime>
+          </div>
+          <div class="input">
+              <p>Address</p>
+              <!-- (change)="checkAddress()" // dont mind this comment yet -->
+              <input id="autocomplete" (focus)="geolocate()"  [(ngModel)]="request.location.address" type="text" placeholder="">
+              <!-- <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"> -->
+              <div>{{message.text}}</div>
+              <span (click)="displayMap()" *ngIf="message.id==0">Find my location On the <a href="#">Map</a></span>
+            </div>
+          <div class="input">
+              <ion-checkbox color="dark" [(ngModel)]="request.book"></ion-checkbox> I want a study guide (book)
+          </div>
+          <p>*This information is kept very safe and it is only used
+              to notify the instructor where to find you.</p>
+          <div class="button">
+              <button [disabled]="!addressokay||!request.time||!request.datein" (click)="createrequest()">Send Request</button>
+            </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

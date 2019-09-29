@@ -1,0 +1,44 @@
+<ion-content class="no-scroll">
+  <div class="logo">
+      <img src="../../assets/imgs/White logo.svg" alt="">
+    </div>
+<div class="container">
+  <div class="form">
+      <h1>SIGN IN</h1>
+    <div>
+        <form  [formGroup]="loginForm" class="login">
+        <div class="input">
+          <p>Email</p>
+          <input type="email" formControlName="email" [(ngModel)]="user.email">
+        </div>
+      <div class="error" *ngFor="let validate of validation_messages.email">
+          <div class="messages" *ngIf="loginForm.get('email').hasError(validate.type) && (loginForm.get('email').dirty || loginForm.get('email').touched)">
+            {{validate.message}}
+          </div>
+        </div>
+        <div class="input">
+            <p>Password</p>
+            <input type="email" type="password" formControlName="password" [(ngModel)]="user.password">
+          </div>
+          <div class="error" *ngFor="let validate of validation_messages.password">
+              <div class="messages" *ngIf="loginForm.get('password').hasError(validate.type) && (loginForm.get('password').dirty || loginForm.get('password').touched)">
+                {{validate.message}}
+              </div>
+            </div>
+            <div class="forgot" >
+                <button (click)="forget()">Forgot Password?</button>
+            </div>
+          <div class="create">
+              <button (click)="Reg()">Create Account</button>
+          </div>
+<br>
+
+          <div class="button">
+            <button (click) ="login(user)">SIGN IN</button>
+          </div>
+
+        </form>
+    </div>
+  </div>
+</div>
+</ion-content>

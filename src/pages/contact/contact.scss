@@ -1,0 +1,222 @@
+page-contact {
+  @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+      .no-scroll .scroll-content{
+          overflow: hidden;
+      }
+      .cancel {
+        position: fixed;
+        z-index: 30;
+        overflow: hidden;
+        border-radius: 200px;
+        // width: ;
+        text-align: center;
+        top: 5px;
+        left: 5px;
+        button{
+          width: 50px;
+          height: 50px;
+          display: grid;
+          align-content: center;
+          background: #B6465F;
+          margin: auto;
+          color: white;
+          padding: 0;
+
+        }
+      }
+      .map {
+        transition: 0.4s;
+        position: absolute;
+        z-index: 10;
+        background: rgb(218, 218, 218);
+        top: 0%;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        // transform: rotateX(90deg);
+      }
+      .map-hide {
+        transition: 0.4s;
+        position: absolute;
+        z-index: 10;
+        background: rgb(218, 218, 218);
+        top: 100%;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        // transform: rotateX(90deg);
+      }
+      .done {
+        transition: 0.4s;
+        position: absolute;
+        bottom: 10px;
+        left: 0;
+        right: 0;
+        z-index: 15;
+        text-align: center;
+        button{
+          width: 60%;
+          background: linear-gradient(#767B91, #2E354E);
+          padding: 10px;
+          border-radius: 200px;
+          color: white;
+          text-shadow: 0px 0px 3px #171717;
+        }
+      }
+      .done-hide {
+        transition: 0.4s;
+        position: absolute;
+        bottom: -100px;
+        left: 0;
+        right: 0;
+        z-index: 15;
+        text-align: center;
+        button{
+          width: 60%;
+          background: linear-gradient(#767B91, #2E354E);
+          padding: 10px;
+          border-radius: 200px;
+          color: white;
+          text-shadow: 0px 0px 3px #171717;
+        }
+      }
+      .logo{
+        position: absolute;
+        // left: 40vw;
+        top: 10px;
+        right: 35vw;
+        height: 30vw;
+        width: 30vw;
+        margin: auto;
+        text-align: center;
+        background: red;
+        border-radius: 200px;
+        overflow: hidden;
+        img{
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
+      .container {
+        display: grid;
+        align-content: center;
+          width: 100%;
+          height:100%;
+          background: url(../../assets/imgs/photo-1562877961-efcec8439f9d.jpg);
+          background-attachment: fixed;
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+
+        .form{
+          width: 100%;
+          padding: 10% 5%;
+          filter: blur(0px);
+          background:url(../../assets/imgs/photo-1562877961-efcec8439f9d_blurred.jpg);
+          background-attachment: fixed;
+          background-position: center;
+          background-size: cover;
+          color: white;
+          text-align: center;
+          position: relative;
+          // display: grid;
+          transform: translateY(-27vh);
+          margin-top: 50vh;
+          align-content: center;
+          .inputReg{
+              text-align: center;
+              width: 100%;
+              position: relative;
+              margin: 20px 0px;
+              p{
+                  font-size: 100%;
+                  background: white;
+                  color: #4C0A0A;
+                  width: 45%;
+                  padding: 2px;
+                  border-radius: 200px;
+                  position: absolute;
+                  top: -9px;
+                  left: 20px;
+                  margin: 0;
+                }
+
+                input{
+                  width: 97%;
+                  padding: 15px 5px;
+                  border: none;
+                  border: solid 1px white;
+                  background: white;
+                  color: white;
+                  border-radius: 200px;
+                }
+          }
+          .input{
+            text-align: center;
+            width: 100%;
+            position: relative;
+            margin: 20px 0px;
+            p{
+              font-size: 80%;
+              background: white;
+              color: #4C0A0A;
+              width: 25%;
+              padding: 2px;
+              border-radius: 200px;
+              position: absolute;
+              top: -9px;
+              left: 20px;
+              margin: 0;
+            }
+            input{
+              width: 97%;
+              padding: 15px 5px;
+              border: none;
+              border: solid 1px white;
+              background: none;
+              color: white;
+              border-radius: 200px;
+            }
+            span {
+              a {
+                color: orange;
+              }
+            }
+          }
+          .forgot{
+            text-align: right;
+            width: 100%;
+            margin-top: -2%;
+            button{
+              background: white;
+              color:  #4C0A0A;
+              font-size: 80%;
+              padding: 5px;
+              border-radius: 200px;
+              margin: 0;
+            }
+          }
+          .button{
+            text-align: center;
+            position: absolute;
+            bottom: -20px;
+            right: 0px;
+            left:  0px;
+            overflow: hidden;
+            button{
+              text-shadow: 0px 2px 2px #1717174f;
+              text-transform: uppercase;
+              letter-spacing: 3px;
+              color:#ffffff;
+              border-radius: 30px;
+              margin: 0;
+              padding: 15px;
+              background: linear-gradient(#767B91, #2E354E);
+              width: 60%;
+            }
+          }
+        }
+      }
+
+}

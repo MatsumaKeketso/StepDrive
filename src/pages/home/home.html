@@ -1,14 +1,127 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content>
+  <div class="viewImage">
+    <div (click)="openImage('', 'close')" class="close"><p>x</p></div>
+    <img *ngIf="viewImage.image" src="{{viewImage.image}}" alt="">
+    <img *ngIf="!viewImage.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  </div>
+  <div [ngClass]="{'loader': loaderAnimate, 'loader-hide': !loaderAnimate}">
+    <div class="maploader">
+      <ion-icon name="navigate"></ion-icon>
+    </div>
+    <div class="loading-text">
+      <p>Loading Map</p>
+    </div>
+  </div>
+    <div class="pac-card" id="pac-card">
+        <!-- <div [ngClass]="{'pac-card': display, 'pac-card-hide': !display}" id="pac-card"> -->
+        <div id="pac-container">
+          <ion-searchbar placeholder="Search by Location" (ionInput)="onSearchChange($event)"></ion-searchbar>
+        </div>
+        <div class="searchresult">
+          <div class="res"  *ngFor="let u of users">
+            <!-- <p>{{u.schoolname}}</p> -->
+          </div>
+        </div>
+      </div>
+
+      <div #map id="map"></div>
+
+    <div class="aboutschool" [ngClass]="{'aboutschool-inactive': about, 'aboutschool': !about}">
+        <div class="information">
+          <div class="s-image">
+            <div class="a-back">
+              <button style="background: none !important;" ion-fab mini (click)="viewSchool(school)" ><ion-icon name="arrow-back"></ion-icon></button>
+            </div>
+            <img src="{{school.image}}">
+          </div>
+          <h1 *ngIf="school.schoolname">{{school.schoolname}}</h1>
+          <p>{{school.desc}}
+              </p>
+              <p>{{school.address}}</p>
+              <ionic3-star-rating #rating
+        activeIcon = "ios-star"
+        defaultIcon = "ios-star-outline"
+        activeColor = "#FEFFF3"
+        defaultColor = "#FEFFF3"
+        readonly = "true"
+        rating = "{{school.average}}"
+        fontSize = "15px">
+    </ionic3-star-rating>
+        </div>
+        <div class="lesson-cont">
+            <div class="lessons" *ngFor="let p of school.packages" (click)="requestLesson(school, p, $event)">
+                <p><b>{{p.name}}</b> <br> {{p.number}} lessons R{{p.amount}}.00</p>
+              </div>
+                    <div class="custom">
+                        <div class="input">
+                           <div> <p>Custom Lessons <br> R{{school.cost}}.00 p/l</p>
+                            <!-- <input type="tel" [(ngModel)]="noLessons"> -->
+                            <!-- <ion-label>Gender</ion-label> -->
+                            <ion-select style="background: rgba(255, 255, 255, 0) !important; margin-right: 0 !important;"[(ngModel)]="noLessons">
+                              <ion-option >1</ion-option>
+                              <ion-option >2</ion-option>
+                              <ion-option >3</ion-option>
+                              <ion-option >4</ion-option>
+                              <ion-option >5</ion-option>
+                              <ion-option >6</ion-option>
+                              <ion-option >7</ion-option>
+                              <ion-option >8</ion-option>
+                              <ion-option >9</ion-option>
+                              <ion-option >10</ion-option>
+                              <ion-option >11</ion-option>
+                              <ion-option >12</ion-option>
+                              <ion-option >13</ion-option>
+                              <ion-option >14</ion-option>
+                              <ion-option >15</ion-option>
+                              <ion-option >16</ion-option>
+                              <ion-option >17</ion-option>
+                              <ion-option >18</ion-option>
+                              <ion-option >19</ion-option>
+                              <ion-option >20</ion-option>
+                            </ion-select>
+                          </div>
+                          </div>
+                          <div class="r-bbutton">
+                              <button [disabled]="!noLessons" (click)="requestLesson(school, noLessons)">Request lesson</button>
+                          </div>
+                    </div>
+        </div>
+      </div>
+  <div class="container">
+      <div #list  [ngClass]="{'list': display, 'listinactive': !display}">
+          <div (click)="swipeUp()" class="toggler">
+              <ion-icon *ngIf="display" class="arrow" name="arrow-dropdown"></ion-icon>
+              <ion-icon *ngIf="!display" class="arrow" name="arrow-dropup"></ion-icon>
+          </div>
+          <div class="s-list">
+            <div *ngIf="!users[0]" class="noschools">
+              <p>No driving schools in this area.</p>
+            </div>
+
+<!-- //this is your orginal code -->
+            <div (click)="clearMarker($event)" class="card" *ngFor="let u of users" >
+              <div (click)="openImage(u.image, 'open')" class="image">
+                <img *ngIf="u.image" src="{{u.image}}" alt="">
+                <img *ngIf="!u.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
+              </div>
+              <div class="details">
+                <p><b> {{u.schoolname}} </b></p>
+                <p>{{u.address}}</p>
+              </div>
+              <div class="call">
+                <button ion-fab mini (click)="call(u)" style="background: #a4c639"><ion-icon name="call" ></ion-icon></button>
+              </div>
+              <div class="request">
+                <button ion-button round small style="background:#EEAE2B; color: rgb(255, 255, 255);" (click)="viewSchool(u)">View More</button>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+        <div #map id="map"></div>
+
+</div>
+
 </ion-content>

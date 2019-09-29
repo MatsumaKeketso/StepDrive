@@ -1,0 +1,40 @@
+{
+    
+    "Politics":{
+        "name" : "Politics",
+  
+        "question1" : " Near a pedestrian crossing, when the pedestrians are waiting to cross the road, you should?",
+        "q1":" Sound horn and proceed",
+        "q2":  "Slow down, sound horn and pass",
+        "q3": "all of the above",
+        "q4": "Stop the vehicle and wait till the pedestrians cross the road and then proceed",
+  
+  
+        "question2" :   "When a vehicle is involved in an accident causing injury to any person?",
+        "q21":"Take the vehicle to the nearest police station and report the accident",
+        "q22":"Stop the vehicle and report to the police station",
+        "q23":"Take all reasonable steps to secure medical attention to the injured and report to the nearestpolice station within 24 hours",
+      
+        "q24":"Wait till the other vehicle crosses the bridge and then proceed",
+  
+        "question3" : "  On a road designated as one way",
+        "q31" : " Parking is prohibited",
+        "q32" : "Should not drive in reverse gear",
+        "q33" : "Overtaking is prohibited",
+        "q34" : "Speed limit ends",
+  
+        "question4": "You can overtake a vehicle in front?",
+        "q41": "Right turn prohibited",
+        "q42": "Through the left side, if the road is wide",
+        "q43": "Through the left side",
+        "q44": "Through the right side of that vehicle",
+  
+        "question5" : "You are approaching a narrow bridge, another vehicle is about to enter the bridge from opposite side you",
+        "q51": "Increase the speed and try to cross the bridge as fast as possible",
+        "q52": "Put on the head light and pass the bridge",
+        "q53": "Wait till the other vehicle crosses the bridge and then proceed",
+        "q54": "Keep left"
+        
+    }
+  
+}

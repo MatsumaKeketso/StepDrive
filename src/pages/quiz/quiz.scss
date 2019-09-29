@@ -1,0 +1,128 @@
+page-quiz {
+  .welcome {
+    transition: 0.4s;
+    transform: translateY(0vh);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 1px;
+    right: 0;
+    background: #30343B;
+    z-index: 7;
+    overflow: hidden !important;
+    color: white;
+    text-align: center;
+  }
+  .welcome-inactive {
+    transform: translateY(-100vh) !important;
+    transition: 0.4s;
+    transform: translateY(-100vh deg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #30343B;
+    z-index: 7;
+    overflow: hidden !important;
+    color: white;
+  }
+.head {
+  height: 20%;
+  width: 100%;
+  img {
+    width: 100% !important;
+    transform: translateY(-55%) !important;
+  }
+}
+.butt {
+  height: 60%;
+  width: 100%;
+  display: grid;
+  align-items: center;
+  img {
+    width: 30vw;
+    margin: 10vw 0%;
+  }
+  h4{
+    font-size: 7vw;
+    margin: 0;
+    padding: 0;
+    margin: 5vw 0%;
+  }
+  #cancel {
+    background: linear-gradient(#30343B,rgb(53, 60, 75));
+    color: white;
+    transform: scale(0.8);
+  }
+  button {
+    margin: 5vw auto;
+  width: 60%;
+  padding: 5vw;
+  font-size: 3vw;
+  border-radius: 200px;
+  letter-spacing: 10px;
+  text-transform: uppercase;
+  background: rgb(245, 245, 245);
+  text-shadow: 0px 2px 2px #17171781;
+  box-shadow: 0px 2px 2px #17171781;
+  color: rgb(10, 10, 10);
+  }
+
+}
+.foot {
+  height: 20%;
+  width: 100%;
+  transform: translateY(-0%) !important;
+  img {
+
+    transform: rotate(180deg) !important;
+    width: 100vw;
+  }
+}
+}
+
+
+
+
+.header {
+height: 5vh;
+width: 100%;
+#bg {
+width: 100% !important;
+transform: translateY(-63vw);
+}
+}
+.container{
+  width: 100%;
+  height: 90vh;
+  overflow-y: auto;
+  // text-align: left; // this somehow affects the onboarding page and the home page
+  img {
+    width: auto;
+    height: 40vw;
+    margin: 2vw 0vw;
+  }
+   p {
+    //  margin: 0; // this somehow affects the onboarding page
+    //  padding: 3px 20vw;
+    //  font-size: 3vw; // this somehow affects the onboarding page
+    //  text-align: left;
+   }
+  h5 {
+    margin: 0;
+    padding:10px 20px;
+    font-size: 5vw;
+    font-weight: bold;
+  }
+}
+.footer {
+  height: 5vh;
+  width: 100%;
+  overflow: hidden;
+  img {
+  width: 100% !important;
+  transform: translateY(80vw) !important;
+  transform: rotate(180deg) !important;
+  }
+  }

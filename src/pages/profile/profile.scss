@@ -1,0 +1,344 @@
+page-profile {
+  .scroll-content {
+    overflow:  hidden !important;
+  }
+  * {
+    transition: 0.4s;
+    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+  }
+  .ultimate {
+
+    width: 100%;
+    height: 100%;
+    overflow: hidden !important;
+  }
+  .feedback {
+    display: flex;
+    background: white;
+    width: 90%;
+    margin: 0px auto -10px auto;
+    position: relative;
+    border-radius:10px;
+    .r-rating {
+      position: absolute;
+      top: -25px;
+      left: 10px;
+      background: linear-gradient(white,rgb(228, 228, 228));
+      padding: 0px 10px;
+      border-radius: 10px 10px 0px 0px;
+      z-index: 7;
+      box-shadow: 0px -2px 2px #17171736;
+    }
+    input {
+      z-index: 10;
+      border-radius: 10px 0px 0px 10px;
+      margin: 5px 0px;
+      width: 70%;
+      border: none;
+      padding: 10px;
+      background: linear-gradient(rgb(236, 236, 236),white);
+      box-shadow: 0px 3px 3px #17171717;
+      // border: solid 1px rgb(219, 219, 219);
+    }
+    button {
+      border-radius: 0px 10px 10px 0px;
+      margin: 5px 0px;
+      background: linear-gradient(rgb(236, 158, 0),#FAB62B); ;
+      color: black;
+      box-shadow: 0px 3px 3px #1717171a;
+    }
+  }
+  .reviews{
+    position: absolute;
+    z-index: 20;
+    // background: rgb(255, 99, 99);
+    top: 80%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding-bottom: 15vw;
+  }
+  .r-title{
+    background: #FAB62B;
+    padding: 10px;
+    height: 20px;
+    width: 100px;
+    margin: auto;
+    text-align: center;
+    border-radius: 100px 100px 0px 0px;
+    .icon {
+      color: white;
+      height: 50%;
+    }
+  }
+  .r-body {
+    height: 94%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-top: solid 1px #FAB62B;
+    background: white;
+    .r-card {
+      box-shadow: 0px 0px 8px #17171717;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 90%;
+      margin: 20px auto;
+      display: flex;
+      position: relative;
+      .ionic3-star-rating {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
+      .r-image {
+        width: 80px;
+        height: 20vw;
+        overflow: hidden;
+        display: grid;
+        img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .r-content{
+        padding: 0px 10px;
+        .name-rating {
+          display: flex;
+          width: 100%;
+          #name {
+            flex-basis: 50%;
+          }
+          p {
+            margin: 0;
+            padding: 7px 0px;
+          }
+
+        }
+      }
+    }
+    .tips-card {
+      box-shadow: 0px 0px 8px #17171717;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 90%;
+      margin: 20px auto;
+      position: relative;
+      background: linear-gradient(rgba(250, 181, 43, 0.055)),url(../../assets/imgs/beanstalk-dark.png);
+      text-align: center;
+      animation: bacgroundmove2 2s linear infinite;
+      color: #FAB62B;
+      padding: 10px;
+      h5 {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+  .tutorial {
+    position: fixed;
+    top: 0vh;
+    left: 0vw;
+    right: 0vh;
+    bottom: 0vw;
+    width: 100vw;
+    height: 100vh;
+    background:  url(../../assets/icon/schoollistbg.svg),linear-gradient(rgb(240, 240, 240));
+    animation: bacgroundmove 20000s linear infinite;
+    background-attachment: fixed;
+    background-position: 105% 10%;
+    background-repeat: repeat-y;
+    overflow-y: auto;
+    z-index: 700;
+    transform: scale(1);
+    padding: 10px;
+    blockquote {
+      border-left: solid 3px orange;
+      padding: 10px;
+      font-style: italic;
+    }
+    .close {
+      width: 90%;
+      margin: 5vw auto;
+      height: 13vw;
+      background: orange;
+      color: black;
+      display: grid;
+      align-content: center;
+      text-align: center;
+      border-radius: 200px;
+    }
+  }
+  @keyframes bacgroundmove {
+    0% {
+      background-position: 105% 10%;
+    }
+    100% {
+      background-position: 105% 10000%;
+    }
+  }
+  @keyframes bacgroundmove2 {
+    0% {
+      background-position: 0% 105%;
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.02);
+    }
+    100% {
+      background-position: 15000% 11000%;
+      transform: scale(1);
+    }
+  }
+  .tutorial-inactive {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.904);
+    overflow-y: auto;
+    z-index: 1700;
+    transform: scale(1);
+    display: none;
+    .close {
+      width: 90%;
+      margin: 5vw auto;
+      height: 13vw;
+      background: orange;
+      color: black;
+      display: grid;
+      align-content: center;
+      text-align: center;
+      border-radius: 200px;
+    }
+  }
+
+.head {
+  width: 100%;
+  height: 20%;
+  background: url(../../assets/imgs/header.svg);
+  background-size: cover;
+  background-position-y: 100%;;
+  background-repeat: no-repeat;
+  display: grid;
+  align-items: center;
+
+  .img {
+    border: solid 3px white;
+    margin: auto;
+    border-radius: 200px;
+    overflow: hidden;
+    width: 20vw;
+    height: 20vw;
+    display: grid;
+    align-items: center;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}
+.booking {
+  height: 70%;
+  width: 100%;
+  overflow-y: auto;
+  padding-bottom: 20vw;
+  .noreqs {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: grid;
+    align-content: center;
+    opacity: 0.5;
+  }
+  .card {
+    width: 90%;
+    margin: 5vw auto;
+    box-shadow: 0px 0px 5px #17171731;
+    text-align: center;
+    border-radius: 10px;
+    overflow: hidden;
+    background: linear-gradient(#F1F1F1,#FFFFFF);
+    position: relative;
+    .image {
+      width: 100%;
+      height: 40vw;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+    .details {
+      .more {
+        display: block;
+        transition: 0.4s;
+      }
+      .moreinactive {
+        transition: 0.4s;
+        display: none;
+      }
+      .dates {
+        text-align: left;
+        padding: 0px 20px;
+      }
+      .pack {
+        text-align: right;
+        padding: 0px 20px;
+        p {
+          font-weight: bold;
+        }
+      }
+      .confirmation {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: white;
+        border-radius: 5px;
+        p {
+          margin: 0;
+          padding: 0 10px;
+        }
+      }
+    }
+    .delete {
+      background: red;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      bottom: -5px;
+      right: -5px;
+      z-index: 17;
+      border-radius: 20px 0px 0px 0px;
+      display: grid;
+      align-items: center;
+    }
+    .comment {
+      background: #2A324B;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      bottom: 0px;
+      left: -5px;
+      z-index: 17;
+      border-radius: 0px 20px 0px 0px;
+      display: grid;
+      align-items: center;
+    }
+    .comment-waiting {
+      background: rgb(173, 184, 216);
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      bottom: 0px;
+      left: -5px;
+      z-index: 17;
+      border-radius: 0px 20px 0px 0px;
+      display: grid;
+      align-items: center;
+    }
+  }
+}
+}

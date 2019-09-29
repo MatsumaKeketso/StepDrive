@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="106" height="149" viewBox="0 0 106 149">
+  <g id="Privacy_Policy" data-name="Privacy Policy" transform="translate(-288 -655)">
+    <g id="Rectangle_111" data-name="Rectangle 111" transform="translate(288 655)" fill="#fff" stroke="#c9c9c9" stroke-width="3">
+      <rect width="99" height="137" rx="13" stroke="none"/>
+      <rect x="1.5" y="1.5" width="96" height="134" rx="11.5" fill="none"/>
+    </g>
+    <g id="Group_316" data-name="Group 316" transform="translate(298.934 679.624)">
+      <circle id="Ellipse_18" data-name="Ellipse 18" cx="6.5" cy="6.5" r="6.5" transform="translate(0.066 0.376)" fill="#dedede"/>
+      <rect id="Rectangle_112" data-name="Rectangle 112" width="58" height="7" transform="translate(18.066 3.376)" fill="#dedede"/>
+    </g>
+    <g id="Group_317" data-name="Group 317" transform="translate(298.934 704.443)">
+      <ellipse id="Ellipse_18-2" data-name="Ellipse 18" cx="6.5" cy="7" rx="6.5" ry="7" transform="translate(0.066 -0.443)" fill="#dedede"/>
+      <rect id="Rectangle_112-2" data-name="Rectangle 112" width="58" height="7" transform="translate(18.066 3.557)" fill="#dedede"/>
+    </g>
+    <g id="Group_319" data-name="Group 319" transform="translate(298.934 729.262)">
+      <ellipse id="Ellipse_18-3" data-name="Ellipse 18" cx="6.5" cy="7" rx="6.5" ry="7" transform="translate(0.066 -0.262)" fill="#dedede"/>
+      <rect id="Rectangle_112-3" data-name="Rectangle 112" width="58" height="6" transform="translate(18.066 3.738)" fill="#dedede"/>
+    </g>
+    <g id="Group_320" data-name="Group 320" transform="translate(298.934 754.081)">
+      <ellipse id="Ellipse_18-4" data-name="Ellipse 18" cx="6.5" cy="7" rx="6.5" ry="7" transform="translate(0.066 -0.081)" fill="#dedede"/>
+      <rect id="Rectangle_112-4" data-name="Rectangle 112" width="58" height="7" transform="translate(18.066 2.919)" fill="#dedede"/>
+    </g>
+    <g id="Group_321" data-name="Group 321" transform="translate(240.09 683.312)">
+      <g id="Union_6" data-name="Union 6" transform="translate(114.91 43.689)" fill="#fff">
+        <path d="M 32.5 60.5 L 1.5 60.5 L 1.5 16.99054908752441 C 1.5 12.85307025909424 3.11217999458313 8.963170051574707 6.039549827575684 6.037409782409668 C 8.967160224914551 3.111419916152954 12.85966014862061 1.5 17 1.5 C 21.14034080505371 1.5 25.03284072875977 3.111419916152954 27.96044921875 6.037409782409668 C 30.88781929016113 8.963170051574707 32.5 12.85307025909424 32.5 16.99054908752441 L 32.5 60.5 Z" stroke="none"/>
+        <path d="M 31 59 L 31 16.99054527282715 C 31 13.2538890838623 29.54395484924316 9.740777969360352 26.90007781982422 7.098366737365723 C 24.25575637817383 4.455488681793213 20.73983383178711 3 17 3 C 13.26016712188721 3 9.744244575500488 4.455488681793213 7.099922180175781 7.098366737365723 C 4.456044673919678 9.740777969360352 3 13.2538890838623 3 16.99054527282715 L 3 59 L 31 59 M 34 62 L 0 62 L 0 16.99054527282715 C 0 7.607044219970703 7.61115550994873 0 17 0 C 26.38884353637695 0 34 7.607044219970703 34 16.99054527282715 L 34 62 Z" stroke="none" fill="#c9c9c9"/>
+      </g>
+      <g id="Rectangle_113" data-name="Rectangle 113" transform="translate(108.91 75.689)" fill="#fff" stroke="#c9c9c9" stroke-width="3">
+        <rect width="45" height="45" rx="12" stroke="none"/>
+        <rect x="1.5" y="1.5" width="42" height="42" rx="10.5" fill="none"/>
+      </g>
+      <circle id="Ellipse_20" data-name="Ellipse 20" cx="7" cy="7" r="7" transform="translate(123.91 90.689)" fill="#c9c9c9"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,50 @@
+page-cover-quiz {
+  .no-scroll .scroll-content{
+      overflow: hidden;
+  }
+  .container {
+      display: flex;
+      flex-direction: column;
+      background: url('../../assets/imgs/Mask\ Group\ 5.png');
+      background-size: cover;
+      height: 100%;
+      width: 100%;
+      align-items: center;
+      align-content: center;
+      .logo {
+          height: 40%;
+          img {
+              width: 100%;
+              height: 100%;
+          }
+      }
+      .recap {
+          height: 20%;
+          display: flex;
+          align-content: center;
+          align-items: center;
+          h1 {
+              font-size: 38px;
+              color: white;
+              font-weight: bold;
+              margin: 0 auto;
+          }
+      }
+      .btn {
+          height: 40%;
+          width: 100%;
+          display: flex;
+          align-content: center;
+          align-items: center;
+          button {
+              height: 23%;
+              width: 60%;
+              background: transparent;
+              border: 2px solid white;
+              border-radius: 10px;
+              margin: 0 auto;
+              font-size: 20px;
+          }
+      }
+  }
+}

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="279.224" height="255.702" viewBox="0 0 279.224 255.702">
+  <g id="quiz-icon" transform="translate(-26.501 -79.5)">
+    <path id="Union_2" data-name="Union 2" d="M37.767,49.562A102.843,102.843,0,1,0,73.91,24.155L0,0Z" transform="translate(297.5 329.357) rotate(180)" fill="#fff" stroke="#c9c9c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+    <path id="Union_1" data-name="Union 1" d="M264.767-4859.2a102.347,102.347,0,0,1-27.056-69.461A102.933,102.933,0,0,1,340.743-5031.5a102.933,102.933,0,0,1,103.031,102.835,102.933,102.933,0,0,1-103.031,102.834,102.869,102.869,0,0,1-39.833-7.967L227-4809.643Z" transform="translate(-192.274 5114)" fill="#fff" stroke="#c9c9c9" stroke-linecap="round" stroke-linejoin="round" stroke-width="6"/>
+    <text id="_" data-name="?" transform="translate(116 241)" fill="#c9c9c9" font-size="122" font-family="TimeBurner"><tspan x="0" y="0">?</tspan></text>
+  </g>
+</svg>

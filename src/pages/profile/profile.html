@@ -1,0 +1,165 @@
+<ion-content class="no-scroll">
+  <div [ngClass]="{'tutorial': showTips,'tutorial-inactive': !showTips}" class="">
+      <!-- <div [ngClass]="{'tutorial': !showTips,'tutorial-inactive': showTips}"> -->
+    <h1>Hi there Learner!</h1>
+    <p><i>Driver education is pretty woeful in this country, Stepdrive put together a list of ten things every driver needs to know. Are you familiar with them all?</i></p>
+    <p>Before we jump into the list, let's remember this wise quote from racecar driver Sterling Marlin.</p>
+    <blockquote>
+        I feel safe when I'm on the racetrack, I really do. I know that I'm surrounded by the best drivers in the world. That's something you can't say when you're driving down a city road.
+    </blockquote>
+    <p>These ten things should keep you faster and safer, but they don't tell the whole story of how to drive. We didn't even touch on the basics of maintenance, and we barely mention driving in emergency situations. We mostly want you to handle commuting and traffic better, because that's how we find the most drama behind the wheel. We hope you learn the rest of them in your next driving lesson. May your Instructor be with you.</p>
+    <hr>
+    <h3>Ten Things Every Driver Needs To Know</h3>
+
+
+    <h5>10.) The Left Lane Isn't For You</h5>
+    <p>It's for passing, not for cruising at or juuuust above the speed limit.</p>
+
+
+    <h5>9.) Merging Is All About Flow</h5>
+    <p>Merging is difficult for most people, apparently. Remember that you're part of a whole traffic flow, not just a single car against many others.</p>
+
+
+    <h5>8.) Four Wheel Drive Won't Save You</h5>
+    <p>Just because your 4wd SUV/Audi/Subaru accelerates really well in the snow, doesn't mean it can slow down any faster than anyone else. If you drive like a jackass in the winter, your four wheel drive won't save you.</p>
+
+
+
+
+
+    <h5>5.) You Turn Into The Skid</h5>
+    <p>That language is always a little unclear, so we'll just say that if you're in an emergency situation in a basic front-drive whatevercar, you want to point the wheel in the direction you want to go. It's that simple. How do you point the way you want to go? You look in the direction that you want to go instead of looking at what you want to avoid. Look to your way out, not the car/bus/tree/wall you're trying to avoid.</p>
+
+
+    <h5>4.) You Need To Leave Space Between Cars</h5>
+    <p>This one is simple: tailgating is dangerous. If a car ahead of you has to slow down, you can't magically slow right down with them. You need a few car lengths to make up for your inevitable reaction time.</p>
+
+
+    <h5>
+        7.) In Freezing Conditions, You Have The Least Traction Where You Need It Most
+    </h5>
+    <p> Places where people regularly accelerate or brake get worn down and extra slick in icy conditions. This means that when you approach an intersection, it will be extra slippery. When you approach a blind spot on the highway, it will be extra slippery. When you're driving on a gravel road, it will be extra slippery before and after intersections or turns.</p>
+
+
+    <h5>6.) Just Because You Signal, Doesn't Mean There's A Space</h5>
+    <p>You're signalling. Great. That's a big step up from not signalling at all before you turn. Now you just have to remember to CHECK YOUR GODDAMN BLIND SPOTS before you cut into the next lane.</p>
+
+    <h5>3.) Looking Ahead Makes You Safer</h5>
+    <blockquote>
+        Keep looking ahead as far as possible. Pay attention to what's really coming up instead of what's just in front of you. If you can react earlier, it's better both for you and everyone behind you.
+    </blockquote>
+
+
+    <h5>2.) You Shouldn't Do Other Things While Driving</h5>
+    <p>Texting, drinking, reading, eating, or screwing: don't do them behind the wheel. They all involve taking your eyes and your attention away from what's in front of you. Like the crash you're about to have.</p>
+    <h5>1.) Everyone Else Is Out To Get You</h5>
+    <p>Want to drive safe? Just remember that everyone else on the roads is incompetent, distracted, and they might as well be out to smash your car into a wall. It's up to you to stay out of an accident.</p>
+
+    <p><b>Everyone is out to get you. Everyone else left their house today determined to crash into your car and it's up to you to make sure that doesn't happen.</b></p>
+    <div (click)="closeTips()" class="close">Close</div>
+  </div>
+<div class="ultimate">
+<div class="reviews">
+<div class="r-title" (swipe)="reviews($event)" (click)="reviews($event, request)">
+    <ion-icon name="arrow-dropup"></ion-icon>
+    <p><sub>comments</sub></p>
+</div>
+<div class="r-body">
+  <div (click)=" openTips()" class="tips-card">
+    <h5>Read Tips Again</h5>
+  </div>
+  <div *ngIf="!userReviews[0]">
+    <p>No reviews made yet. <br> Be the first to say something.</p>
+  </div>
+  <div class="r-card" *ngFor="let r of userReviews">
+      <ionic3-star-rating #rating
+      activeIcon = "ios-star"
+      defaultIcon = "ios-star-outline"
+      activeColor = "#FAB62B"
+      defaultColor = "#FAB62B"
+      readonly = "true"
+      rating = "{{r.rating}}"
+      fontSize = "15px"
+      (ratingChanged)="logRatingChange($event)">
+      </ionic3-star-rating>
+    <div class="r-image">
+      <img src="{{r.image}}" alt="">
+    </div>
+    <div class="r-content">
+      <div class="name-rating">
+<p id="name"><b>{{r.username}}</b></p>
+      </div>
+
+      <p>{{r.text}}</p>
+    </div>
+  </div>
+
+</div>
+<div class="feedback">
+  <div class="r-rating">
+      <ionic3-star-rating #rating
+      activeIcon = "ios-star"
+      defaultIcon = "ios-star-outline"
+      activeColor = "#FAB62B"
+      defaultColor = "#FAB62B"
+      readonly = "false"
+      rating = "{{review.rating}}"
+      fontSize = "20px"
+      (ratingChanged)="logRatingChange($event)">
+  </ionic3-star-rating>
+  </div>
+  <input type="text" [(ngModel)]="review.text" placeholder="Write Something..">
+<button (click)="sendReview()" [disabled]="!request[0] || !review.schooluid">Send Feedback</button>
+</div>
+</div>
+
+<div class="head">
+  <div class="img">
+      <img *ngIf="user.image" src="{{user.image}}" alt="">
+      <img *ngIf="!user.image" src="../../assets/imgs/placeholder-images-image_large.png" alt="">
+  </div>
+</div>
+<div class="booking">
+  <div *ngIf="!request[0]" class="noreqs">
+    <h1>No Requests</h1>
+  </div>
+  <div class="card" *ngFor="let s of request; let i = index">
+    <div *ngIf="!request[0]" class="image">
+      <img *ngIf="request[0]"  src="{{s.school.image}}">
+    </div>
+    <div class="details">
+      <h3>{{s.school.schoolname}}</h3>
+      <div *ngIf="more.id==i" class="more">
+          <p>{{s.school.desc}}</p>
+      </div>
+      <div class="dates">
+          <p>Date in: {{s.request.datein | date}}</p>
+          <p>Date out: {{s.request.dateout}}</p>
+      </div>
+      <div class="pack">
+          <p>{{s.request.package.name}}: {{s.request.package.number}} lessons(s) for R{{s.request.package.amount}}.00</p>
+      </div>
+      <div class="confirmation">
+        <p *ngIf="s.request.confirmed=='waiting'" style="float: left; color: rgb(255, 153, 0);">Awaiting Confirmation</p>
+        <p *ngIf="s.request.confirmed=='accepted'" style="float: left; color: rgb(0, 185, 15);">Accepted</p>
+        <p *ngIf="s.request.confirmed=='rejected'" style="float: left; color: rgb(255, 0, 0);">Rejected</p>
+      </div>
+    </div>
+    <div class="show" (click)="showMore(i)">
+      <p *ngIf="!more.id==i"><br></p>
+      <br>
+      <p *ngIf="more.id==i">   </p>
+    </div>
+    <div (click)="delete(s.request.docid)" class="delete">
+      <ion-icon style="margin: auto; color: white;" name="trash"></ion-icon>
+    </div>
+    <div (click)="reviews($event, s)" class="comment">
+        <ion-icon style="margin: auto; color: white;" name="chatbubbles"></ion-icon>
+      </div>
+      <div *ngIf="s.request.confirmed=='waiting'||s.request.confirmed=='rejected'" class="comment-waiting">
+          <ion-icon style="margin: auto; color: white;" name="chatbubbles"></ion-icon>
+        </div>
+  </div>
+</div>
+</div>
+</ion-content>
