@@ -31,9 +31,10 @@ export class MyApp {
     public toastCtrl: ToastController,
     public app: App) {
     statusBar.backgroundColorByHexString('#D28B2B');
-
+    
     platform.ready().then(async () => {
-      this.initialiseApp()
+      this.initialiseApp();
+      firebase.initializeApp(firebaseConfig);
       // platform.backButton.subscribe(res => {
       // })
       if (platform.is('android')) {
@@ -81,7 +82,7 @@ export class MyApp {
         }
       })
     });
-    firebase.initializeApp(firebaseConfig);
+    
   }
   initialiseApp() {
     this.platform.registerBackButtonAction(() => {
