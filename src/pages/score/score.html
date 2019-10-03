@@ -1,15 +1,18 @@
-<!--
-  Generated template for the ScorePage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-  <ion-navbar>
-    <ion-title>score</ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding>
-
+<ion-content>
+  <div class="container">
+          <div class="title">
+              <h1>{{title}}</h1>
+            </div>
+            <div class="results">
+              <p>{{results}}%</p>
+            </div>
+            <div class="text">
+              <p> {{text}} </p>
+            </div>
+            <div class="button">
+                <button class="btn" (click)="home()" *ngIf="pass==true">Finnish</button>
+                <button class="btn white" (click)="quiz()" *ngIf="pass==false">Try Again</button>
+                <button class="btn" (click)="home()" *ngIf="pass==false">Next Time</button>
+            </div>
+      </div>
 </ion-content>

@@ -1,0 +1,373 @@
+{
+  "hmv": {
+    "questions" : [
+      {
+        "id": "175",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/quiz%20images%2Fk53_learners_image_1323466466.gif?alt=media&token=9f6cfab7-73d6-4a83-ab1c-9ec59b97ae25",
+        "question": "This warning sign tells you that you may not drive there if your vehicle is",
+        "suggestions": [],
+        "options": [
+          {"option": "higher than 4.42m", "correct": true},
+          {"option": "wider than 4.42m", "correct": false},
+          {"option": "longer than 4.42m", "correct": false}
+        ]
+      },
+      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/quiz%20images%2F10ton-prohibited.gif?alt=media&token=43257397-4b3a-4de1-8a2a-e1b379b61714",
+        "question": "This road sign shows that:",
+        "suggestions": [],
+        "options": [
+          {"option": "You must drive there at all times if your vehicle has a GVM of 12 tons.", "correct": true},
+          {"option": "You must drive there at all times if your vehicle has a GVM of 8 tons.", "correct": false},
+          {"option": "If you want to you can drive there if your vehicle has a GVM of 10 tons.", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "",
+        "question": "You may carry passengers in a vehicle that is being towed:",
+        "suggestions": ["If you only travel at 35 km/h","If the vehicle that is being towed is a semi-trailer","Only if the vehicle that tows something is a tractor"],
+        "options": [
+          {"option": "All of the above are correct", "correct": false},
+          {"option": "(1) and (2) are correct", "correct": false},
+          {"option": "(2) is the only correct answer", "correct": true}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/ehicles%20carrying%20hazardous%20products.gif?alt=media&token=0bade6e2-cc04-45bd-bcc5-b802e79c1bbc",
+        "question": "This sign shows that:",
+        "suggestions": [],
+        "options": [
+          {"option": "All heavy vehicles may drive here during the times showed on the sign", "correct": false},
+          {"option": "Vehicles carrying hazardous products can only use the road during the times showed on the sign", "correct": true},
+          {"option": "Tankers must use this road during the times showed on the sign", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "",
+        "question": "You must not reverse your vehicle for further than:",
+        "suggestions": [],
+        "options": [
+          {"option": "100 m", "correct": false},
+          {"option": "500 m", "correct": false},
+          {"option": "It is safe to do so", "correct": true}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/Vehicles%20longer%20than%2015m%20may%20not%20drive.gif?alt=media&token=5a5d737f-6b62-4882-9a9a-624b182acea6",
+        "question": "This sign shows you that:",
+        "suggestions": [],
+        "options": [
+          {"option": "No vehicle with trailers may drive past this sign", "correct": false},
+          {"option": "The road is only 15m wide past this sign", "correct": false},
+          {"option": "Vehicles longer than 15m may not drive past this sign", "correct": true}
+        ]
+      },      {
+        "id": "",
+        "image": "",
+        "question": "If you only have learners license for a heavy motor vehicle;",
+        "suggestions": ["Then there must be someone with you in the vehicle with the same driving license","You are not allowed to drive on a freeway","No passengers are allowed with you in the vehicle"],
+        "options": [
+          {"option": "All the above correct", "correct": false},
+          {"option": "Only (1) is correct", "correct": true},
+          {"option": "Only (1) and (3) are correct", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/arrestor%20bed%20ahead.gif?alt=media&token=21130d38-d2e9-4050-ba4e-21f35c486a57",
+        "question": "This shows you that:",
+        "suggestions": [],
+        "options": [
+          {"option": "Your brakes will be checked at a stop ahead where you must stop", "correct": false},
+          {"option": "The road forks ahead on a steep decline and you should slow down", "correct": false},
+          {"option": "There is an arrestor bed ahead to be used when your brakes fail", "correct": true}
+        ]
+      },      {
+        "id": "",
+        "image": "",
+        "question": "The distance it takes the driver of a motor vehicle to stop it is:",
+        "suggestions": ["Longer on a wet road than on a dry road","Longer if the vehicle is travelling at a higher speed","Longer if the vehicle is loaded"],
+        "options": [
+          {"option": "All of the above are correct", "correct": true},
+          {"option": "None of the above are correct", "correct": false},
+          {"option": "(1) is correct", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/LightMotorVehicleScketch.jpg?alt=media&token=ee347973-5009-4d43-8bf5-7a859f709c1d",
+        "question": "To select a gear, you must use numbers:",
+        "suggestions": [],
+        "options": [
+          {"option": "6 and 8", "correct": true},
+          {"option": "7 and 9", "correct": false},
+          {"option": "5 and 8", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/LightMotorVehicleScketch.jpg?alt=media&token=ee347973-5009-4d43-8bf5-7a859f709c1d",
+        "question": "To stop your vehicle, you must use number:",
+        "suggestions": [],
+        "options": [
+          {"option": "7", "correct": false},
+          {"option": "8", "correct": false},
+          {"option": "9", "correct": true}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/LightMotorVehicleScketch.jpg?alt=media&token=ee347973-5009-4d43-8bf5-7a859f709c1d",
+        "question": "To turn your vehicle, number (x) is used:",
+        "suggestions": [],
+        "options": [
+          {"option": "5", "correct": false},
+          {"option": "4", "correct": true},
+          {"option": "6", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/LightMotorVehicleScketch.jpg?alt=media&token=ee347973-5009-4d43-8bf5-7a859f709c1d",
+        "question": "To ensure that your parked vehicle does not move, use number:",
+        "suggestions": [],
+        "options": [
+          {"option": "9", "correct": false},
+          {"option": "8", "correct": false},
+          {"option": "7", "correct": true}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/LightMotorVehicleScketch.jpg?alt=media&token=ee347973-5009-4d43-8bf5-7a859f709c1d",
+        "question": "To accelerate your vehicle, you must use number:",
+        "suggestions": [],
+        "options": [
+          {"option": "10", "correct": true},
+          {"option": "6", "correct": false},
+          {"option": "8", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/LightMotorVehicleScketch.jpg?alt=media&token=ee347973-5009-4d43-8bf5-7a859f709c1d",
+        "question": "What controls must you use when you are going to turn sharp?",
+        "suggestions": [],
+        "options": [
+          {"option": "1, 3, 4,5,6,8 and 9 only", "correct": true},
+          {"option": "3,4,5,9 and 10 only", "correct": false},
+          {"option": "1, 3, 5, 6 and 8 only", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/LightMotorVehicleScketch.jpg?alt=media&token=ee347973-5009-4d43-8bf5-7a859f709c1d",
+        "question": "To indicate that you are going to turn, you must use number:",
+        "suggestions": [],
+        "options": [
+          {"option": "11", "correct": false},
+          {"option": "5", "correct": true},
+          {"option": "3", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "",
+        "question": "value",
+        "suggestions": [],
+        "options": [
+          {"option": "val", "correct": false},
+          {"option": "val", "correct": false},
+          {"option": "val", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "",
+        "question": "value",
+        "suggestions": [],
+        "options": [
+          {"option": "val", "correct": false},
+          {"option": "val", "correct": false},
+          {"option": "val", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "",
+        "question": "value",
+        "suggestions": [],
+        "options": [
+          {"option": "val", "correct": false},
+          {"option": "val", "correct": false},
+          {"option": "val", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "",
+        "question": "value",
+        "suggestions": [],
+        "options": [
+          {"option": "val", "correct": false},
+          {"option": "val", "correct": false},
+          {"option": "val", "correct": false}
+        ]
+      }
+    ]
+  },
+  "m": {
+    "questions" : [
+      {
+        "id": "",
+        "image": "",
+        "question": "When is it an offense when you are the holder of a learners license of a motorcycle:",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "None of the above", "correct": false},
+          {"option": "You ride at 80 km/h outside built-up areas", "correct": false},
+          {"option": "You keep one hand on the handlebars", "correct": true}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/motorcycle_quiz%2Fk53_learners_image_1323439413.gif?alt=media&token=fcdd39ca-e36a-4d1a-b49a-d0806c2f71a4",
+        "question": "When you see this sign you:",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "May not ride there", "correct": true},
+          {"option": "Must yield for other motor vehicles", "correct": false},
+          {"option": "May only ride a motor cycle of 50cc there", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "",
+        "question": "If your motor cycle has an engine size of (x) cc, you may not use it on free way",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "50", "correct": false},
+          {"option": "125", "correct": false},
+          {"option": "250", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/motorcycle_quiz%2Fk53_learners_image_1323439624.gif?alt=media&token=9f78c247-4649-46fd-aa1d-82109899c5fb",
+        "question": "This sign shows motor cycle riders that:",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "There is parking for motor cycles there", "correct": false},
+          {"option": "They can use that part of the road if they wish", "correct": true},
+          {"option": "They must use that part of the road", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "",
+        "question": "When may you as the holder of a learners licence carry a passenger on your motor cycle?",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "When a motor cycle has a cylinder of at least 100 cc", "correct": false},
+          {"option": "For short journeys if you do not exceed to the speed limit.", "correct": false},
+          {"option": "In no case", "correct": true}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/motorcycle_quiz%2Fk53_learners_image_1323669490.gif?alt=media&token=e2340425-c896-4726-8926-59befa06d610",
+        "question": "This road sign shows you that:",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "There is a compulsory stop for motor cycles ahead", "correct": false},
+          {"option": "All motor cycles must ride left of the arrow", "correct": true},
+          {"option": "A motor cycle may only ride in the left lane", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "",
+        "question": "When you ride your motor cycle, you are not allowed to:",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "Have only one hand on the handlebars", "correct": false},
+          {"option": "Carry a passenger on a 125 cc motor cycle", "correct": false},
+          {"option": "Have one wheel of motor cycle off the ground", "correct": true}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/motorcycle_quiz%2Fk53_learners_image_1323669814.gif?alt=media&token=9625736d-8359-4a5f-b0e0-9bd486435a92",
+        "question": "This road sign shows you that:",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "The speed limit for you is 60km/h", "correct": true},
+          {"option": "It is recommended that you do not ride faster than 60 km/h", "correct": false},
+          {"option": "You are riding in a city area", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/motorcycle_quiz%2Fk53_learners_image_1323670176.gif?alt=media&token=e1ab1a86-6968-4f7a-b847-894617ec8181",
+        "question": "What controls must you never use in combination?",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "2 and 4", "correct": false},
+          {"option": "4 and 7", "correct": false},
+          {"option": "4 and 8", "correct": true}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/motorcycle_quiz%2Fk53_learners_image_1323670176.gif?alt=media&token=e1ab1a86-6968-4f7a-b847-894617ec8181",
+        "question": "To change gears, you must use numbers:",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "1 and 5", "correct": false},
+          {"option": "1 and 2", "correct": true},
+          {"option": "2 and 7", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/motorcycle_quiz%2Fk53_learners_image_1323670176.gif?alt=media&token=e1ab1a86-6968-4f7a-b847-894617ec8181",
+        "question": "To turn, you must use number:",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "1", "correct": false},
+          {"option": "7", "correct": false},
+          {"option": "8", "correct": true}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/motorcycle_quiz%2Fk53_learners_image_1323670176.gif?alt=media&token=e1ab1a86-6968-4f7a-b847-894617ec8181",
+        "question": "To stop, you must use number:",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "4 and 7", "correct": true},
+          {"option": "2 and 7", "correct": false},
+          {"option": "1 and 2", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/motorcycle_quiz%2Fk53_learners_image_1323670176.gif?alt=media&token=e1ab1a86-6968-4f7a-b847-894617ec8181",
+        "question": "To indicate that you going to turn, you must use number:",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "4", "correct": false},
+          {"option": "6", "correct": true},
+          {"option": "8", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "",
+        "question": "The distance it takes you to stop your motor cycle is:",
+        "suggestions": ["Longer on a wet road than on dry road","Longer if you ride at a higher speed","Longer if it is loaded"],
+        "options": [
+          {"option": "All of the above are correct", "correct": true},
+          {"option": "None of the above are correct", "correct": false},
+          {"option": "(1) is only correct", "correct": false}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/motorcycle_quiz%2Fk53_learners_image_1323670176.gif?alt=media&token=e1ab1a86-6968-4f7a-b847-894617ec8181",
+        "question": "To ride faster, you must use number?",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "4", "correct": false},
+          {"option": "7", "correct": false},
+          {"option": "5", "correct": true}
+        ]
+      },      {
+        "id": "",
+        "image": "https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/motorcycle_quiz%2Fk53_learners_image_1323670176.gif?alt=media&token=e1ab1a86-6968-4f7a-b847-894617ec8181",
+        "question": "What controls must you use when you are going to make a sharp turn?",
+        "suggestions": ["","",""],
+        "options": [
+          {"option": "1,2 3, 4, 6 and 8 only", "correct": true},
+          {"option": "1,3,5,6 and 8 only", "correct": false},
+          {"option": "1, 2,4 and 8 only", "correct": false}
+        ]
+      }
+    ]
+  }
+}

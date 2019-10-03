@@ -15,6 +15,8 @@ import {
 } from '../score/score';
 import * as firebase from 'firebase';
 import { TabsPage } from '../tabs/tabs';
+import { Http } from '@angular/http';
+import { ElementRef, Renderer2 } from '@angular/core';
 
 
 @IonicPage()
@@ -31,24 +33,27 @@ export class QuizPage {
   @ViewChild('slide') slides: Slides;
   grandTotal = 0;
   questions = []
-  Qs = [];
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public appCtrl: App) {}
+  lightmotoQuiz = []
+  heavyMotorQuiz = []
+  motorcycleQuiz = []
+  constructor(public navCtrl: NavController, public navParams: NavParams, public appCtrl: App, private http: Http, public elementrev: ElementRef, public renderer: Renderer2) {}
   async ionViewDidLoad() {
-    this.questions = []
-  this.Qs = [];
-    this.slides.lockSwipes(true);this.grandTotal = 0;
-    await this.db.collection('questions').get().then(async res => {
-      await res.forEach( async doc => {
-        await this.Qs.push(doc.data());
-      })
-      console.log('Qs from fire: ', this.Qs.length);
+    this.http.get('../../assets/quiz.json').subscribe(data => {
+      console.log(data);
 
-      do {
-        const random = Math.floor(Math.random() * this.Qs.length)
-        this.questions.push(this.Qs[random])
-      } while (this.questions.length < 5);
-      console.log('Qs to disp: ', this.questions);
+    })
+    this.questions = []
+  this.lightmotoQuiz = [];
+    this.slides.lockSwipes(true);this.grandTotal = 0;
+    this.db.collection('questions').get().then(async res => {
+      res.forEach( async doc => {
+        this.lightmotoQuiz.push(doc.data());
+      })
+      // do {
+      //   const random = Math.floor(Math.random() * this.Qs.length)
+      //   this.firebaseQs.push(this.Qs[random])
+      // } while (this.questions.length < 5);
+      // console.log('Qs to disp: ', this.questions);
 
     })
 
@@ -81,8 +86,30 @@ export class QuizPage {
       }
     }
   }
-  sendQs() {
+  sendQs(category, ev) {
+    let path = ev.path[0]
+    switch (category) {
+      case "lmv":
+      console.log('light moto', path);
+      setTimeout(()=> {
+        this.renderer.setStyle(path, 'transform', 'scale(1.05)');
+      },100)
+      setTimeout(() => {
+        this.renderer.setStyle(path, 'transform', 'scale(1)');
+      }, 500)
+        break;
+        case "hmv":
+      console.log("heavy", path);
 
+          break;
+          case "m":
+      console.log("cycle", path);
+
+            break;
+
+      default:
+        break;
+    }
   }
   results(): void {}
 }

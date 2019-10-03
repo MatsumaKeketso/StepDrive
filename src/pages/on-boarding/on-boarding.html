@@ -2,112 +2,107 @@
   <ion-slides #slides pager>
     <ion-slide>
       <div class="container">
-          <div class="header">
-              <h1>Welcome to <br> Stepdrive</h1>
+        <div class="text">
+                <h1>Welcome <br> to <br> Stepdrive</h1>
+                <p>This is a asecure enviroment to request a pro for a driving lesson.</p>
+                <p>The following screens will help familiariese yourself with the app.</p>
+        </div>
+        <div class="buttons">
+            <div class="bn">
+                    <button (click)="nextslides()">Let's Go</button><br>
+                    <button  (click)="formPage(1)" >Not Now</button>
             </div>
-            <div class="logo">
-              <img src="../../assets/imgs/color_logo.svg">
-            </div>
-            <div class="content">
-              <p>This is a secure environment to
-                  request a pro for a driving lesson.</p>
-                  <p>The following screens will help familiarise
-                      yourself with the app.</p>
-            </div>
-            <div class="buttons">
-              <button id="go" (click)="nextslides()">Let's Go</button>
-              <button id="not" (click)="formPage(1)">Not Now</button>
-            </div>
-      </div>
+        </div>
+    </div>
+    <div class="header">
+
+    </div>
+    <div class="bg">
+
+    </div>
     </ion-slide>
     <ion-slide>
-        <div class="container">
-            <div class="header">
-                <h1>Notifications</h1>
-              </div>
-              <div class="logo">
-                <img src="../../assets/imgs/notification.svg">
-              </div>
-              <div class="content">
-                <p>We'll always keep you up to date about
-                    important updates and changes.</p>
-              </div>
-              <div class="buttons">
-                <button id="go" (click)="nextslides()">Next</button>
-              </div>
+      <div class="container1">
+        <div class="text">
+                <h1>Location</h1>
+                <p>This is not for us to use.</p>
+                <p>This ensures that the instructor knows where to find you.</p>
+                <p>You can change this setting anytime</p>
         </div>
+        <div class="buttons">
+            <div class="bn">
+                    <button (click)="nextslides()">Next</button>
+            </div>
+        </div>
+    </div>
+    <div class="header1">
+
+    </div>
+    <div class="bg1">
+
+    </div>
       </ion-slide>
       <ion-slide>
-          <div class="container">
-              <div class="header">
-                  <h1>Rating</h1>
-                </div>
-                <div class="logo">
-                  <img src="../../assets/imgs/rating.svg">
-                </div>
-                <div class="content">
-                  <p>Rate the instructors
-                      to maintain service quality
-                      and help produce good drivers.</p>
-                </div>
-                <div class="buttons">
-                  <button id="go" (click)="nextslides()">Next</button>
-                </div>
+        <div class="container2">
+          <div class="text2">
+                  <h1>Notifications</h1>
+                  <p>We'll always keep you up to date about important updates and changes.</p>
           </div>
+          <div class="buttons2">
+              <div class="bn2">
+                      <button (click)="nextslides()">Next</button>
+              </div>
+          </div>
+      </div>
+      <div class="header2">
+
+      </div>
+      <div class="bg2">
+
+      </div>
         </ion-slide>
         <ion-slide>
-            <div class="container">
-                <div class="header">
-                    <h1>Reviews</h1>
-                  </div>
-                  <div class="logo">
-                    <img src="../../assets/imgs/reviews.svg">
-                  </div>
-                  <div class="content">
+          <div class="container3">
+            <div class="text3">
+                    <h1>Ratings <br> & <br> Reviews</h1>
                     <p>Learn about common mistakes from
                         others and share driving experiences.</p>
-                  </div>
-                  <div class="buttons">
-                    <button id="go" (click)="nextslides()">Next</button>
-                  </div>
             </div>
-          </ion-slide>
-          <ion-slide>
-              <div class="container">
-                  <div class="header">
-                      <h1>Location</h1>
-                    </div>
-                    <div class="logo">
-                      <img src="../../assets/imgs/your_location.svg">
-                    </div>
-                    <div class="content">
-                      <p>This is not for us to use. This ensures that
-                          the instructor knows where to find you. <br>
-
-                          You can change this setting at anytime.</p>
-                    </div>
-                    <div class="buttons">
-                      <button id="go" (click)="nextslides()">Next</button>
-                    </div>
-              </div>
-            </ion-slide>
-            <ion-slide>
-                <div class="container">
-                    <div class="header">
-                        <h1>All set!</h1>
-                      </div>
-                      <div class="logo">
-                        <img src="../../assets/imgs/All_set.svg">
-                      </div>
-                      <div class="content">
-                        <p>We'll always keep you up to date about
-                            important updates and changes.</p>
-                      </div>
-                      <div class="buttons">
-                          <button id="go" (click)="formPage(1)">Sign Up</button>
-                          <button id="not" (click)="formPage(0)">Sign In</button>
-                        </div>
+            <div class="buttons3">
+                <div class="bn3">
+                        <button (click)="nextslides()">Next</button>
                 </div>
+            </div>
+        </div>
+        <div class="header3">
+
+        </div>
+        <div class="bg3">
+
+        </div>
+          </ion-slide>
+            <ion-slide>
+              <div class="container4">
+                <div class="text4">
+                        <h1>All Set</h1>
+                        <p>Just sign in to get started with
+                            requesting your first
+                            ever driving lesson or sign right in if you're
+                            already a member.</p>
+                </div>
+                <div class="buttons4">
+                    <div class="bn4">
+                            <button (click)="formPage(0)">Sign In</button><br>
+                            <button (click)="formPage(1)">Sign Up</button>
+                    </div>
+                </div>
+            </div>
+            <div class="header4">
+
+            </div>
+            <div class="bg4">
+
+            </div>
               </ion-slide>
   </ion-slides>
 </ion-content>

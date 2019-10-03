@@ -1,4 +1,57 @@
 page-quiz {
+  #inst {
+    padding: 0;
+    margin: 0;
+  }
+  .instructions {
+    overflow-y: auto;
+    position: absolute;
+    z-index: 30;
+    text-align: left;
+    background: white;
+    left:0px;
+    right: 0px;
+    bottom: 5px;
+    width: 96vw;
+    height: 40px;
+    margin: auto;
+    border-radius: 10px;
+    color: black;
+    padding: 10px;
+    transition: 0.5s;
+  }
+  @media screen and (max-width: 1050px) {
+    .instructions:hover {
+      height: 20vw;
+    }
+  }
+  @media screen and (max-width: 600px) {
+    .instructions:hover {
+      height: 60vw;
+    }
+  }
+  .instructions-active{
+
+  }
+  @keyframes quizHelp {
+    0% {
+      transform: scale(1)
+    }
+    50% {
+      transform: scale(1.05)
+    }
+    100% {
+      transform: scale(1)
+    }
+  }
+  @keyframes instruct {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
   .welcome {
     transition: 0.4s;
     transform: translateY(0vh);
@@ -40,6 +93,41 @@ page-quiz {
   width: 100%;
   display: grid;
   align-items: center;
+  z-index: 29;
+  position: relative;
+  .category-cont {
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    .lmv {
+      background: url(../../assets/tutvid/car_icon.png),linear-gradient(rgb(255,255,255));
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .hmv {
+      background: url(../../assets/tutvid/bus_icon.png),linear-gradient(rgb(255,255,255));
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    .m {
+      background: url(../../assets/tutvid/cycle_icon.png),linear-gradient(rgb(255,255,255));
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+    div {
+      background: white;
+      min-width: 33.33%;
+      height: 50%;
+      margin: 2px;
+      border-radius: 10px;
+      box-shadow: 0px 2px 3px #171717bd;
+    }
+  }
   img {
     width: 30vw;
     margin: 10vw 0%;
@@ -120,6 +208,8 @@ transform: translateY(-63vw);
   height: 5vh;
   width: 100%;
   overflow: hidden;
+  position: relative;
+  z-index: -1;
   img {
   width: 100% !important;
   transform: translateY(80vw) !important;

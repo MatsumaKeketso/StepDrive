@@ -19,7 +19,7 @@ export class TabsPage {
   tab5Root = Question4Page;
   constructor(public navCtrl: NavController, public alertCtrl: AlertController, public appCtrl: App, public elementref: ElementRef) {
     console.log('tabs elementref', this.elementref);
-
+    
   }
   async quizpage(event: Tab){
     if (event.tabTitle == 'Quiz') {

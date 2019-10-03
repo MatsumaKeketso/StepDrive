@@ -19,6 +19,7 @@ page-profile {
     margin: 0px auto -10px auto;
     position: relative;
     border-radius:10px;
+    text-align: center;
     .r-rating {
       position: absolute;
       top: -25px;
@@ -91,8 +92,8 @@ page-profile {
         right: 0;
       }
       .r-image {
-        width: 80px;
-        height: 20vw;
+        min-width: 30%;
+        min-height: 100%;
         overflow: hidden;
         display: grid;
         img {
@@ -102,6 +103,7 @@ page-profile {
         }
       }
       .r-content{
+        min-width: 70%;
         padding: 0px 10px;
         .name-rating {
           display: flex;

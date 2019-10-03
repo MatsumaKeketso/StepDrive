@@ -8,6 +8,8 @@ import { ContactPage } from './contact';
   ],
   imports: [
     IonicPageModule.forChild(ContactPage),
-  ],
+  ],providers: [
+    Storage
+  ]
 })
 export class ContactPageModule {}
