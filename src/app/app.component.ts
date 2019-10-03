@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, IonicApp, App, ToastController } from 'ionic-angular';
+import { Platform, NavController, IonicApp, App, ToastController, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -20,6 +20,9 @@ declare var google: google;
 export class MyApp {
   rootPage:any
 
+    // set up hardware back button event.
+    lastTimeBackPress = 0;
+    timePeriodToExit = 2000;
   constructor(public platform: Platform,
     public statusBar: StatusBar,
     splashScreen: SplashScreen,
@@ -31,12 +34,10 @@ export class MyApp {
 
     platform.ready().then(async () => {
       this.initialiseApp()
-      platform.backButton.subscribe(res => {
-        console.log('back Clicked');
-
-      })
+      // platform.backButton.subscribe(res => {
+      // })
       if (platform.is('android')) {
-        // screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
+        screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
       }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -55,13 +56,17 @@ export class MyApp {
             if (user) {
               console.log('user logged in');
 
-              splashScreen.hide();
+              setTimeout(()=>{
+                // splashScreen.hide();
+              }, 3000)
               this.rootPage = TabsPage;
 
             } else {
               console.log('user logged in');
 
-              splashScreen.hide();
+              setTimeout(()=>{
+                // splashScreen.hide();
+              }, 3000)
               this.rootPage = LoginPage;
 
             }
@@ -69,7 +74,9 @@ export class MyApp {
         } else {
           console.log('Onboarding not done');
 
-          splashScreen.hide();
+          setTimeout(()=>{
+            // splashScreen.hide();
+          }, 3000)
           this.rootPage = OnBoardingPage;
         }
       })
@@ -83,24 +90,21 @@ export class MyApp {
       let activeView = nav.getActive();
 
       // Checks if can go back before show up the alert
-      if(activeView.name === 'HomePage' || activeView.name === 'ContactPage') {
+      if(activeView.name === 'ContactPage') {
           if (nav.canGoBack()){
               nav.pop();
           } else {
-            let exittor = false;
+            if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
+              // this.platform.exitApp(); // Exit from app
+              navigator['app'].exitApp(); // work in ionic 4
 
-            if (exittor) {
-              this.platform.exitApp();
-            } else {
-
-            exittor = true
-            console.log(exittor);
-
+          } else {
               this.toastCtrl.create({
-                message: 'Press again to exit app.',
+                message: 'Press back again to exit App.',
                 duration: 2000
-              })
-            }
+              }).present();
+              this.lastTimeBackPress = new Date().getTime();
+                }
 
           }
       }

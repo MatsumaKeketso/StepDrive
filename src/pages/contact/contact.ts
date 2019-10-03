@@ -4,7 +4,7 @@ import { Http } from '@angular/http';
 import * as firebase from 'firebase'
 import { Question1Page } from '../question1/question1';
 import { Geolocation } from '@ionic-native/geolocation';
-
+import { Storage } from '@ionic/storage'
 declare var google;
 @Component({
   selector: 'page-contact',
@@ -72,7 +72,7 @@ export class ContactPage {
   autocomplete;
   geocoder = new google.maps.Geocoder;
   infowindow = new google.maps.InfoWindow;
-  constructor(public navCtrl: NavController,public geolocation: Geolocation, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController,public geolocation: Geolocation, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController,public store: Storage) {
   }
   ionViewDidLoad(){
     this.initAutocomplete();
@@ -115,7 +115,23 @@ export class ContactPage {
       this.db.collection('users').doc(user.uid).get().then(res => {
         if (res.data().location) {
           this.request.location.address = res.data().location.address;
+
           this.dummyAddress = res.data().location.address;
+          this.geocoder.geocode({'address': res.data().location.address},(results, status) =>{
+            if (status ) {
+              if (results[0]) {
+                console.log(results);
+                this.request.location.lat = results[0].geometry.location.lat()
+                this.request.location.lng = results[0].geometry.location.lng()
+                this.request.city = results[0].address_components[3].long_name;
+                console.log('filterd by', results);
+              } else {
+                console.log('No results found');
+              }
+            } else {
+              console.log('Geocoder failed due to: ' + status);
+            }
+          });
           this.addressokay = true
           console.log('Address ', res.data().location)
         } else {
@@ -153,6 +169,7 @@ export class ContactPage {
   this.showMap = !this.showMap;
 }
   async getlocation() {
+
     await this.geolocation.getCurrentPosition().then((resp) => {
       console.log('Get loc res', resp);
 
@@ -445,8 +462,9 @@ console.log(this.request);
 // as supplied by the browser's 'navigator.geolocation' object.
   geolocate() {
     console.log('Geoing');
-
-    if (this.geolocation) {
+    this.store.get('acceptedPermission').then(res => {
+      if (res == 'yes') {
+          if (this.geolocation) {
       this.geolocation.getCurrentPosition().then(position => {
         var geolocation = {
           lat: position.coords.latitude,
@@ -463,6 +481,9 @@ console.log(this.request);
       console.log('Not Geolocation');
 
     }
+      }
+    })
+
   }
   handleAddressChange(ev) {
     console.log(ev);

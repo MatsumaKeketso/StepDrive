@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content (click)="checkKeyBoard()">
   <div class="viewImage">
     <div (click)="openImage('', 'close')" class="close"><p>x</p></div>
     <img *ngIf="viewImage.image" src="{{viewImage.image}}" alt="">
@@ -14,9 +14,12 @@
     </div>
   </div>
     <div class="pac-card" id="pac-card">
+
         <!-- <div [ngClass]="{'pac-card': display, 'pac-card-hide': !display}" id="pac-card"> -->
         <div id="pac-container">
-          <ion-searchbar placeholder="Search by Location" (ionInput)="onSearchChange($event)"></ion-searchbar>
+            <button (click)="requestPrompt()" ion-fab mini><ion-icon name="locate"></ion-icon></button>
+          <ion-searchbar placeholder="Search by location" (ionInput)="onSearchChange($event)">
+          </ion-searchbar>
         </div>
         <div class="searchresult">
           <div class="res"  *ngFor="let u of users">
@@ -33,7 +36,8 @@
             <div class="a-back">
               <button style="background: none !important;" ion-fab mini (click)="viewSchool(school)" ><ion-icon name="arrow-back"></ion-icon></button>
             </div>
-            <img src="{{school.image}}">
+            <img *ngIf="school.image" src="{{school.image}}">
+            <img *ngIf="!school.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
           </div>
           <h1 *ngIf="school.schoolname">{{school.schoolname}}</h1>
           <p>{{school.desc}}
@@ -98,22 +102,18 @@
             <div *ngIf="!users[0]" class="noschools">
               <p>No driving schools in this area.</p>
             </div>
-
 <!-- //this is your orginal code -->
-            <div (click)="clearMarker($event)" class="card" *ngFor="let u of users" >
+            <div  class="card" *ngFor="let u of users" >
               <div (click)="openImage(u.image, 'open')" class="image">
                 <img *ngIf="u.image" src="{{u.image}}" alt="">
                 <img *ngIf="!u.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
               </div>
-              <div class="details">
-                <p><b> {{u.schoolname}} </b></p>
-                <p>{{u.address}}</p>
+              <div class="details" (click)="viewSchool(u)">
+                <p id="s-name"><b> {{u.schoolname}} </b></p>
+                <p id="addr">{{u.address}}</p>
               </div>
               <div class="call">
                 <button ion-fab mini (click)="call(u)" style="background: #a4c639"><ion-icon name="call" ></ion-icon></button>
-              </div>
-              <div class="request">
-                <button ion-button round small style="background:#EEAE2B; color: rgb(255, 255, 255);" (click)="viewSchool(u)">View More</button>
               </div>
             </div>
 

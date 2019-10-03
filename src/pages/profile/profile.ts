@@ -54,6 +54,7 @@ export class ProfilePage {
     username: '',
     rating: 0
   }
+  revDateValidation: any
   reviewDiv: any;
   feedbackDiv: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, private store: Storage, public plt: Platform, public localNot: LocalNotifications, public element: ElementRef, public renderer: Renderer2, public keyb: Keyboard) {}
@@ -145,6 +146,113 @@ export class ProfilePage {
 
   }
   reviews(event, school) {
+    if(school !== 'school') {
+      let createdDate = new Date(school.request.datecreated);
+    
+        let d = new Date();
+
+      let todayD = new Date(d.toDateString());
+
+      var Difference_In_Time = todayD.getTime() - createdDate.getTime();
+
+// To calculate the no. of days between two dates
+var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+
+        if (Difference_In_Days <= 0) {
+          console.log('createdDate', Difference_In_Days,);
+          const toaster = this.toastCtrl.create({
+            message: 'Reviews can only be made after at least 1 lesson has been done.',
+            closeButtonText: 'Okay',
+            showCloseButton: true
+          }).present()
+        } else {
+          console.log('createdDate', Difference_In_Days,);
+          this.revDateValidation = school;
+          this.review.datecreated = new Date().toDateString();
+          // console.log('the S', school);
+          // console.log('Review objet', this.review);
+          if (school.request) {
+            this.review.schooluid = school.request.schooluid
+          }
+
+          let feedbackDiv = this.element.nativeElement.children[0].children[1].children[1].children[0].children[2]
+          // console.log('Feedback div', feedbackDiv);
+          this.renderer.setStyle(feedbackDiv, 'opacity', '0');
+          // reference to the reviews divs
+          let cards = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children.length
+
+          // reference to the review div
+          let reviewDiv = this.element.nativeElement.children[0].children[1].children[1].children[0]
+
+          // reference to the device height
+          let height = this.plt.height();
+          // log the event
+          // console.log(event.type);
+
+          // check the event type and the status of the review div
+          if (event.type == "click" && !this.revsOpen) {
+            // loop through all the divs that hold the reviews and  apply the style depending on the translate result
+            for (let i = 0; i < cards; i++) {
+              let translate = i % 2;
+              // console.log('Translate on open', translate);
+              // reference to individual divs
+              let card = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children[i]
+              // console.log('Cards,  ', card);
+              // if translate has a reminder
+              if (translate) {
+                this.renderer.setStyle(card, 'opacity', '1');
+                this.renderer.setStyle(card, 'transform', 'translateX(0vw)');
+              } else {
+                this.renderer.setStyle(card, 'opacity', '1');
+                this.renderer.setStyle(card, 'transform', 'translateX(0vw)');
+              }
+            }
+            this.revsOpen = !this.revsOpen;
+            this.renderer.setStyle(reviewDiv, 'top', '10vh');
+            this.renderer.setStyle(feedbackDiv, 'opacity', '1');
+          } else {
+
+
+            for (let i = 0; i < cards; i++) {
+              let translate = i % 2;
+              // console.log('Translate on close', translate);
+
+              let card = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children[i]
+              // console.log('Cards,  ', card);
+              if (translate) {
+                this.renderer.setStyle(card, 'opacity', '0');
+                this.renderer.setStyle(card, 'transform', 'translateX(-100vw)');
+              } else {
+                this.renderer.setStyle(card, 'opacity', '0');
+                this.renderer.setStyle(card, 'transform', 'translateX(100vw)');
+              }
+            }
+            this.revsOpen = !this.revsOpen;
+            this.renderer.setStyle(reviewDiv, 'top', '80vh');
+            this.renderer.setStyle(feedbackDiv, 'opacity', '0');
+          }
+
+          // console.log('Element', reviewDiv)
+          if (this.revsOpen == true) {
+            let elements = document.querySelectorAll(".tabbar");
+            if (elements != null) {
+              Object.keys(elements).map((key) => {
+                elements[key].style.transform = 'translateY(50vh)';
+                // elements[key].style.display = 'none';
+              });
+            }
+          } else {
+            let elements = document.querySelectorAll(".tabbar");
+            if (elements != null) {
+              Object.keys(elements).map((key) => {
+                elements[key].style.transform = 'translateY(0vh)';
+                // elements[key].style.display = 'flex';
+              });
+            }
+          }
+        }
+    } else { ////------
+    this.revDateValidation = school;
     this.review.datecreated = new Date().toDateString();
     // console.log('the S', school);
     // console.log('Review objet', this.review);
@@ -228,6 +336,8 @@ export class ProfilePage {
       }
     }
   }
+
+  }
   openTips() {
     this.store.set('readTips', false).then(res => {
       this.initialiseTips();
@@ -306,7 +416,7 @@ export class ProfilePage {
       })
     })
   }
-  sendReview() {
+  sendReview(review) {
     if (this.review.text) {
       if (this.review.rating == 0) {
         const toaster = this.toastCtrl.create({
@@ -327,6 +437,7 @@ export class ProfilePage {
             duration: 2000
           }).present()
         })
+
       }
     } else {
       const toaster = this.toastCtrl.create({

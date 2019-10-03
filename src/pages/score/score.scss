@@ -1,3 +1,64 @@
 page-score {
-
-}
+  .container {
+    width: 100%;
+    background: url(../../assets/imgs/photo-1563161084-b4c9f34d60ae_blurred.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    text-align: center;
+    color: white;
+    overflow: hidden;
+    .title {
+      padding: 10vh 0vh;
+      h1 {
+        margin: 0;
+        padding: 0;
+        text-shadow: 0px 2px 2px #17171781;
+        font-size: 15vw;
+      }
+    }
+    .results {
+      width: 100%;
+      height: 40vw;
+      display: grid;
+      align-content: center;
+      p {
+        margin: 0;
+        padding: 0;
+        font-size: 30vw;
+      }
+    }
+    .text {
+      width: 100%;
+      height: 10vh;
+    }
+    .button {
+      width: 100%;
+      height: 25vh;
+      padding: 20px;
+      display: flex;
+      text-align: center;
+      flex-direction: column;
+      overflow: show;
+      justify-content: center;
+      .white {
+        background: white !important;
+        color: black !important;
+      }
+      button {
+        margin: 10px auto;
+        width: 80%;
+        padding: 5vw 0vw;
+        border-radius: 200px;
+        letter-spacing: 10px;
+        text-transform: uppercase;
+        background: #2A324B;
+        text-shadow: 0px 2px 2px #17171781;
+        box-shadow: 0px 2px 2px #17171781;
+        color: white;
+        font-size: 3vw;
+      }
+    }
+  }
+  }

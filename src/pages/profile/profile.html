@@ -60,16 +60,17 @@
   </div>
 <div class="ultimate">
 <div class="reviews">
-<div class="r-title" (swipe)="reviews($event)" (click)="reviews($event, request)">
+<div class="r-title" (swipe)="reviews($event)" (click)="reviews($event, 'school')">
     <ion-icon name="arrow-dropup"></ion-icon>
-    <p><sub>comments</sub></p>
+    <p style="margin: 0; padding: 0;"><sub>comments</sub></p>
 </div>
 <div class="r-body">
   <div (click)=" openTips()" class="tips-card">
     <h5>Read Tips Again</h5>
   </div>
-  <div *ngIf="!userReviews[0]">
-    <p>No reviews made yet. <br> Be the first to say something.</p>
+  <div style="text-align: center; width: 90%; margin: auto;" *ngIf="!userReviews[0]">
+    <p>No reviews made yet.</p>
+    <p><b>A day after your lesson, click on the blue button to make a review.</b></p>
   </div>
   <div class="r-card" *ngFor="let r of userReviews">
       <ionic3-star-rating #rating
@@ -133,8 +134,7 @@
           <p>{{s.school.desc}}</p>
       </div>
       <div class="dates">
-          <p>Date in: {{s.request.datein | date}}</p>
-          <p>Date out: {{s.request.dateout}}</p>
+          <p>Lesson starts {{s.request.datein | date}} to {{s.request.dateout}}</p>
       </div>
       <div class="pack">
           <p>{{s.request.package.name}}: {{s.request.package.number}} lessons(s) for R{{s.request.package.amount}}.00</p>

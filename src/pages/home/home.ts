@@ -1,14 +1,15 @@
 import { Component, ViewChild, ElementRef, Renderer2 } from '@angular/core';
-import { NavController, AlertController, App, Platform } from 'ionic-angular';
+import { NavController, AlertController, App, Platform, Keyboard } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from "@ionic/storage";
 import { CallNumber } from '@ionic-native/call-number';
 import {google} from 'google-maps'
-
+import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 import * as firebase from 'firebase';
 import { ContactPage } from '../contact/contact';
 import { Subject } from 'rxjs/Subject';
+import { SplashScreen } from '@ionic-native/splash-screen';
 declare var google: google;
 @Component({
   selector: 'page-home',
@@ -19,6 +20,7 @@ export class HomePage {
   storage = firebase.storage().ref();
   display = false;
   loaderAnimate = true;
+  loaderSeconds = 3000;
   @ViewChild('map') mapElement: ElementRef;
   filterby = ''
   map: any;
@@ -59,13 +61,12 @@ mapCenter = {
     open: false
   }
 
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController,private callNumber: CallNumber, public appCtrl: App, public renderer: Renderer2, public plt: Platform, public elementref: ElementRef) { }
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController,private callNumber: CallNumber, public appCtrl: App, public renderer: Renderer2, public plt: Platform, public elementref: ElementRef, public keyboard: Keyboard, private androudPermissions: AndroidPermissions, public splashscreen: SplashScreen) { }
 
   ionViewDidLoad(){
-
-    setTimeout(() => {
-      this.loaderAnimate = false;
-    }, 3000);
+    this.splashscreen.hide();
+    this.loaderAnimate = true;
+    this.promptLocation();
     this.plt.ready().then(res => {
       let viewimage = this.elementref.nativeElement.children[0].children[1].children[0];
       this.renderer.setStyle(viewimage, 'transform', 'scale(0)');
@@ -73,37 +74,26 @@ mapCenter = {
     firebase.auth().onAuthStateChanged(user => {
       this.user.uid = user.uid;
     })
-    this.getlocation();
+    // this.getlocation();
 
   }
-//=========This is the code Nkwe added=====================
-  // Pulling data from the database  ==Nkwe==
-  ionViewWillEnter(){
-this.getlocation();
-}
-
-    //Dropping markers of the driving schools ==Nkwe==
-  addMarkers(lat, lng, obj) {
-    //here
-    let marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: new google.maps.LatLng(lat, lng),
-      icon: 'https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/icons8-car-16.png?alt=media&token=3a913499-e6d2-4128-9b4e-4a4ae206e08d'
-    });
-    let content = `<h5 style="margin:0;padding:0;">${obj.schoolname} </h5>`+obj.address
-
-    let infoWindow = new google.maps.InfoWindow({
-      content: content
-    });
-    google.maps.event.addListener(marker, 'click', () => {
-      infoWindow.open(this.map, marker);
-    });
+  checkKeyBoard() {
+    let elements = document.querySelectorAll(".tabbar");
+    if (this.keyboard.isOpen()) {
+      this.store.set('readTips', true)
+            if (elements) {
+              Object.keys(elements).map((key) => {
+                elements[key].style.transform = 'translateY(50vh)';
+                elements[key].style.transition = '0.4s';
+              });
+            }
+    } else {
+      Object.keys(elements).map((key) => {
+        elements[key].style.transform = 'translateY(0vh)';
+        elements[key].style.transition = '0.4s';
+      });
+    }
   }
-
-
-//=======================================================
-
   // views the image on a bigger size
   openImage(image, cmd) {
     if (cmd == 'open') {
@@ -119,7 +109,6 @@ this.getlocation();
       this.renderer.setStyle(viewimage, 'transform', 'scale(0)');
     }
   }
-
   logRatingChange(rating){
     // do your stuff
 }
@@ -146,30 +135,30 @@ this.users = filterd
       }
     }
   }
-
-
   viewSchool(data) {
     this.school = data;
     this.about = !this.about;
+    console.log(this.about);
     let elements = document.querySelectorAll(".tabbar");
-    if (this.about) {
+    if (this.about==true) {
 
-      if (elements) {
-        Object.keys(elements).map((key) => {
-          elements[key].style.transform = 'translateY(0vh)';
-          elements[key].style.transition = '0.4s';
-        });
-      }
-    } else {
-      if (elements) {
-        Object.keys(elements).map((key) => {
-          elements[key].style.transform = 'translateY(50vh)';
-          elements[key].style.transition = '0.4s';
-        });
-      }
+
+            if (elements) {
+              Object.keys(elements).map((key) => {
+                console.log('Trans');
+                elements[key].style.transform = 'translateY(0vh)';
+                elements[key].style.transition = '0.4s';
+              });
+            }
+    } else if (this.about==false) {
+
+      Object.keys(elements).map((key) => {
+        console.log('form');
+        elements[key].style.transform = 'translateY(50vh)';
+        elements[key].style.transition = '0.4s';
+      });
     }
   }
-
   //=================This is the method Nkwe altered========
   requestLesson(school, lessons, event) {
     let data = {
@@ -178,13 +167,13 @@ this.users = filterd
      }
      this.renderer.setStyle(event.path[0], 'transition', '0.4s');
      this.renderer.setStyle(event.path[0], 'transform', 'scale(1.07)');
-     this.renderer.setStyle(event.path[0], 'background', 'url(../../assets/icon/package-background.svg),linear-gradient(45deg, rgba(255, 255, 255, 0.616),rgb(250, 182, 43)');
+     this.renderer.setStyle(event.path[0], 'background', 'linear-gradient(140deg, rgba(255, 242, 217, 0.616),rgb(255, 228, 173)),linear-gradient(45deg, rgba(179, 0, 104, 0.616),rgb(255, 228, 173))');
      setTimeout(()=>{
        this.renderer.setStyle(event.path[0], 'transform', 'scale(1)');
-       this.renderer.setStyle(event.path[0], 'background', 'url(../../assets/icon/package-background.svg),linear-gradient(45deg, rgba(255, 255, 255, 0.616),rgb(250, 182, 43)');
+       this.renderer.setStyle(event.path[0], 'background', 'linear-gradient(40deg, rgba(255, 242, 217, 0.616),rgb(255, 228, 173)),linear-gradient(155deg, rgba(179, 0, 104, 0.616),rgb(255, 228, 173))');
 
        ///
-       this.renderer.setStyle(event.path[0], 'background', 'url(../../assets/icon/package-background.svg),linear-gradient(45deg, rgba(255, 255, 255, 0.616),rgb(250, 182, 43)');
+      //  this.renderer.setStyle(event.path[0], 'background', 'url(../../assets/icon/package-background.svg),linear-gradient(45deg, rgba(255, 255, 255, 0.616),rgb(250, 182, 43)');
 
      }, 200);
 
@@ -193,33 +182,102 @@ this.users = filterd
      }, 400)
      //
    }
+  //  requests permission when the user clicks the location button
+   async requestPrompt() {
+     this.loaderAnimate = true;
+     console.log('Requested Prompt')
+    await this.androudPermissions.requestPermission(this.androudPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then( async res => {
+      console.log('Accepted', res);
+      if (res.hasPermission) {
+        await this.store.set('acceptedPermission', 'yes').then(res => {
+this.getlocation();
+        })
 
-   //=====================This is your original method===============
-//   requestLesson(school, lessons, event) {
-//    let data = {
-//       school: school,
-//       lessons: lessons
-//     }
-//     this.renderer.setStyle(event.path[0], 'transition', '0.4s');
-//     this.renderer.setStyle(event.path[0], 'transform', 'scale(1.07)');
-//     this.renderer.setStyle(event.path[0], 'background', 'url(../../assets/icon/package-background.svg),linear-gradient(45deg, rgba(255, 255, 255, 0.616),rgb(250, 182, 43)');
-//     setTimeout(()=>{
-//       this.renderer.setStyle(event.path[0], 'transform', 'scale(1)');
-//       this.renderer.setStyle(event.path[0], 'background', 'url(../../assets/icon/package-background.svg),linear-gradient(45deg, rgba(255, 255, 255, 0.616),rgb(250, 182, 43)');
+      } else {
+        await this.store.set('acceptedPermission', 'no')
+        this.mapCenter.lat = -29.465306;
+      this.mapCenter.lng = 24.741967;
+      // this.initMap()
+      // load the map with the zoom of 2
+      this.loadMap(2);
+        this.getusers();
+      }
+   })
+  }
+  // initiates the first time the app opens
+   async promptLocation() {
+    this.loaderAnimate = true;
+    this.store.get('acceptedPermission').then( async res => {
+      // checks the acceptedPermission value if its null
+      if(res==null) {
+        // checks the permission
+        this.androudPermissions.checkPermission(this.androudPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then( async res => {
+          console.log('location responded with', res);
+          // if we dont have location permission
+          if (res.hasPermission==false) {
+            // request it here
+        await this.androudPermissions.requestPermission(this.androudPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(res => {
+          // check if the access is  true
+          if (res.hasPermission) {
+            // if access is true store update acceptedPermission to yes
+            this.store.set('acceptedPermission', 'yes').then(res => {
+            console.log('Storage loc var updated');
 
-//       ///
-//       this.renderer.setStyle(event.path[0], 'background', 'url(../../assets/icon/package-background.svg),linear-gradient(45deg, rgba(255, 255, 255, 0.616),rgb(250, 182, 43)');
-
-//     }, 200);
-
-//     setTimeout(()=> {
-// this.appCtrl.getRootNav().push(ContactPage, data);
-//     }, 400)
-//     //
-//   }
-
+            })
+            this.getlocation();
+          } else {
+            // if the user denies the location then set the value to no
+            this.store.set('acceptedPermission', 'no')
+            this.mapCenter.lat = -29.465306;
+      this.mapCenter.lng = 24.741967;
+      // this.initMap()
+      // load the map with the zoom of 2
+      this.loadMap(2);
+            this.getusers();
+          }
+        }).catch(err => {
+          console.log('Rejected',err);
+               // if the user denies the location then set the value to no
+            this.store.set('acceptedPermission', 'no')
+            this.mapCenter.lat = -29.465306;
+      this.mapCenter.lng = 24.741967;
+      // this.initMap()
+      // load the map with the zoom of 2
+      this.loadMap(2);
+            this.getusers();
+        })
+      }
+    }).catch(err => {
+      console.log('RESPONSE', err);
+      this.loaderAnimate = false;
+        // if the user denies the location then set the value to no
+        this.store.set('acceptedPermission', 'no')
+        this.mapCenter.lat = -29.465306;
+  this.mapCenter.lng = 24.741967;
+  // this.initMap()
+  // load the map with the zoom of 2
+  this.loadMap(2);
+        this.getusers();
+    })
+      } else if(res=='yes') {
+        this.getlocation()
+      } else if (res=='no') {
+        this.mapCenter.lat = -29.465306;
+      this.mapCenter.lng = 24.741967;
+      // this.initMap()
+      // load the map with the zoom of 2
+      this.loadMap(2);
+            this.getusers();
+      }
+    })
+  }
+  // gets the location of the user and the driving schools in that area
+  // can only be called after the user has accepted the permission
   async getlocation() {
+    this.loaderAnimate = true;
+    // get the current position
     await this.geolocation.getCurrentPosition().then((resp) => {
+      console.log('Location responded with', resp);
 
       this.mapCenter.lat = resp.coords.latitude;
       this.mapCenter.lng = resp.coords.longitude;
@@ -227,12 +285,15 @@ this.users = filterd
         lat: resp.coords.latitude,
         lng: resp.coords.longitude
       }
+      // get the address from the current position's coords
       this.geocoder.geocode({'location': geoData},(results, status) =>{
+        console.log('Geocode responded with', results, 'and status of', status)
         if (status ) {
           if (results[0]) {
-            this.filterby = results[0].address_components[3].short_name;
+            // get the city from the address components
+            this.filterby = results[1].address_components[3].short_name;
             console.log('filterd by', results);
-
+            // get schools depending on the city
             this.getfilterdusers();
           } else {
             console.log('No results found');
@@ -240,7 +301,10 @@ this.users = filterd
         } else {
           console.log('Geocoder failed due to: ' + status);
         }
+      }, err => {
+        console.log('Geocoder failed with', err)
       });
+      // generate marker info for the user
       let data = {
         schooladdress: {
           lng: resp.coords.longitude,
@@ -249,9 +313,9 @@ this.users = filterd
         schoolname: 'You',
         address: ' '
       }
-      this.store.set('homelocation', data);
       // load the map with the zoom of 14
       this.loadMap(14);
+
       // create a radius around the user marker
       let radius = new google.maps.Circle({
         strokeColor: 'rgba(255, 154, 59, 0.589)',
@@ -281,10 +345,9 @@ this.users = filterd
 
 
     }).catch((err) => {
-
+      //  load default coords (center of SA) if the location was rejected
       this.mapCenter.lat = -29.465306;
       this.mapCenter.lng = 24.741967;
-
       // this.initMap()
       // load the map with the zoom of 2
       this.loadMap(2);
@@ -295,8 +358,10 @@ this.users = filterd
   swipeUp() {
     this.display = !this.display;
   }
-
+// loads our main map
   async loadMap(zoomlevel: number){
+    console.log('Loaded map with soom of', zoomlevel);
+
 
     let location;
     var ref = this;
@@ -314,7 +379,7 @@ this.users = filterd
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-
+    // this.loaderAnimate = false;
   }
   // add marker function
   addMarker(props) {
@@ -322,13 +387,9 @@ this.users = filterd
     const marker = new google.maps.Marker({
       position: props.coords,
       map: this.map,
-      icon: 'https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/icons8-car-16.png?alt=media&token=3a913499-e6d2-4128-9b4e-4a4ae206e08d'
+      icon: '../../assets/icon/icons8-car-16.png'
     })
     // check for custom icon
-    if(props.iconImage) {
-      // set custom icon
-      marker.setIcon(props.iconImage)
-    }
     // check for content
     if(props.address || props.schoolname) {
       // set custom content
@@ -349,47 +410,46 @@ this.users = filterd
       infoWindow.open(this.map, marker);
     });
   }
+  // get every driving school, doesn't matter the location
   async getusers(){
+    this.loaderAnimate = true;
    await this.db.collection('drivingschools').onSnapshot(async snapshot => {
+     console.log('Denied location, got all driving schools');
+
       this.users = [];
+      this.markers = []
       snapshot.forEach( async doc => {
         this.users.push(doc.data());
-        this.addMarker(doc.data());
-        this.markers = []
+        // this.addMarker(doc.data());
+
         this.markers.push(doc.data());
       })
-     await this.markers.forEach( async element => {
+      this.loaderAnimate = false;
+     setTimeout( async () => {
+      await this.markers.forEach( async element => {
         this.addMarker(element);
-      // await this.geocoder.geocode({'location': this.mapCenter}, (results, status) => {
-      //   if (status === 'OK') {
-      //     if (results[0]) {
-      //       for (let index = 0; index < results.length; index++) {
-      //         const element = results[index];
-      //       }
-      //     } else {
-      //       console.log('No results found');
-      //     }
-      //   } else {
-      //     console.log('Geocoder failed due to: ' + status);
-      //   }
-      // });
-
       })
+     }, 1000)
 
     })
   }
   async getfilterdusers(){
+    this.loaderAnimate = true;
     await this.db.collection('drivingschools').where('city', '==', this.filterby).get().then(async snapshot => {
+      console.log('Accepted location, getting filterd driving schools');
        this.users = [];
+       this.markers = []
        snapshot.forEach( async doc => {
 
          this.users.push(doc.data());
         //  this.addMarker(doc.data());
-         this.markers = []
+
          this.markers.push(doc.data());
        })
+       this.loaderAnimate = false;
       await this.markers.forEach( async element => {
          this.addMarker(element);
+
        // await this.geocoder.geocode({'location': this.mapCenter}, (results, status) => {
        //   if (status === 'OK') {
        //     if (results[0]) {

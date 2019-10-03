@@ -2,7 +2,7 @@
   <div class="ultimate" >
       <div *ngIf="!isprofile" class='container'>
           <div class="header">
-            <h1>Create Profile</h1>
+            <h1>Manage Profile</h1>
             </div>
             <div *ngIf="!user.image" class="button">
                   <button (click)="getImage()" >Select Image</button>
@@ -10,7 +10,7 @@
               <div *ngIf="user.image" class="profileimage">
                 <img src="{{user.image}}" alt="">
                 <div (click)="removeimage()" class="delete">
-                    <ion-icon name="trash" style="margin: auto;font-size: 5vw;"></ion-icon>
+                    <ion-icon name="create" style="margin: auto;font-size: 5vw;"></ion-icon>
                 </div>
               </div>
               <form  [formGroup]="profileForm">

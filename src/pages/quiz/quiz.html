@@ -1,6 +1,21 @@
 <ion-content>
 
   <div [ngClass]="{'welcome': landing.active, 'welcome-inactive': landing.inactive}">
+    <div class="instructions">
+      <div class="icon">
+          <p id="inst">How should I use this Practice Test ?</p>
+      </div>
+      <div class="details">
+        <h4>Practice Test 101</h4>
+        <ul>
+          <li>Each question has multiple answers, <u>tap the correct one.</u></li>
+          <li>In cases where more than one answer seems correct, select the <u>most correct one.</u></li>
+          <li>Each session consists of 5 Questions.</li>
+          <li>You will get your score after the 5th question is answered.</li>
+          <li>Each session returns differet questions. <u>You will not get the same questions everytime.</u></li>
+        </ul>
+      </div>
+    </div>
     <div class="head">
         <img  id="bg" src="../../assets/imgs/header.svg" alt="">
     </div>
@@ -8,7 +23,11 @@
       <div>
           <img src="../../assets/imgs/whitelogo.svg">
           <h4>Recap Quiz</h4>
-          <button (click)="start()">Start Quiz</button>
+          <div class="category-cont">
+            <div (click)="sendQs('lmv', $event)" class="lmv"></div>
+            <div (click)="sendQs('hmv', $event)" class="hmv"></div>
+            <div (click)="sendQs('m', $event)" class="m"></div>
+          </div>
           <button id="cancel" (click)="cancel()">Quit</button>
       </div>
     </div>
