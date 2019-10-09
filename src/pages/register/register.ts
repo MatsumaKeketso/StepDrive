@@ -4,7 +4,7 @@ import { LoginPage } from '../login/login';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Users } from '../../app/user';
 import * as firebase from 'firebase';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, ToastController, Keyboard } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { YouPage } from '../you/you';
 
@@ -18,7 +18,7 @@ user =  {} as Users;
 
   loginForm: FormGroup;
 
-
+  isKeyOpen = false;
     email: string;
     password: string;
     RepeatedPassword: string;
@@ -40,7 +40,7 @@ user =  {} as Users;
   }
 
 
-  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams,  public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams,  public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, public keyboard: Keyboard) {
 
     this.loginForm = this.forms.group({
       email: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
@@ -52,7 +52,13 @@ user =  {} as Users;
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
   }
-
+  checkKeyboard() {
+    if(this.keyboard.isOpen()) {
+      this.isKeyOpen = true
+    } else {
+      this.isKeyOpen = false;
+    }
+  }
   goToLogin(){
     this.navCtrl.setRoot(LoginPage);
   }

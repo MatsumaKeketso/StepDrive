@@ -206,7 +206,7 @@ this.getlocation();
   }
   // initiates the first time the app opens
    async promptLocation() {
-    this.loaderAnimate = true;
+    this.loaderAnimate = true; 
     this.store.get('acceptedPermission').then( async res => {
       // checks the acceptedPermission value if its null
       if(res==null) {

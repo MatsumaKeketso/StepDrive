@@ -1,6 +1,16 @@
 // http://ionicframework.com/docs/theming/
-
-
+@font-face {
+  src: '../../assets/fonts/Cocomat_Light.ttf';
+  font-family: 'Cocomat Light';
+}
+@font-face {
+  src: '../../assets/fonts/Geometos.ttf';
+  font-family: 'Geometos';
+}
+@font-face {
+  src: '../../assets/fonts/criticized.ttf';
+  font-family: 'Criticized';
+}
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These

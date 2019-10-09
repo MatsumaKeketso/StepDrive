@@ -27,7 +27,7 @@ export class MyApp {
     public statusBar: StatusBar,
     splashScreen: SplashScreen,
     private screenOrien: ScreenOrientation,
-    public storage: Storage,
+    public store: Storage,
     public toastCtrl: ToastController,
     public app: App) {
     statusBar.backgroundColorByHexString('#D28B2B');
@@ -37,7 +37,7 @@ export class MyApp {
       // platform.backButton.subscribe(res => {
       // })
       if (platform.is('android')) {
-        screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
+        // screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
       }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -46,7 +46,7 @@ export class MyApp {
 
       }, 2000)
       console.log('Checking if onboarding was done');
-      this.storage.get('onboarding').then((res) => {
+      this.store.get('onboarding').then((res) => {
         if (res) {
           console.log('Onboarding done');
 
@@ -85,29 +85,17 @@ export class MyApp {
   }
   initialiseApp() {
     this.platform.registerBackButtonAction(() => {
-      // Catches the active view
-      let nav = this.app.getActiveNavs()[0];
-      let activeView = nav.getActive();
+      if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
+                this.platform.exitApp(); // Exit from app
+                // navigator['app'].exitApp(); // work in ionic 4
 
-      // Checks if can go back before show up the alert
-      if(activeView.name === 'ContactPage') {
-          if (nav.canGoBack()){
-              nav.pop();
-          } else {
-            if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
-              // this.platform.exitApp(); // Exit from app
-              navigator['app'].exitApp(); // work in ionic 4
-
-          } else {
-              this.toastCtrl.create({
-                message: 'Press back again to exit App.',
-                duration: 2000
-              }).present();
-              this.lastTimeBackPress = new Date().getTime();
-                }
-
-          }
-      }
+            } else {
+                this.toastCtrl.create({
+                  message: 'Press back again to exit App.',
+                  duration: 2000
+                }).present();
+                this.lastTimeBackPress = new Date().getTime();
+                  }
   });
   }
 }

@@ -5,11 +5,20 @@ page-register {
     }
     .logo{
       position: absolute;
+      top: 1vw;
       left: 0;
       right: 0;
       text-align: center;
+      h1 {
+        letter-spacing: 10px;
+        font-size: 4vw;
+        margin: 10vw 0px;
+        font-family: 'Cocomat';
+        text-transform: uppercase;
+        color: rgb(233, 193, 0);
+      }
       img{
-        height: 100%;
+        height: 20vw;
       }
     }
     .container {
@@ -17,25 +26,25 @@ page-register {
       align-content: center;
         width: 100%;
         height:100%;
-        background: url(../../assets/imgs/roberto-nickson-Ddjl0Cicdr4-unsplash.jpg);
+        background: url(../../assets/tapes/HEADER-TAPE.svg),rgb(30, 30, 30);
         background-attachment: fixed;
         background-size: cover;
-        background-position: center;
+        background-position: 20vw -30vh;
         background-repeat: no-repeat;
       .form{
         width: 100%;
         padding: 10% 5%;
         filter: blur(0px);
-        background:url(../../assets/imgs/roberto-nickson-Ddjl0Cicdr4-unsplash_blurred.jpg);
+        background:none;
         background-attachment: fixed;
         background-position: center;
         background-size: cover;
-        color: white;
+        color: rgb(223, 50, 50);
         text-align: right;
         position: relative;
         // display: grid;
         margin-top: 50vh;
-        transform: translateY(-30vh);
+        transform: translateY(-20vh);
         align-content: center;
         h1{
           text-align: center;
@@ -52,8 +61,8 @@ page-register {
             margin: 20px 0px;
             p{
                 font-size: 80%;
-                background: white;
-                color: #4C0A0A;
+                background: rgb(233, 193, 0);
+                color: rgb(233, 193, 0);
                 width: 45%;
                 padding: 2px;
                 border-radius: 200px;
@@ -66,9 +75,9 @@ page-register {
                 width: 97%;
                 padding: 15px 5px;
                 border: none;
-                border: solid 1px white;
-                background: none;
-                color: white;
+                border: solid 1px rgb(233, 193, 0);
+                background: rgb(30, 30, 30);
+                color: rgb(233, 193, 0);
                 border-radius: 200px;
               }
         }
@@ -79,7 +88,7 @@ page-register {
           margin: 20px 0px;
           p{
             font-size: 80%;
-            background: white;
+            background: rgb(233, 193, 0);
             color: #4C0A0A;
             width: 25%;
             padding: 2px;
@@ -93,9 +102,9 @@ page-register {
             width: 97%;
             padding: 15px 5px;
             border: none;
-            border: solid 1px white;
-            background: none;
-            color: white;
+            border: solid 1px rgb(233, 193, 0);
+            background: rgb(30, 30, 30);
+            color: rgb(233, 193, 0);
             border-radius: 200px;
           }
         }
@@ -115,19 +124,27 @@ page-register {
         .button{
           text-align: center;
           position: absolute;
-          bottom: -20px;
+          bottom: -80px;
           right: 0px;
           left:  0px;
           overflow: hidden;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          #signup {
+            background: none !important;
+            box-shadow: none;
+            color: rgb(233, 193, 0);
+          }
           button{
             text-shadow: 0px 2px 2px #1717174f;
             text-transform: uppercase;
             letter-spacing: 3px;
-            color:#ffffff;
+            color:rgb(30, 30, 30);
             border-radius: 30px;
-            margin: 0;
+            margin: 5px 0px;
             padding: 15px;
-            background: linear-gradient(#767B91, #2E354E);
+            background: rgb(255, 255, 255);
             width: 60%;
           }
         }

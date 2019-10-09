@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
 .scroll-content {
   bottom: 0 !important;
 }
@@ -9,36 +9,51 @@ page-login {
     }
     .logo{
       position: absolute;
-      top: 0;
+      top: 0vh;
       left: 0;
       right: 0;
       bottom: auto;
       overflow: hidden;
       text-align: center;
       padding: 20px;
-      z-index: -1;
+      z-index: 10;
       text-align: center;
+      h1 {
+          letter-spacing: 10px;
+          font-size: 4vw;
+          margin: 10vw 0px;
+          font-family: 'Cocomat';
+          text-transform: uppercase;
+      }
       img{
-        width: 10vw;
+        width: 20vw;
       }
     }
     .container {
      width: 100%;
      height: 100%;
-     background: url(../../assets/imgs/averie-woodard-5d20kdvFCfA-unsplash.jpg);
+     background:url(../../assets/tapes/footer_tape.svg),#FED201;
      background-attachment: fixed;
      background-size: auto 100%;
-     background-position: center;
+     background-position: -50vw 50vh;
      background-repeat: no-repeat;
      display: grid;
      align-items: center;
      align-content: center;
       padding: 0 !important;
+      h1{
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: normal;
+        // margin: 20px 0px;
+        letter-spacing: 5px;
+        font-family: 'Geometos';
+      }
       .form{
         width: 100%;
         padding: 5%;
         filter: blur(0px);
-        background:url(../../assets/imgs/averie-woodard-5d20kdvFCfA-unsplash_blured.jpg);
+        background:rgba(254, 212, 1, 0);
         background-attachment: fixed;
         background-position: center;
         background-size: cover;
@@ -46,20 +61,14 @@ page-login {
         text-align: right;
         position: relative;
         // display: grid;
-        margin-top: 50vh;
-        transform: translateY(-25vh);
         align-content: center;
+        margin-top: 50vh;
+        transform: translateY(-20vh);
         .messages{
           text-shadow: 0px 0px 1px rgb(255, 114, 114);
           color: rgb(255, 0, 0);
         }
-        h1{
-          text-align: center;
-          text-transform: uppercase;
-          font-weight: normal;
-          // margin: 20px 0px;
-          letter-spacing: 5px;
-        }
+
         .input{
           text-align: center;
           width: 100%;
@@ -67,8 +76,8 @@ page-login {
           margin: 20px 0px;
           p{
             font-size: 80%;
-            background: white;
-            color: #4C0A0A;
+            background: rgb(48, 48, 48);
+            color: rgb(255, 255, 255);
             width: 25%;
             padding: 2px;
             border-radius: 200px;
@@ -81,20 +90,20 @@ page-login {
             width: 97%;
             padding: 15px 10px;
             border: none;
-            border: solid 1px white;
+            border: solid 1px rgb(48, 48, 48);
             background: none;
-            color: white;
+            color: rgb(48, 48, 48);
             border-radius: 200px;
           }
         }
         .forgot{
           width: 100%;
-          text-align: center;
+          text-align: right;
           margin: 5px 0px;
           button {
             padding: 10px;
             background: none;
-            color: white;
+            color: rgb(48, 48, 48);
           }
         }
         .create{
@@ -113,19 +122,28 @@ page-login {
         .button{
           text-align: center;
           position: absolute;
-          bottom: -10px;
+          bottom: -80px;
           right: 0px;
           left:  0px;
           overflow: hidden;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          #signup {
+            background: none !important;
+            box-shadow: none;
+          }
           button{
+
             text-shadow: 0px 2px 2px #1717174f;
+            box-shadow: 0px 2px 2px #1717174f;
             text-transform: uppercase;
             letter-spacing: 3px;
             color:#171717;
             border-radius: 30px;
-            margin: 0;
+            margin: 5px 0px;
             padding: 15px;
-            background: linear-gradient(#FFFFFF, #D1D1D1);
+            background: linear-gradient(#FFFFFF);
             width: 60%;
           }
         }

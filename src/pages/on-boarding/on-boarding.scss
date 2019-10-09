@@ -1,266 +1,211 @@
 page-on-boarding {
-  .swiper-pagination-bullet-active //it will change the color of active slider dot
-  {
-      background-color: #2A324B;  //write your desired color here
-  }
-  .container {
-      position: absolute;
-      text-align: center;
-      margin: auto;
-      left: 0vw;
-      right: 0vw;
-      bottom: 0;
-      top: 20vh;
-  }
-  .container .text {
-      height: 40%;
-      p {
-        margin: 15vw 4vw;
-        font-size: 5vw;
+
+ .container{
+   width: 100vw;
+   height: 100vh;
+  overflow: hidden;
+   background: url(../../assets/onboarding/onboarding_header.svg),rgb(233, 193, 0);
+   background-repeat: no-repeat;
+   background-position: 50vw -5vh;
+   .welcome {
+     display: flex;
+     flex-direction: column;
+     .title {
+      h2 {
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 4vw;
+        letter-spacing: 5px;
       }
-  }
-  .container .buttons {
-      height: 40%;
-      position: relative;
-
-  }
-  .container .buttons .bn {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      /* top: 0; */
-  }
-  .buttons .bn button {
-      outline: none;
-      background: rgb(3, 7, 39);
-      color: rgb(255, 255, 255);
-      border: none;
-      width: 50%;
-      margin: 10px 0px;
-      padding: 10px 0px;
-      border-radius: 200px;
-  }
-  .header {
-      background: url(../../assets/onboarding/header.svg);
-      width: 100%;
-      height: 20vh;
-      background-repeat: repeat no-repeat;
-      background-size: 100%;
-  }
-  .bg {
-      width: 100%;
-      height: 80vh;
-      background: url(../../assets/onboarding/welcome.svg);
-      background-size: 100% 110%;
-      background-repeat: no-repeat;
-  }
-  body {
-    padding: 0;
-    margin: 0;
-    /* overflow: hidden; */
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-.container1 {
-    position: absolute;
-    text-align: center;
-    margin: auto;
-    left: 5vw;
-    right: 5vw;
-    bottom: 0;
-    top: 20vh;
-    .text {
-        height: 50%;
-    }
-    .buttons {
-        height: 40%;
-        position: relative;
-        .bn {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            /* top: 0; */
-            button {
-                outline: none;
-                background: rgb(3, 7, 39);
-                color: rgb(255, 255, 255);
-                border: none;
-                width: 50%;
-                margin: 10px 0px;
-                padding: 10px 0px;
-                border-radius: 200px;
-            }
+      .image {
+        img {
+          width: 30vw;
         }
+      }
+   }
 
+   }
+   .details {
+     padding: 0px 30px;
+    p {
+      font-size: 4vw;
+      font-family: 'Questrial', sans-serif;
+      padding: 30px 0px;
     }
-}
-.header1 {
-    background: url(../../assets/onboarding/header.svg);
-    width: 100%;
-    height: 20vh;
-    background-repeat: repeat no-repeat;
-    background-size: 100%;
-}
-.bg1 {
-    width: 100%;
-    height: 80vh;
+
+   }
+   .buttons {
+     background: none;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    .button {
+      margin: 10px auto;
+      width: 40vw !important;
+      font-family: 'Questrial', sans-serif !important;
+      text-transform: capitalize;
+    }
+   }
+     // font-family: 'Josefin Sans', sans-serif;
+// font-family: 'Questrial', sans-serif;
+// font-family: 'Didact Gothic', sans-serif;
+   .location {
+     width: 100%;
+     height: 50vh;
+     h2 {
+      font-family: 'Josefin Sans', sans-serif;
+      text-transform: uppercase;
+      font-weight: bold;
+      padding: 10vw 0px;
+     }
+     p {
+       padding: 7vw 2vw;
+       font-size: 4vw;
+      font-family: 'Questrial', sans-serif;
+      margin-left: 25px;
+      margin-top: 50px;
+      text-align: left;
+      line-height: 5vw;;
+     }
+   }
+   .l-buttons {
+    height: 50vh;
     background: url(../../assets/onboarding/location.svg);
-    background-size: 100% 150%;
+    background-position:  0px 7vh;
     background-repeat: no-repeat;
-}
-
-.container2 {
-  position: absolute;
-  text-align: center;
-  margin: auto;
-  left: 5vw;
-  right: 5vw;
-  bottom: 0;
-  top: 20vh;
-}
-.container2 .text2 {
-  height: 50%;
-}
-.container2 .buttons2 {
-  height: 40%;
-  position: relative;
-
-}
-.container2 .buttons2 .bn2 {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* top: 0; */
-}
-.buttons2 .bn2 button {
-  outline: none;
-  background: rgb(3, 7, 39);
-  color: rgb(255, 255, 255);
-  border: none;
-  width: 50%;
-  margin: 10px 0px;
-  padding: 10px 0px;
-  border-radius: 200px;
-}
-.header2 {
-  background: url(../../assets/onboarding/header.svg);
-  width: 100%;
-  height: 20vh;
-  background-repeat: repeat no-repeat;
-  background-size: 100%;
-}
-.bg2 {
-  width: 100%;
-  height: 80vh;
-  background: url(../../assets/onboarding/notifications.svg);
-  background-size: 100% 100%;
-  background-position: 0vh 17vh;
-  background-repeat: no-repeat;
-  /* background-attachment: fixed; */
-  overflow: visible;
-}
-.container3 {
-  position: absolute;
-  text-align: center;
-  margin: auto;
-  left: 5vw;
-  right: 5vw;
-  bottom: 0;
-  top: 20vh;
-}
-.container3 .text3 {
-  height: 50%;
-}
-.container3 .buttons3 {
-  height: 40%;
-  position: relative;
-
-}
-.container3 .buttons3 .bn3 {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* top: 0; */
-}
-.buttons3 .bn3 button {
-  outline: none;
-  background: rgb(3, 7, 39);
-  color: rgb(255, 255, 255);
-  border: none;
-  width: 50%;
-  margin: 10px 0px;
-  padding: 10px 0px;
-  border-radius: 200px;
-}
-.header3 {
-  background: url(../../assets/onboarding/header.svg);
-  width: 100%;
-  height: 20vh;
-  background-repeat: repeat no-repeat;
-  background-size: 100%;
-}
-.bg3 {
-  width: 100%;
-  height: 80vh;
-  background: url(../../assets/onboarding/ratings.svg);
-  background-size: 100% 100%;
-  background-position: 0vh 15vh;
-  background-repeat: no-repeat;
-}
-.container4 {
-  position: absolute;
-  text-align: center;
-  margin: auto;
-  left: 5vw;
-  right: 5vw;
-  bottom: 0;
-  top: 20vh;
-}
-.container4 .text4 {
-  height: 50%;
-}
-.container4 .buttons4 {
-  height: 40%;
-  position: relative;
-
-}
-.container4 .buttons4 .bn4 {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* top: 0; */
-}
-.buttons4 .bn4 button {
-  outline: none;
-  background: rgb(3, 7, 39);
-  color: rgb(255, 255, 255);
-  border: none;
-  width: 50%;
-  margin: 10px 0px;
-  padding: 10px 0px;
-  border-radius: 200px;
-}
-.header4 {
-  background: url(../../assets/onboarding/header.svg);
-  width: 100%;
-  height: 20vh;
-  background-repeat: repeat no-repeat;
-  background-size: 100%;
-  h1 {
-    margin: 0;
-    padding: 10px;
+    background-size: 100% auto;
+    position: relative;
+    .btn {
+      position: absolute;
+      width: 100%;
+      top: 70%;
+      .button {
+        background: white;
+        color: rgb(30, 30, 30);
+        text-transform: capitalize;
+        font-family: 'Questrial', sans-serif !important;
+      }
+    }
+   }
+   .notification {
+    width: 100%;
+    height: 50vh;
+    h2 {
+     font-family: 'Josefin Sans', sans-serif;
+     text-transform: uppercase;
+     font-weight: bold;
+     padding: 10vw 0px;
+    }
+    p {
+      padding: 7vw 2vw;
+      font-size: 4vw;
+     font-family: 'Questrial', sans-serif;
+     margin-left: 25px;
+     margin-top: 50px;
+     text-align: left;
+     line-height: 5vw;;
+    }
   }
-}
-.bg4 {
-  width: 100%;
-  height: 80vh;
-  background: url(../../assets/onboarding/allset.svg);
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-  background-position: 0vh 15vh;
-}
+  .n-buttons {
+   height: 50vh;
+   background: url(../../assets/onboarding/notifications.svg);
+   background-position:  0px 7vh;
+   background-repeat: no-repeat;
+   background-size: 100% auto;
+   position: relative;
+   .btn {
+     position: absolute;
+     width: 100%;
+     top: 70%;
+     .button {
+       background: white;
+       color: rgb(30, 30, 30);
+       text-transform: capitalize;
+       font-family: 'Questrial', sans-serif !important;
+     }
+   }
+  }
+  .reviews {
+    width: 100%;
+    height: 50vh;
+    h2 {
+     font-family: 'Josefin Sans', sans-serif;
+     text-transform: uppercase;
+     font-weight: bold;
+     padding: 10vw 0px;
+    }
+    p {
+      padding: 7vw 2vw;
+      font-size: 4vw;
+     font-family: 'Questrial', sans-serif;
+     margin-left: 25px;
+     margin-top: 50px;
+     text-align: left;
+     line-height: 5vw;;
+    }
+  }
+  .r-buttons {
+   height: 50vh;
+   background: url(../../assets/onboarding/ratings.svg);
+   background-position:  50% 0vh;
+   background-repeat: no-repeat;
+   background-size: 50% auto;
+   position: relative;
+   .btn {
+     position: absolute;
+     width: 100%;
+     top: 70%;
+     .button {
+       background: white;
+       color: rgb(30, 30, 30);
+       text-transform: capitalize;
+       font-family: 'Questrial', sans-serif !important;
+     }
+   }
+  }
+  .all-set {
+    width: 100%;
+    height: 50vh;
+    h2 {
+     font-family: 'Josefin Sans', sans-serif;
+     text-transform: uppercase;
+     font-weight: bold;
+     padding: 10vw 0px;
+    }
+    p {
+      padding: 7vw 2vw;
+      font-size: 4vw;
+     font-family: 'Questrial', sans-serif;
+     margin-left: 25px;
+     margin-top: 50px;
+     text-align: left;
+     line-height: 5vw;;
+    }
+  }
+  .set-buttons {
+   height: 50vh;
+   background: url(../../assets/onboarding/allset.svg);
+   background-position:  50% 0vh;
+   background-repeat: no-repeat;
+   background-size: 100% auto;
+   position: relative;
+   .btn {
+     position: absolute;
+     width: 100%;
+     top: 50%;
+     #signup {
+      color: rgb(233, 193, 0);
+     }
+
+     #signin {
+       background: rgb(233, 193, 0);
+     }
+     .button {
+       width: 70vw;
+       color: rgb(30, 30, 30);
+       text-transform: capitalize;
+       font-family: 'Questrial', sans-serif !important;
+     }
+   }
+  }
+ }
 }

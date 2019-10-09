@@ -201,24 +201,26 @@ export class ContactPage {
   }
     // add marker function
     addMarker(props) {
-      // console.log('Marker triggerd', props);
 
       // add marker
       const marker = new google.maps.Marker({
         position: props.schooladdress,
         map: this.map,
-        draggable:true,
+        draggable:true, // set draggable to true
         animation: google.maps.Animation.DROP,
         icon: 'https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/icons8-map-pin-64.png?alt=media&token=80953d82-f9c0-4b32-b8e9-dc83f9286f8b'
 
       })
+      // add event listener
       marker.addListener('dragend', (event) => {
+        // get the coords
         let data = {
           lat: event.latLng.lat(),
           lng: event.latLng.lng()
         }
-
+        // geocode the coords for the address
     this.geocoder.geocode({'location': data},(results, status) =>{
+      // do your stuff with the results
       if (status === 'OK') {
         console.log(results);
         if (results[0]) {
@@ -243,22 +245,6 @@ export class ContactPage {
       }
     });
       });
-      // check for custom icon
-      if(props.iconImage) {
-        // set custom icon
-        marker.setIcon(props.iconImage)
-      }
-
-      // check for content
-      if(props.address || props.schoolname) {
-        // set custom content
-       let infoWindow = new google.maps.InfoWindow({
-         content: `<h5 style="margin:0;padding:0;">${props.schoolname} </h5>`+props.address
-       });
-       marker.addListener('click', () => {
-        infoWindow.open(this.map, marker);
-       })
-      }
     }
 
   async loadMap(){

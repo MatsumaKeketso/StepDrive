@@ -21,7 +21,7 @@ export class LoginPage {
   db = firebase.firestore();
   user =  {} as Users;
   loginForm: FormGroup;
-
+  isKeyOpen = false;
 
   email: string;
   password: string;
@@ -36,7 +36,7 @@ export class LoginPage {
 
     'password': [
      {type: 'required', message: 'Password is required.'},
-     {type: 'minlength', message: 'password must be more than 6 characters.'},
+     {type: 'minlength', message: 'Password must be more than 6 characters.'},
      {type: 'maxlength', message: 'Password must be less than 10 characters.'},
    ],
 
@@ -44,7 +44,7 @@ export class LoginPage {
 
    'RepeatedPassword': [
     {type: 'required', message: 'Password is required.'},
-    {type: 'minlength', message: 'password must be more than 6 characters.'},
+    {type: 'minlength', message: 'Password must be more than 6 characters.'},
      {type: 'maxlength', message: 'Password must be less than 10 characters.'},
   ]
 
@@ -63,6 +63,7 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
+    
     if (this.tabs) {
       this.tabs.setElementStyle('display', 'none')
       console.log('Tabs', this.tabs);
@@ -76,7 +77,7 @@ export class LoginPage {
       if (user) {
         this.db.collection('users').where('uid', '==', user.uid).get().then(res => {
           if (res.empty) {
-            this.splashScreen.hide()
+
             // loading.dismiss();
             this.navCtrl.setRoot(YouPage);
           } else {
@@ -91,7 +92,13 @@ export class LoginPage {
       }
     })
   }
-
+  checkKeyboard() {
+    if(this.keyboard.isOpen()) {
+      this.isKeyOpen = true
+    } else {
+      this.isKeyOpen = false;
+    }
+  }
   Reg(){
    this.navCtrl.push(RegisterPage);
   }

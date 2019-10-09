@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 import { Storage } from "@ionic/storage";
 import { LoginPage } from '../login/login';
 import { TabsPage } from '../tabs/tabs';
+import { SplashScreen } from '@ionic-native/splash-screen';
 @IonicPage()
 @Component({
   selector: 'page-you',
@@ -36,7 +37,7 @@ export class YouPage {
   profileForm:FormGroup
   moveto = false
   isediting = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private keyBoard: Keyboard, private renderer: Renderer2, private camera: Camera, public loadingCtrl: LoadingController, public forms: FormBuilder, public store: Storage, public toastCtrl: ToastController, private appCtrl: App,public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private keyBoard: Keyboard, private renderer: Renderer2, private camera: Camera, public loadingCtrl: LoadingController, public forms: FormBuilder, public store: Storage, public toastCtrl: ToastController, private appCtrl: App,public alertCtrl: AlertController,public splashScreen: SplashScreen) {
     this.profileForm = this.forms.group({
       name: new FormControl(this.user.name, Validators.compose([Validators.required])),
       surname: new FormControl(this.user.surname, Validators.compose([Validators.required])),
@@ -51,6 +52,7 @@ export class YouPage {
   ionViewDidLoad() {
 this.getprofile();
     firebase.auth().onAuthStateChanged(res => {
+      this.splashScreen.hide()
       this.user.uid = res.uid
     })
     console.log('Current user ', this.user);

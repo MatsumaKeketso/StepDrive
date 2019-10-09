@@ -3,8 +3,20 @@
 
 // Font path is used to include ionicons,
 // roboto, and noto sans fonts
-$font-path: "../assets/fonts";
 
+$font-path: "../assets/fonts";
+@font-face {
+  src: '../../assets/fonts/Cocomat_Light.ttf';
+  font-family: 'Cocomat Light';
+}
+@font-face {
+  src: '../../assets/fonts/Geometos.ttf';
+  font-family: 'Geometos';
+}
+@font-face {
+  src: '../../assets/fonts/criticized.ttf';
+  font-family: 'Criticized';
+}
 
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
@@ -34,11 +46,11 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #2A324B,
-  secondary:  #767B91,
+  primary:    rgb(30, 30, 30),
+  secondary:  rgb(233, 193, 0),
   danger:     #B6465F,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       rgb(2, 2, 2)
 );
 
 

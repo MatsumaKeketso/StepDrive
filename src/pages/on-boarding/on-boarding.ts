@@ -15,6 +15,8 @@ export class OnBoardingPage {
   }
 
   ionViewDidLoad() {
+    this.slides.effect = 'flip';
+    this.slides.speed = 700;
     this.slides.lockSwipes(true);
     // this.storage.clear()
     this.storage.get('onboarding').then((res) => {
