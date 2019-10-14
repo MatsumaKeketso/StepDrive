@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, ViewController } from 'ionic-angular';
 import * as firebase from 'firebase';
 
 /**
@@ -28,7 +28,7 @@ export class CoverQuizPage {
   }
   school = {}
   request = {}
-  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public toastCtrl: ToastController, public viewCtrl: ViewController) {
   }
 
   ionViewDidLoad() {
@@ -68,11 +68,16 @@ export class CoverQuizPage {
         }).present()
       } else {
         this.db.collection('reviews').add(this.review).then(res => {
+          this.review.text = ''
+          this.review.rating = 0
+
           const toaster = this.toastCtrl.create({
             message: 'Thank You',
             duration: 2000
           }).present()
-
+          setTimeout(()=>{
+            this.viewCtrl.dismiss();
+          }, 100)
         }).catch(err => {
           const toaster = this.toastCtrl.create({
             message: 'Oops!' + err.message,
