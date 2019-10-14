@@ -74,7 +74,7 @@ export class ContactPage {
   infowindow = new google.maps.InfoWindow;
   constructor(public navCtrl: NavController,public geolocation: Geolocation, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController,public store: Storage) {
   }
-  ionViewDidLoad(){
+  ionViewDidLoad() {
     this.initAutocomplete();
     this.getAddress();
     // sets the date picker to today's time
@@ -281,7 +281,7 @@ export class ContactPage {
       }
       this.db.collection('users').doc(this.request.uid).set(address, {merge: true}).then(res => {
         loader.dismiss();
-        this.navCtrl.push(Question1Page);
+        this.navCtrl.push(Question1Page ,{request: this.request, school: this.navParams.data});
       }).catch( async err=> {
         const alerter = await this.alertCtrl.create({
           message: "Something went wrong. We couldn't save your address somehow.",
@@ -310,7 +310,7 @@ export class ContactPage {
     loader.present();
     this.db.collection('bookings').add(this.request).then(async res => {
       loader.dismiss();
-      this.navCtrl.push(Question1Page);
+      this.navCtrl.push(Question1Page, {request: this.request, school: this.navParams.data});
     }).catch(async err => {
       loader.dismiss();
       const alerter = this.alertCtrl.create({

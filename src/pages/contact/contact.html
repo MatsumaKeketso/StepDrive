@@ -29,7 +29,7 @@
               <input id="autocomplete" (focus)="geolocate()"  [(ngModel)]="request.location.address" type="text" placeholder="">
               <!-- <input ngx-google-places-autocomplete [options]='options' #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"> -->
               <div>{{message.text}}</div>
-              <span (click)="displayMap()" *ngIf="message.id==0">Find my location On the <a href="#">Map</a></span>
+              <span (click)="displayMap()" >Find my location On the <a href="#">Map</a></span>
             </div>
           <div class="input">
               <ion-checkbox color="dark" [(ngModel)]="request.book"></ion-checkbox> I want a study guide (book)

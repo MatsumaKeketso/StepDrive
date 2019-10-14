@@ -89,7 +89,6 @@ page-contact {
         width: 30vw;
         margin: auto;
         text-align: center;
-        background: red;
         border-radius: 200px;
         overflow: hidden;
         img{
@@ -103,17 +102,19 @@ page-contact {
         align-content: center;
           width: 100%;
           height:100%;
-          background: url(../../assets/imgs/photo-1562877961-efcec8439f9d.jpg);
-          background-attachment: fixed;
+          background:url(../../assets/tapes/footer_tape.svg),rgb(24, 24, 24);
+          // background-attachment: fixed;
           background-size: cover;
-          background-position: center;
+          background-size: auto 100%;
+     background-position: 30vw -30vh;
+          // background-position: center;
           background-repeat: no-repeat;
 
         .form{
           width: 100%;
           padding: 10% 5%;
           filter: blur(0px);
-          background:url(../../assets/imgs/photo-1562877961-efcec8439f9d_blurred.jpg);
+          background:none;
           background-attachment: fixed;
           background-position: center;
           background-size: cover;
@@ -131,7 +132,7 @@ page-contact {
               margin: 20px 0px;
               p{
                   font-size: 100%;
-                  background: white;
+                  background: #FED201;
                   color: #4C0A0A;
                   width: 45%;
                   padding: 2px;
@@ -146,10 +147,13 @@ page-contact {
                   width: 97%;
                   padding: 15px 5px;
                   border: none;
-                  border: solid 1px white;
-                  background: white;
-                  color: white;
+                  border: solid 1px #FED201 !important;
+                  background: rgb(26, 26, 26);
+                  color: #FED201 !important;
                   border-radius: 200px;
+                  span {
+                    color: #FED201 !important;
+                  }
                 }
           }
           .input{
@@ -157,10 +161,14 @@ page-contact {
             width: 100%;
             position: relative;
             margin: 20px 0px;
+            .datetime {
+              border: solid 1px #FED201 !important;
+              color: #FED201 !important;
+            }
             p{
               font-size: 80%;
-              background: white;
-              color: #4C0A0A;
+              background: #FED201;
+              color: rgb(31, 31, 31);
               width: 25%;
               padding: 2px;
               border-radius: 200px;
@@ -173,10 +181,10 @@ page-contact {
               width: 97%;
               padding: 15px 5px;
               border: none;
-              border: solid 1px white;
-              background: none;
-              color: white;
+              border: solid 1px #FED201;
+              color: #FED201;
               border-radius: 200px;
+              background: rgb(26, 26, 26);
             }
             span {
               a {
@@ -208,11 +216,11 @@ page-contact {
               text-shadow: 0px 2px 2px #1717174f;
               text-transform: uppercase;
               letter-spacing: 3px;
-              color:#ffffff;
+              color:#1a1a1a;
               border-radius: 30px;
               margin: 0;
               padding: 15px;
-              background: linear-gradient(#767B91, #2E354E);
+              background: #FED201;
               width: 60%;
             }
           }

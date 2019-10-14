@@ -3,9 +3,11 @@ page-question1 {
     width: 100%;
     height: 100vh;
     overflow: hidden !important;
-    background: url(../../assets/imgs/photo-1563161084-b4c9f34d60ae_blurred.jpg);
+    background:url(../../assets/tapes/footer_tape.svg),rgb(255, 196, 0);
     background-position: center;
     background-size: cover;
+          background-size: auto 100%;
+     background-position: 20vw -20vh;
     background-repeat: no-repeat;
     .head {
       width: 100%;
@@ -16,8 +18,13 @@ page-question1 {
       color: white;
       h1 {
         margin: 0;
-        padding: 0;
+        padding: 5px;
         font-size: 6vw;
+        text-transform: uppercase;
+        background: rgb(32, 32, 32);
+        border-bottom: dashed 1px rgb(255, 174, 0);
+        border-top: dashed 1px rgb(255, 174, 0);
+        // line-height: 20px;
       }
     }
     .imag {
@@ -26,10 +33,18 @@ page-question1 {
       display: grid;
       align-items: center;
       text-align: center;
-      color: white;
+      color: rgb(20, 20, 20);
       img {
         margin: 0 auto;
-        width: 60vw;
+        width: 40vw;
+      }
+      h2 {
+        font-size: 4vw;
+        text-transform: uppercase;
+      }
+      p {
+        font-size: 3.5vw;
+        padding: 0px 20px;
       }
     }
     .butt {
@@ -48,7 +63,7 @@ page-question1 {
         border-radius: 30px;
         margin: 0 auto;
         padding: 4vw;
-        background: linear-gradient(#FFFFFF, #D1D1D1);
+        background: linear-gradient(rgb(255, 255, 255));
         width: 60%;
       }
     }

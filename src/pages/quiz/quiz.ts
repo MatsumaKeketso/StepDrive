@@ -26,10 +26,7 @@ import { ElementRef, Renderer2 } from '@angular/core';
 })
 export class QuizPage {
   db = firebase.firestore()
-  landing = {
-    active: true,
-    inactive: false
-  }
+  landing  = true;
   @ViewChild('slide') slides: Slides;
   grandTotal = 0;
   questions = []
@@ -39,8 +36,9 @@ export class QuizPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public appCtrl: App, private http: Http, public elementrev: ElementRef, public renderer: Renderer2) {}
   async ionViewDidLoad() {
     this.http.get('../../assets/quiz.json').subscribe(data => {
-      console.log(data);
 
+      this.heavyMotorQuiz = data.json().hmv.questions
+      this.motorcycleQuiz = data.json().m.questions
     })
     this.questions = []
   this.lightmotoQuiz = [];
@@ -49,17 +47,11 @@ export class QuizPage {
       res.forEach( async doc => {
         this.lightmotoQuiz.push(doc.data());
       })
-      // do {
-      //   const random = Math.floor(Math.random() * this.Qs.length)
-      //   this.firebaseQs.push(this.Qs[random])
-      // } while (this.questions.length < 5);
-      // console.log('Qs to disp: ', this.questions);
-
     })
 
   }
   start() {
-    this.landing.inactive = true;
+    this.landing = false;
   }
   cancel(){
     this.navCtrl.pop()
@@ -90,21 +82,71 @@ export class QuizPage {
     let path = ev.path[0]
     switch (category) {
       case "lmv":
-      console.log('light moto', path);
+      this.questions = []
       setTimeout(()=> {
         this.renderer.setStyle(path, 'transform', 'scale(1.05)');
       },100)
       setTimeout(() => {
         this.renderer.setStyle(path, 'transform', 'scale(1)');
       }, 500)
+      do {
+        const random = Math.floor(Math.random() * this.lightmotoQuiz.length)
+        this.questions.push(this.lightmotoQuiz[random])
+      } while (this.questions.length < 5);
+      setTimeout(() => {
+        this.start()
+      }, 100)
         break;
         case "hmv":
-      console.log("heavy", path);
-
+            this.questions = []
+            setTimeout(()=> {
+              this.renderer.setStyle(path, 'transform', 'scale(1.05)');
+            },100)
+            setTimeout(() => {
+              this.renderer.setStyle(path, 'transform', 'scale(1)');
+            }, 500)
+            do {
+        const random = Math.floor(Math.random() * this.heavyMotorQuiz.length)
+        this.questions.push(this.heavyMotorQuiz[random])
+      } while (this.questions.length < 5);
+      console.log('Qs to disp: ', this.questions);
+      setTimeout(() => {
+        this.start()
+      }, 100)
           break;
           case "m":
-      console.log("cycle", path);
-
+              this.questions = []
+              setTimeout(()=> {
+                this.renderer.setStyle(path, 'transform', 'scale(1.05)');
+              },100)
+              setTimeout(() => {
+                this.renderer.setStyle(path, 'transform', 'scale(1)');
+              }, 500)
+            do {
+              const random = Math.floor(Math.random() * this.motorcycleQuiz.length)
+              this.questions.push(this.motorcycleQuiz[random])
+            } while (this.questions.length < 5);
+            console.log('Qs to disp: ', this.questions);
+            setTimeout(() => {
+              this.start()
+            }, 100)
+            break;
+            case "tmv":
+                this.questions = []
+                setTimeout(()=> {
+                  this.renderer.setStyle(path, 'transform', 'scale(1.05)');
+                },100)
+                setTimeout(() => {
+                  this.renderer.setStyle(path, 'transform', 'scale(1)');
+                }, 500)
+              do {
+                const random = Math.floor(Math.random() * this.heavyMotorQuiz.length)
+                this.questions.push(this.heavyMotorQuiz[random])
+              } while (this.questions.length < 5);
+              console.log('Qs to disp: ', this.questions);
+              setTimeout(() => {
+                this.start()
+              }, 100)
             break;
 
       default:

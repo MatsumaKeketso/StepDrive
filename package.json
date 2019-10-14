@@ -1,6 +1,7 @@
 {
   "name": "StepDrive",
   "version": "0.0.1",
+  "app_id": "eac8e5be",
   "author": "Ionic Framework",
   "homepage": "http://ionicframework.com/",
   "private": true,

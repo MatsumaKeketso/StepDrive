@@ -162,46 +162,6 @@
           {"option": "5", "correct": true},
           {"option": "3", "correct": false}
         ]
-      },      {
-        "id": "",
-        "image": "",
-        "question": "value",
-        "suggestions": [],
-        "options": [
-          {"option": "val", "correct": false},
-          {"option": "val", "correct": false},
-          {"option": "val", "correct": false}
-        ]
-      },      {
-        "id": "",
-        "image": "",
-        "question": "value",
-        "suggestions": [],
-        "options": [
-          {"option": "val", "correct": false},
-          {"option": "val", "correct": false},
-          {"option": "val", "correct": false}
-        ]
-      },      {
-        "id": "",
-        "image": "",
-        "question": "value",
-        "suggestions": [],
-        "options": [
-          {"option": "val", "correct": false},
-          {"option": "val", "correct": false},
-          {"option": "val", "correct": false}
-        ]
-      },      {
-        "id": "",
-        "image": "",
-        "question": "value",
-        "suggestions": [],
-        "options": [
-          {"option": "val", "correct": false},
-          {"option": "val", "correct": false},
-          {"option": "val", "correct": false}
-        ]
       }
     ]
   },

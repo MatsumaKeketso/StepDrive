@@ -1,20 +1,20 @@
-
-
 <ion-content class="no-scroll">
   <div class="container">
-
-    <div class="logo">
-      <img src="../../assets/imgs/WhiteLogo-02@2x.png" alt="">
-    </div>
-
-    <div class="recap">
-      <h1>
-        Recap Quiz
-      </h1>
-    </div>
-
-    <div class="btn">
-      <button ion-button full>Start the Quiz</button>
-    </div>
+      <ion-label>Rate here</ion-label>
+      <ionic3-star-rating #rating
+      activeIcon = "ios-star"
+      defaultIcon = "ios-star-outline"
+      activeColor = "#FAB62B"
+      defaultColor = "#FAB62B"
+      readonly = "false"
+      rating = "{{review.rating}}"
+      (ratingChanged)="logRatingChange($event)"
+      fontSize = "20px">
+  </ionic3-star-rating>
+    <ion-item style="padding: 0px 5px !important;">
+      <ion-label floating>Review here</ion-label>
+      <ion-textarea [(ngModel)]="review.text" style="margin: 0px 5px;" rows="6" cols="20"></ion-textarea>
+    </ion-item>
+    <button ion-button full round (click)="sendReview()" >Send Review</button>
   </div>
 </ion-content>

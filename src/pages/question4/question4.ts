@@ -17,6 +17,11 @@ export class Question4Page {
 
   }
   ionViewDidLoad() {
+    let detailsScroll = document.getElementById('Sdetails');
+    detailsScroll.addEventListener("scroll", (event)=> {
+      // console.log('scrolled', event);
+
+    });
 
   }
   aboutUs() {
