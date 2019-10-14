@@ -1,4 +1,5 @@
 page-quiz {
+
   #inst {
     padding: 0;
     margin: 0;
@@ -30,7 +31,7 @@ page-quiz {
       height: 60vw;
     }
   }
-  .instructions-active{
+  .instructions-active {
 
   }
   @keyframes quizHelp {
@@ -60,7 +61,7 @@ page-quiz {
     left: 0;
     bottom: 1px;
     right: 0;
-    background: #30343B;
+    background: rgb(34, 34, 34);
     z-index: 7;
     overflow: hidden !important;
     color: white;
@@ -75,7 +76,7 @@ page-quiz {
     left: 0;
     bottom: 0;
     right: 0;
-    background: #30343B;
+    background: rgb(36, 36, 36);
     z-index: 7;
     overflow: hidden !important;
     color: white;
@@ -119,13 +120,32 @@ page-quiz {
       background-repeat: no-repeat;
       background-position: center;
     }
+    .tmv {
+      background: url(../../assets/tutvid/semi-truck-silhouette-17.jpg),linear-gradient(rgb(255,255,255));
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
     div {
+      transition: 0.3s;
+      color: black;
       background: white;
       min-width: 33.33%;
       height: 50%;
       margin: 2px;
       border-radius: 10px;
       box-shadow: 0px 2px 3px #171717bd;
+      position: relative;
+      overflow: hidden;
+      p {
+        pointer-events: none;;
+        background: white;;
+        position: absolute;
+        bottom: 0;
+        margin: 0;
+        padding: 5px;
+        border-radius: 0px 10px 0px 0px;
+      }
     }
   }
   img {
@@ -139,7 +159,7 @@ page-quiz {
     margin: 5vw 0%;
   }
   #cancel {
-    background: linear-gradient(#30343B,rgb(53, 60, 75));
+    background: linear-gradient(rgb(53, 60, 75));
     color: white;
     transform: scale(0.8);
   }

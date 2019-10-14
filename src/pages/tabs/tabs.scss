@@ -11,7 +11,7 @@ page-tabs {
     box-shadow: inset 0px 2px 8px rgb(23, 23, 23) !important;
     height: 0px !important;
     .tab-button {
-      background: linear-gradient(rgba(20, 46, 82, 0.493)),url(../../assets/imgs/buildings-1851246_1920.jpg) !important;
+      background: linear-gradient(rgba(34, 34, 34, 0.493)),url(../../assets/imgs/buildings-1851246_1920.jpg) !important;
       // background-attachment: fixed;
       background-size: cover;
       transform: translateY(-28px) !important;
@@ -23,7 +23,7 @@ page-tabs {
       overflow: hidden !important;
       width: 5vw !important;
       height: 5vw !important;
-      border: solid 2px rgb(182, 70, 95);
+      border: solid 2px rgb(255, 166, 0);
       .tab-button-icon {
         transition: 0.3s;
         transform: translateY(5px) !important;
@@ -33,6 +33,7 @@ page-tabs {
         transition: 0.3s;
         transform: translateY(22px) !important;
         color: white !important;
+        font-family: 'Questrial', sans-serif;
       }
     }
     .tab-button:hover {

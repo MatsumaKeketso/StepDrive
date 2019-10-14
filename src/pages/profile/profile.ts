@@ -12,15 +12,16 @@ import {
   AlertController,
   ToastController,
   Platform,
-  Keyboard
+  Keyboard,
+  PopoverController
 } from 'ionic-angular';
 import * as firebase from 'firebase';
 import {
   Storage
 } from '@ionic/storage';
-import {
-  LocalNotifications
-} from '@ionic-native/local-notifications';
+
+import { CoverQuizPage } from '../cover-quiz/cover-quiz';
+import {LocalNotifications } from '@ionic-native/local-notifications';
 
 @IonicPage()
 @Component({
@@ -29,6 +30,7 @@ import {
 })
 export class ProfilePage {
   @ViewChild('reviews') revs: ElementRef;
+  loaderAnimate = true;
   db = firebase.firestore();
   user = {
     uid: '',
@@ -57,46 +59,14 @@ export class ProfilePage {
   revDateValidation: any
   reviewDiv: any;
   feedbackDiv: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, private store: Storage, public plt: Platform, public localNot: LocalNotifications, public element: ElementRef, public renderer: Renderer2, public keyb: Keyboard) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, private store: Storage, public plt: Platform, public localNot: LocalNotifications, public element: ElementRef, public renderer: Renderer2, public keyb: Keyboard, public popoverCtrl: PopoverController) {}
   // get the request of the user
   // get the schooldata where they made the request
   ionViewDidLoad() {
     // this.getReviews();
     // check if all the elemnts exist
 
-    if (this.element.nativeElement.children[0].children[1].children[0].children[1]) {
-      this.reviewDiv = this.element.nativeElement.children[0].children[1].children[1].children[0]
-      // console.log('Rev div: ', this.reviewDiv)
-    }
-    if (this.element.nativeElement.children[0].children[1].children[1].children[0].children[2]) {
-      this.feedbackDiv = this.element.nativeElement.children[0].children[1].children[1].children[0].children[2]
-      // console.log('Feedback div: ', this.feedbackDiv)
-      let feedbackDiv = this.element.nativeElement.children[0].children[1].children[1].children[0].children[2]
-    // console.log('Feedback div', feedbackDiv);
-    this.renderer.setStyle(feedbackDiv, 'opacity', '0');
-    }
-    if (this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children.length) {
-      this.reviewCardLength = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1]
-    }
 
-   setTimeout(()=> {
-     // loop through all the reviews that are in the array
-     for (let i = 0; i < this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children.length; i++) {
-      let translate = i % 2;
-      // console.log('Translate upon load', translate);
-      // reference to each card
-      let card = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children[i]
-      // console.log('Cards,  ', card);
-      if (translate) {
-        this.renderer.setStyle(card, 'opacity', '0');
-        this.renderer.setStyle(card, 'transform', 'translateX(-100vw)');
-      } else {
-        this.renderer.setStyle(card, 'opacity', '0');
-        this.renderer.setStyle(card, 'transform', 'translateX(100vw)');
-
-      }
-    }
-   }, 1000)
     // // log the page's native elements for reverence
     let Div = this.element
     // console.log(Div);
@@ -145,204 +115,13 @@ export class ProfilePage {
     console.log(this.review);
 
   }
-  reviews(event, school) {
-    if(school !== 'school') {
-      let createdDate = new Date(school.request.datecreated);
-    
-        let d = new Date();
 
-      let todayD = new Date(d.toDateString());
-
-      var Difference_In_Time = todayD.getTime() - createdDate.getTime();
-
-// To calculate the no. of days between two dates
-var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-
-        if (Difference_In_Days <= 0) {
-          console.log('createdDate', Difference_In_Days,);
-          const toaster = this.toastCtrl.create({
-            message: 'Reviews can only be made after at least 1 lesson has been done.',
-            closeButtonText: 'Okay',
-            showCloseButton: true
-          }).present()
-        } else {
-          console.log('createdDate', Difference_In_Days,);
-          this.revDateValidation = school;
-          this.review.datecreated = new Date().toDateString();
-          // console.log('the S', school);
-          // console.log('Review objet', this.review);
-          if (school.request) {
-            this.review.schooluid = school.request.schooluid
-          }
-
-          let feedbackDiv = this.element.nativeElement.children[0].children[1].children[1].children[0].children[2]
-          // console.log('Feedback div', feedbackDiv);
-          this.renderer.setStyle(feedbackDiv, 'opacity', '0');
-          // reference to the reviews divs
-          let cards = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children.length
-
-          // reference to the review div
-          let reviewDiv = this.element.nativeElement.children[0].children[1].children[1].children[0]
-
-          // reference to the device height
-          let height = this.plt.height();
-          // log the event
-          // console.log(event.type);
-
-          // check the event type and the status of the review div
-          if (event.type == "click" && !this.revsOpen) {
-            // loop through all the divs that hold the reviews and  apply the style depending on the translate result
-            for (let i = 0; i < cards; i++) {
-              let translate = i % 2;
-              // console.log('Translate on open', translate);
-              // reference to individual divs
-              let card = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children[i]
-              // console.log('Cards,  ', card);
-              // if translate has a reminder
-              if (translate) {
-                this.renderer.setStyle(card, 'opacity', '1');
-                this.renderer.setStyle(card, 'transform', 'translateX(0vw)');
-              } else {
-                this.renderer.setStyle(card, 'opacity', '1');
-                this.renderer.setStyle(card, 'transform', 'translateX(0vw)');
-              }
-            }
-            this.revsOpen = !this.revsOpen;
-            this.renderer.setStyle(reviewDiv, 'top', '10vh');
-            this.renderer.setStyle(feedbackDiv, 'opacity', '1');
-          } else {
-
-
-            for (let i = 0; i < cards; i++) {
-              let translate = i % 2;
-              // console.log('Translate on close', translate);
-
-              let card = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children[i]
-              // console.log('Cards,  ', card);
-              if (translate) {
-                this.renderer.setStyle(card, 'opacity', '0');
-                this.renderer.setStyle(card, 'transform', 'translateX(-100vw)');
-              } else {
-                this.renderer.setStyle(card, 'opacity', '0');
-                this.renderer.setStyle(card, 'transform', 'translateX(100vw)');
-              }
-            }
-            this.revsOpen = !this.revsOpen;
-            this.renderer.setStyle(reviewDiv, 'top', '80vh');
-            this.renderer.setStyle(feedbackDiv, 'opacity', '0');
-          }
-
-          // console.log('Element', reviewDiv)
-          if (this.revsOpen == true) {
-            let elements = document.querySelectorAll(".tabbar");
-            if (elements != null) {
-              Object.keys(elements).map((key) => {
-                elements[key].style.transform = 'translateY(50vh)';
-                // elements[key].style.display = 'none';
-              });
-            }
-          } else {
-            let elements = document.querySelectorAll(".tabbar");
-            if (elements != null) {
-              Object.keys(elements).map((key) => {
-                elements[key].style.transform = 'translateY(0vh)';
-                // elements[key].style.display = 'flex';
-              });
-            }
-          }
-        }
-    } else { ////------
-    this.revDateValidation = school;
-    this.review.datecreated = new Date().toDateString();
-    // console.log('the S', school);
-    // console.log('Review objet', this.review);
-    if (school.request) {
-      this.review.schooluid = school.request.schooluid
-    }
-
-    let feedbackDiv = this.element.nativeElement.children[0].children[1].children[1].children[0].children[2]
-    // console.log('Feedback div', feedbackDiv);
-    this.renderer.setStyle(feedbackDiv, 'opacity', '0');
-    // reference to the reviews divs
-    let cards = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children.length
-
-    // reference to the review div
-    let reviewDiv = this.element.nativeElement.children[0].children[1].children[1].children[0]
-
-    // reference to the device height
-    let height = this.plt.height();
-    // log the event
-    // console.log(event.type);
-
-    // check the event type and the status of the review div
-    if (event.type == "click" && !this.revsOpen) {
-      // loop through all the divs that hold the reviews and  apply the style depending on the translate result
-      for (let i = 0; i < cards; i++) {
-        let translate = i % 2;
-        // console.log('Translate on open', translate);
-        // reference to individual divs
-        let card = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children[i]
-        // console.log('Cards,  ', card);
-        // if translate has a reminder
-        if (translate) {
-          this.renderer.setStyle(card, 'opacity', '1');
-          this.renderer.setStyle(card, 'transform', 'translateX(0vw)');
-        } else {
-          this.renderer.setStyle(card, 'opacity', '1');
-          this.renderer.setStyle(card, 'transform', 'translateX(0vw)');
-        }
-      }
-      this.revsOpen = !this.revsOpen;
-      this.renderer.setStyle(reviewDiv, 'top', '10vh');
-      this.renderer.setStyle(feedbackDiv, 'opacity', '1');
-    } else {
-
-
-      for (let i = 0; i < cards; i++) {
-        let translate = i % 2;
-        // console.log('Translate on close', translate);
-
-        let card = this.element.nativeElement.children[0].children[1].children[1].children[0].children[1].children[i]
-        // console.log('Cards,  ', card);
-        if (translate) {
-          this.renderer.setStyle(card, 'opacity', '0');
-          this.renderer.setStyle(card, 'transform', 'translateX(-100vw)');
-        } else {
-          this.renderer.setStyle(card, 'opacity', '0');
-          this.renderer.setStyle(card, 'transform', 'translateX(100vw)');
-        }
-      }
-      this.revsOpen = !this.revsOpen;
-      this.renderer.setStyle(reviewDiv, 'top', '80vh');
-      this.renderer.setStyle(feedbackDiv, 'opacity', '0');
-    }
-
-    // console.log('Element', reviewDiv)
-    if (this.revsOpen == true) {
-      let elements = document.querySelectorAll(".tabbar");
-      if (elements != null) {
-        Object.keys(elements).map((key) => {
-          elements[key].style.transform = 'translateY(50vh)';
-          // elements[key].style.display = 'none';
-        });
-      }
-    } else {
-      let elements = document.querySelectorAll(".tabbar");
-      if (elements != null) {
-        Object.keys(elements).map((key) => {
-          elements[key].style.transform = 'translateY(0vh)';
-          // elements[key].style.display = 'flex';
-        });
-      }
-    }
-  }
-
-  }
   openTips() {
     this.store.set('readTips', false).then(res => {
       this.initialiseTips();
     })
   }
+
   async initialiseTips() {
     let elements = document.querySelectorAll(".tabbar");
     let readTips = null
@@ -401,50 +180,45 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
   pushNotification() {
     this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res => {
+
       res.forEach(doc => {
         if ((doc.data().confirmed == 'accepted') || (doc.data().confirmed == 'rejected') && (!doc.data().notified)) {
           this.localNot.schedule({
             id: 1,
             title: 'StepDrive',
-            text: 'One of the driving instructors responded to your request.'
+            text: `One of the driving instructors responded to your request.`
           })
-          this.db.collection('bookings').doc(doc.id).set(
-            {notified: true},
-            {merge: true}
-          )
+          this.db.collection('bookings').doc(doc.id).update({notified: true})
         }
       })
     })
   }
-  sendReview(review) {
-    if (this.review.text) {
-      if (this.review.rating == 0) {
-        const toaster = this.toastCtrl.create({
-          message: 'Please provide a rating for this review.',
-          duration: 2000
-        }).present()
-      } else {
-        this.db.collection('reviews').add(this.review).then(res => {
-          const toaster = this.toastCtrl.create({
-            message: 'Thank You',
-            duration: 2000
-          }).present()
-          this.userReviews = []
+  popReview(school) {
+    let createdDate = new Date(school.request.datein);
 
-        }).catch(err => {
-          const toaster = this.toastCtrl.create({
-            message: 'Oops!' + err.message,
-            duration: 2000
-          }).present()
-        })
+    let d = new Date();
 
-      }
-    } else {
+  let todayD = new Date(d.toDateString());
+
+  var Difference_In_Time = todayD.getTime() - createdDate.getTime();
+
+// To calculate the no. of days between two dates
+var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    console.log(Difference_In_Days);
+
+    if (Difference_In_Days <= 0) {
+      console.log('createdDate', Difference_In_Days,);
       const toaster = this.toastCtrl.create({
-        message: 'Please write something',
-        duration: 2000
+        message: 'Reviews can only be made after at least 1 lesson has been done.',
+        closeButtonText: 'Okay',
+        showCloseButton: true
       }).present()
-    }
+    } else {
+      console.log('createdDate', Difference_In_Days,);
+      this.review.datecreated = new Date().toDateString();
+      this.popoverCtrl.create(CoverQuizPage, school,{showBackdrop: true, enableBackdropDismiss: true}).present()
+          }
+
   }
   getReviews(school) {
     this.db.collection('reviews').where('schooluid', '==', school).get().then(res => {
@@ -456,7 +230,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
     })
   }
-  getBooking() {
+  async getBooking() {
 
     let data = {
       school: {
@@ -490,10 +264,10 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       content: 'Please Wait'
     });
 
-    loader.present()
-    this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res => {
+    // loader.present()
+   await this.db.collection('bookings').where('uid', '==', this.user.uid).get().then( async res => {
       this.request = []
-      res.forEach(doc => {
+      res.forEach(async doc => {
         data.request.docid = doc.id;
         // this is extreme bad programming :(
         data.request.book = doc.data().book;
@@ -559,7 +333,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
           // console.log('Dates are thesame');
 
         }
-        this.db.collection('drivingschools').where('schooluid', '==', data.request.schooluid).get().then(res => {
+       await this.db.collection('drivingschools').where('schooluid', '==', data.request.schooluid).get().then(res => {
 
           res.forEach(doc => {
             data.school.allday = doc.data().allday;
@@ -574,8 +348,40 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
             data.school.registration = doc.data().registration;
             data.school.schoolname = doc.data().schoolname;
             data.school.uid = doc.data().schooluid;
-            this.getReviews(doc.data().schooluid);
-
+            this.request.push(data);
+            this.loaderAnimate = false;
+        // this.more = this.request.indexOf()
+        this.count += 1;
+        setTimeout(()=>{
+          data = {
+            school: {
+              allday: null,
+              cellnumber: '',
+              closed: null,
+              coords: {},
+              cost: 0,
+              desc: null,
+              email: null,
+              image: null,
+              open: null,
+              registration: null,
+              schoolname: null,
+              uid: null,
+            },
+            request: {
+              book: null,
+              confirmed: null,
+              location: {},
+              package: {},
+              datecreated: null,
+              datein: null,
+              dateout: null,
+              schooluid: null,
+              uid: null,
+              docid: null
+            }
+          }
+        }, 0)
 
           })
           if (doc.data().confirmed == 'rejected' && !doc.data().notified) {
@@ -593,11 +399,10 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
           }
         })
 
-        this.request.push(data);
-        // this.more = this.request.indexOf()
-        this.count += 1;
+
       })
-      loader.dismiss()
+      // loader.dismiss()
+
       // console.log('Reqs: ', this.request);
     })
   }

@@ -199,13 +199,75 @@ this.getprofile();
 
     */
   }
+  editNote(note) {
+    this.note.text = note.doc.text
+    console.log(note, this.user);
+    let date = new Date();
+    this.note.datecreated = date.toDateString();
+    this.alertCtrl.create({
+      title: 'Edit note.',
+      enableBackdropDismiss: false,
+      inputs:[
+        {placeholder: 'Say something',
+        type: 'text',
+        name: 'noteText',
+        value: this.note.text
+      }
+      ],
+      buttons: [
+        {text: 'Cancel',role: 'cancel'},
+        {text: 'Edit', handler: (data) => {
+          if (!data.noteText) {
+            this.toastCtrl.create({
+              message: "Cannot edit empty note",
+              duration: 3000
+            }).present()
+          } else {
+            this.note.text = data.noteText
+            console.log('data', this.note);
+            this.db.collection('users').doc(this.user.uid).collection('notes').doc(note.docid).set(this.note).then(res => {
+              this.getnote();
+
+              this.toastCtrl.create({
+                message: 'Note updated',
+                duration: 2000
+              }).present();
+              this.note.text = '';
+              this.note.datecreated = ''
+            }).catch(err => {
+              this.store.set('note', this.note);
+              this.getnote()
+              this.toastCtrl.create({
+                message: 'Saved',
+                duration: 2000
+              }).present();
+            })
+          }
+        }}
+      ]
+
+    }).present()
+    /*
+
+    */
+  }
   getnote(){
     this.notes = [];
+    let note = {
+      doc: {},
+      docid: ''
+    }
     firebase.auth().onAuthStateChanged(user => {
       this.db.collection('users').doc(user.uid).collection('notes').get().then(res => {
         if (!res.empty) {
           res.forEach(doc => {
-            this.notes.push(doc.data());
+            note.doc = doc.data();
+            note.docid = doc.id;
+            this.notes.push(note);
+            note = {
+              doc: {},
+              docid: ''
+            }
           })
         }
       })
