@@ -1,4 +1,14 @@
 <ion-content (click)="checkKeyboard()" class="no-scroll">
+    <div [ngClass]="{'loader': loaderAnimate, 'loader-hide': !loaderAnimate}">
+        <!-- <div class="loader"> -->
+        <div class="maploader">
+            <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            <p>Signing <br> In</p>
+        </div>
+        <div class="loading-text">
+
+        </div>
+      </div>
   <div *ngIf="!isKeyOpen" class="logo">
       <h1>SIGN UP</h1>
       <img src="../../assets/tapes/STEPDRIVE-YELLOW-LOGO.svg" alt="">

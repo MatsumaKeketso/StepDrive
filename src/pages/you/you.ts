@@ -15,6 +15,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 export class YouPage {
   db = firebase.firestore();
   storage = firebase.storage().ref();
+  loaderAnimate =true;
   user = {
     name: '',
     surname: '',
@@ -61,6 +62,33 @@ this.getprofile();
       this.user.location = res;
     })
     this.getnote();
+  }
+  pressEvent(event, n) {
+    console.log(n);
+    this.alertCtrl.create({
+      title: 'Delete Note?',
+      message: 'Do you want to delete this note?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel'
+        },{
+          text: 'Yes',
+          handler: ()=> {
+            firebase.auth().onAuthStateChanged(user => {
+              this.db.collection('users').doc(user.uid).collection('notes').doc(n.docid).delete().then(res => {
+                this.notes = []
+                this.getnote()
+                this.toastCtrl.create({
+                  message: 'Note deleted',
+                  duration: 2000
+                }).present()
+              })
+            })
+          }
+        }
+      ]
+    }).present()
   }
   checkkeyboard() {
     if (this.keyBoard.isOpen()) {
@@ -298,7 +326,11 @@ this.getprofile();
         this.user.uid = res.data().uid
           this.isprofile = true;
         console.log('Got Profile: ', this.user);
-
+          setTimeout(()=>{
+            this.loaderAnimate = false;
+          }, 1000)
+        } else {
+          this.loaderAnimate = false;
         }
       })
     })

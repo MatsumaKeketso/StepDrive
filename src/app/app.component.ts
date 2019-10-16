@@ -13,6 +13,7 @@ import {google} from 'google-maps';
 
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { Network } from '@ionic-native/network';
 declare var google: google;
 @Component({
   templateUrl: 'app.html'
@@ -29,10 +30,16 @@ export class MyApp {
     private screenOrien: ScreenOrientation,
     public store: Storage,
     public toastCtrl: ToastController,
+    public network: Network,
     public app: App) {
     statusBar.backgroundColorByHexString('#D28B2B');
-    
+
     platform.ready().then(async () => {
+      let checkDownLinkSpeed = this.network.downlinkMax
+      setTimeout(()=> {
+        console.log(checkDownLinkSpeed);
+      }, 3000)
+
       this.initialiseApp();
       firebase.initializeApp(firebaseConfig);
       // platform.backButton.subscribe(res => {
@@ -47,6 +54,7 @@ export class MyApp {
 
       }, 2000)
       console.log('Checking if onboarding was done');
+      // this.store.clear()
       this.store.get('onboarding').then((res) => {
         if (res) {
           console.log('Onboarding done');
@@ -82,14 +90,15 @@ export class MyApp {
         }
       })
     });
-    
+
   }
   initialiseApp() {
     this.platform.registerBackButtonAction(() => {
+      console.log(this.app.getActiveNav());
+
       if (new Date().getTime() - this.lastTimeBackPress < this.timePeriodToExit) {
                 this.platform.exitApp(); // Exit from app
                 // navigator['app'].exitApp(); // work in ionic 4
-
             } else {
                 this.toastCtrl.create({
                   message: 'Press back again to exit App.',

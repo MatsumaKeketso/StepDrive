@@ -1,5 +1,7 @@
 page-home {
-
+   // font-family: 'Josefin Sans', sans-serif;
+  // font-family: 'Questrial', sans-serif;
+  // font-family: 'Didact Gothic', sans-serif;
   .loading-text {
     // color: yellow;
     position: absolute;
@@ -74,7 +76,7 @@ page-home {
     margin: 0 !important;
   }
   * {
-    // transition: 0.4s;
+    transition: 0.4s;
   }
   .viewImage {
     transition: 0.4s;
@@ -83,7 +85,7 @@ page-home {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 30;
+    z-index: 9000;
     display: grid;
     text-align: center;
     align-content: center;
@@ -500,7 +502,6 @@ page-home {
     .scroll {
         height: 100%
       }
-
       #map {
         width: 100%;
         height: 100%;
@@ -523,10 +524,12 @@ page-home {
         .s-readmore {
           position: absolute;
           bottom: 60vh;
-          left: 28vw;
-          right: 28vw;
+          left: 40vw;
+          right:40vw;
+          height: 40px;
+          width: 40px;
           transform: scale(1);
-          background: rgba(255, 255, 255, 0.911);
+          background: rgba(19, 19, 19, 0);
           z-index: 20;
           text-align: center;
           border-radius: 10px 10px 0px 0px;
@@ -534,6 +537,64 @@ page-home {
             margin: 0;
             padding: 0;;
           }
+
+.round {
+  position: absolute;
+  border: 2px solid rgba(255, 255, 255, 0);
+  width: 40px;
+  height: 30px;
+  border-radius: 100%;
+  transform: rotate(-90deg);
+}
+
+#cta{
+  width:100%; cursor: pointer; position: absolute;
+}
+
+#cta .arrow{left: 30%;}
+.arrow {position: absolute; bottom: 0;  margin-left:0px; width: 12px; height: 12px; background-size: contain; top:15px;}
+.segunda{margin-left: 8px;}
+.next {
+background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+PHN0eWxlPi5zdDB7ZmlsbDojZmZmfTwvc3R5bGU+PHBhdGggY2xhc3M9InN0MCIgZD0iTTMxOS4xIDIxN2MyMC4yIDIwLjIgMTkuOSA1My4yLS42IDczLjdzLTUzLjUgMjAuOC03My43LjZsLTE5MC0xOTBjLTIwLjEtMjAuMi0xOS44LTUzLjIuNy03My43UzEwOSA2LjggMTI5LjEgMjdsMTkwIDE5MHoiLz48cGF0aCBjbGFzcz0ic3QwIiBkPSJNMzE5LjEgMjkwLjVjMjAuMi0yMC4yIDE5LjktNTMuMi0uNi03My43cy01My41LTIwLjgtNzMuNy0uNmwtMTkwIDE5MGMtMjAuMiAyMC4yLTE5LjkgNTMuMi42IDczLjdzNTMuNSAyMC44IDczLjcuNmwxOTAtMTkweiIvPjwvc3ZnPg==);
+}
+
+@keyframes bounceAlpha {
+0% {opacity: 1; transform: translateX(0px) scale(1);}
+25%{opacity: 0; transform:translateX(10px) scale(0.9);}
+26%{opacity: 0; transform:translateX(-10px) scale(0.9);}
+55% {opacity: 1; transform: translateX(0px) scale(1);}
+}
+
+.bounceAlpha {
+  animation-name: bounceAlpha;
+  animation-duration:1.4s;
+  animation-iteration-count:infinite;
+  animation-timing-function:linear;
+}
+
+.arrow.primera.bounceAlpha {
+  animation-name: bounceAlpha;
+  animation-duration:1.4s;
+  animation-delay:0.2s;
+  animation-iteration-count:infinite;
+  animation-timing-function:linear;
+}
+
+.arrow{
+  animation-name: bounceAlpha;
+  animation-duration:1.4s;
+  animation-iteration-count:infinite;
+  animation-timing-function:linear;
+}
+.arrow.primera{
+  animation-name: bounceAlpha;
+  animation-duration:1.4s;
+  animation-delay:0.2s;
+  animation-iteration-count:infinite;
+  animation-timing-function:linear;
+}
+
+
                 }
         .reviews {
           transition: 0.4s;
@@ -571,7 +632,7 @@ page-home {
             width: 100%;
             background: white;
             overflow-y: auto;
-
+            padding-bottom: 50px;
             .r-card {
               box-shadow: 0px 0px 8px #17171717;
               border-radius: 10px;
@@ -774,7 +835,7 @@ page-home {
           }
           p {
             font-size: 4vw;
-            padding: 0px 30px;
+            // padding: 0px 30px;
             font-family: 'Questrial', sans-serif;
           }
 
@@ -795,8 +856,9 @@ page-home {
 
             p {
               text-align: center;
-              width: 70vw;
+
               margin: auto;
+              pointer-events: none;
             }
             .lesson {
               min-width: 40vw;
@@ -821,6 +883,9 @@ page-home {
                 pointer-events: none;
                 font-family: 'Didact Gothic', sans-serif;
                 font-weight: bold;
+              }
+              h4 {
+                pointer-events: none;
               }
               button {
                 position: absolute;
@@ -848,8 +913,12 @@ page-home {
             overflow-x: auto;
             p {
               text-align: center;
-              width: 70vw;
-              margin: auto;
+              // width: 70%;
+              // margin: auto;
+              pointer-events: none;
+            }
+            h4 {
+              pointer-events: none;
             }
             .lesson {
               min-width: 40vw;
@@ -864,33 +933,21 @@ page-home {
               background-repeat: no-repeat;
               background-position: 50% 0%;
               background-size: cover;
-              display: grid;
               align-content: center;
+              overflow: hidden;
    // font-family: 'Josefin Sans', sans-serif;
   // font-family: 'Questrial', sans-serif;
   // font-family: 'Didact Gothic', sans-serif;
-              p {
-                font-size: 3vw;
-                pointer-events: none;
-                font-family: 'Didact Gothic', sans-serif;
-                font-weight: bold;
-              }
-              button {
-                position: absolute;
-                bottom: 0;
-                right: 0%;
-                text-shadow: 0px 2px 2px rgba(23, 23, 23, 0.31);
-                box-shadow: 0px 2px 2px rgba(23, 23, 23, 0.075);
-                text-transform: uppercase;
-                letter-spacing: 3px;
-                color:rgb(36, 36, 36);
-                border-radius: 30px;
-                margin: 0;
-                padding: 3vw;
-                background: linear-gradient(rgb(226, 226, 226), rgb(255, 255, 255));
-                width: 100%;
-                font-size: 3vw;
-              }
+  p {
+    text-align: center;
+    font-size: 3vw;
+    pointer-events: none;
+    font-family: 'Didact Gothic', sans-serif;
+    font-weight: bold;
+  }
+  h4 {
+    pointer-events: none;
+  }
             }
           }
           .code10 {
@@ -901,8 +958,11 @@ page-home {
             transition: 0.3s;
             p {
               text-align: center;
-              width: 70vw;
+
               margin: auto;
+            }
+            h4 {
+              pointer-events: none;
             }
             .lesson {
               min-width: 40vw;
@@ -928,22 +988,7 @@ page-home {
                 font-family: 'Didact Gothic', sans-serif;
                 font-weight: bold;
               }
-              button {
-                position: absolute;
-                bottom: 0;
-                right: 0%;
-                text-shadow: 0px 2px 2px rgba(23, 23, 23, 0.31);
-                box-shadow: 0px 2px 2px rgba(23, 23, 23, 0.075);
-                text-transform: uppercase;
-                letter-spacing: 3px;
-                color:rgb(36, 36, 36);
-                border-radius: 30px;
-                margin: 0;
-                padding: 3vw;
-                background: linear-gradient(rgb(226, 226, 226), rgb(255, 255, 255));
-                width: 100%;
-                font-size: 3vw;
-              }
+
             }
           }
           .code14 {
@@ -972,30 +1017,15 @@ page-home {
               background-size: cover;
               display: grid;
               align-content: center;
-   // font-family: 'Josefin Sans', sans-serif;
-  // font-family: 'Questrial', sans-serif;
-  // font-family: 'Didact Gothic', sans-serif;
+
               p {
                 font-size: 3vw;
                 pointer-events: none;
                 font-family: 'Didact Gothic', sans-serif;
                 font-weight: bold;
               }
-              button {
-                position: absolute;
-                bottom: 0;
-                right: 0%;
-                text-shadow: 0px 2px 2px rgba(23, 23, 23, 0.31);
-                box-shadow: 0px 2px 2px rgba(23, 23, 23, 0.075);
-                text-transform: uppercase;
-                letter-spacing: 3px;
-                color:rgb(36, 36, 36);
-                border-radius: 30px;
-                margin: 0;
-                padding: 3vw;
-                background: linear-gradient(rgb(226, 226, 226), rgb(255, 255, 255));
-                width: 100%;
-                font-size: 3vw;
+              h4 {
+                pointer-events: none;
               }
             }
           }
@@ -1035,6 +1065,13 @@ page-home {
               // margin: 20px 0px;
               display: grid;
               align-content: center;
+              .label {
+                background: rgb(255, 255, 255) !important;
+                padding: 0px;
+                margin: 0px;
+                border-left: solid 1px black;
+                border-right: solid 1px black;
+              }
               p{
                 font-size: 80%;
                 background: linear-gradient(rgb(118, 123, 145), rgb(42, 50, 75));

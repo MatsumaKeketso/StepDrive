@@ -22,7 +22,7 @@ export class LoginPage {
   user =  {} as Users;
   loginForm: FormGroup;
   isKeyOpen = false;
-
+  loaderAnimate = false;
   email: string;
   password: string;
   validation_messages = {
@@ -63,7 +63,7 @@ export class LoginPage {
   }
 
   ionViewDidLoad() {
-    
+
     if (this.tabs) {
       this.tabs.setElementStyle('display', 'none')
       console.log('Tabs', this.tabs);
@@ -87,14 +87,14 @@ export class LoginPage {
           }
         })
       } else {
-        this.splashScreen.hide()
+        this.splashScreen.hide();
         loading.dismiss();
       }
     })
   }
   checkKeyboard() {
     if(this.keyboard.isOpen()) {
-      this.isKeyOpen = true
+      this.isKeyOpen = true;
     } else {
       this.isKeyOpen = false;
     }
@@ -115,6 +115,7 @@ export class LoginPage {
           text: 'Send Verification',
           handler: data => {
             console.log(data);
+            this.loaderAnimate = true;
             this.emailsent(data)
           }
         }
@@ -122,7 +123,9 @@ export class LoginPage {
     }).present()
   }
   emailsent(val) {
+
     firebase.auth().sendPasswordResetEmail(val.email).then(() => {
+      this.loaderAnimate = false;
       this.alertCtrl.create({
         title: 'Email Sent',
         message: 'Please check you inbox for the verification link.',
@@ -131,6 +134,7 @@ export class LoginPage {
         ]
       }).present()
     }).catch((error) => {
+      this.loaderAnimate = false;
       this.alertCtrl.create({
         title: 'Email Not Sent',
         message: 'Oops, something went wrong. Please try again later.',
@@ -147,26 +151,30 @@ export class LoginPage {
     }
   }
   login(user: Users) {
+    this.loaderAnimate = true;
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
     })
 
-    loading.present();
+    // loading.present();
 
     if (!user.email || !user.password) {
-      loading.dismiss()
+      // loading.dismiss()
+      this.loaderAnimate = false;
       this.toastCtrl.create({
         message: 'Provide all required credentials.',
         duration: 2000
       }).present();
     } else {
       firebase.auth().signInWithEmailAndPassword(user.email, user.password).then((result) => {
-        loading.dismiss();
+        // loading.dismiss();
+        this.loaderAnimate = false;
           this.navCtrl.setRoot(TabsPage);
       }).catch((error) => {
         console.log(error);
 
-        loading.dismiss();
+        // loading.dismiss();
+        this.loaderAnimate = false;
         let errorCode = 'Error';
         let errorMessage = error.message;
 

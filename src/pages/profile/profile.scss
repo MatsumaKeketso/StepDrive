@@ -301,13 +301,14 @@ page-profile {
     }
   }
   .tutorial {
+    transition: 0.3s;;
     position: fixed;
-    top: 0vh;
-    left: 0vw;
-    right: 0vh;
-    bottom: 0vw;
-    width: 100vw;
-    height: 100vh;
+    top: 5vw;
+    left: 5vw;
+    right: 5vw;
+    bottom: 5vw;
+    width: 90vw;
+    height: 95vh;
     background:  url(../../assets/icon/schoollistbg.svg),linear-gradient(rgb(240, 240, 240));
     animation: bacgroundmove 20000s linear infinite;
     background-attachment: fixed;
@@ -317,6 +318,9 @@ page-profile {
     z-index: 700;
     transform: scale(1);
     padding: 10px;
+    border-radius: 20px;
+    transition: 0.3s;;
+    box-shadow: 0px 0px 10px #10101059;;
     blockquote {
       border-left: solid 3px orange;
       padding: 10px;
@@ -334,6 +338,34 @@ page-profile {
       border-radius: 200px;
     }
   }
+  .tutorial-inactive {
+    position: fixed;
+    border-radius: 20px;
+    transition: 0.3s;;
+    top: 5vw;
+    left: 5vw;
+    right: 5vw;
+    bottom: 5vw;
+    width: 90vw;
+    height: 95vh;
+    background: rgba(255, 255, 255, 0.904);
+    overflow-y: auto;
+    z-index: 1700;
+    transform: scale(0);
+    display: none;
+    .close {
+      width: 90%;
+      margin: 5vw auto;
+      height: 13vw;
+      background: orange;
+      color: black;
+      display: grid;
+      align-content: center;
+      text-align: center;
+      border-radius: 200px;
+    }
+  }
+
   @keyframes bacgroundmove {
     0% {
       background-position: 105% 10%;
@@ -353,29 +385,6 @@ page-profile {
     100% {
       background-position: 15000% 11000%;
       transform: scale(1);
-    }
-  }
-  .tutorial-inactive {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.904);
-    overflow-y: auto;
-    z-index: 1700;
-    transform: scale(1);
-    display: none;
-    .close {
-      width: 90%;
-      margin: 5vw auto;
-      height: 13vw;
-      background: orange;
-      color: black;
-      display: grid;
-      align-content: center;
-      text-align: center;
-      border-radius: 200px;
     }
   }
 

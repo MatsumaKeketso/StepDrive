@@ -14,7 +14,7 @@ page-quiz {
     right: 0px;
     bottom: 5px;
     width: 96vw;
-    height: 40px;
+    height: 33px;
     margin: auto;
     border-radius: 10px;
     color: black;
@@ -59,7 +59,7 @@ page-quiz {
     position: absolute;
     top: 0;
     left: 0;
-    bottom: 1px;
+    bottom: 0px;
     right: 0;
     background: rgb(34, 34, 34);
     z-index: 7;
@@ -103,33 +103,73 @@ page-quiz {
     flex-wrap: wrap;
     justify-content: center;
     .lmv {
-      background: url(../../assets/tutvid/car_icon.png),linear-gradient(rgb(255,255,255));
+      background:url(../../assets/tutvid/car_icon.png),linear-gradient(rgb(255, 211, 88));
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
+      p {
+        pointer-events: none;;
+        background: rgb(206, 167, 62);
+        color: white;
+        position: absolute;
+        bottom: 0;
+        margin: 0;
+        padding: 5px;
+        border-radius: 0px 10px 0px 0px;
+      }
     }
     .hmv {
-      background: url(../../assets/tutvid/bus_icon.png),linear-gradient(rgb(255,255,255));
+      background: url(../../assets/tutvid/bus_icon.png),linear-gradient(rgb(162, 187, 255));
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
+      p {
+        pointer-events: none;;
+        background: rgb(106, 130, 197);
+        color: white;
+        position: absolute;
+        bottom: 0;
+        margin: 0;
+        padding: 5px;
+        border-radius: 0px 10px 0px 0px;
+      }
     }
     .m {
-      background: url(../../assets/tutvid/cycle_icon.png),linear-gradient(rgb(255,255,255));
+      background: url(../../assets/tutvid/cycle_icon.png),linear-gradient(rgb(255, 147, 147));
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
+      p {
+        pointer-events: none;;
+        background: rgb(209, 99, 99);
+        color: white;
+        position: absolute;
+        bottom: 0;
+        margin: 0;
+        padding: 5px;
+        border-radius: 0px 10px 0px 0px;
+      }
     }
     .tmv {
-      background: url(../../assets/tutvid/semi-truck-silhouette-17.jpg),linear-gradient(rgb(255,255,255));
+      background: url(../../assets/tutvid/semi-truck-silhouette-17.png),linear-gradient(rgb(170, 255, 188));
       background-size: contain;
       background-repeat: no-repeat;
       background-position: center;
+      p {
+        pointer-events: none;;
+        background: rgb(113, 194, 131);
+        color: white;
+        position: absolute;
+        bottom: 0;
+        margin: 0;
+        padding: 5px;
+        border-radius: 0px 10px 0px 0px;
+      }
     }
     div {
       transition: 0.3s;
       color: black;
-      background: white;
+      background: rgb(70, 70, 70);
       min-width: 33.33%;
       height: 50%;
       margin: 2px;
@@ -137,15 +177,8 @@ page-quiz {
       box-shadow: 0px 2px 3px #171717bd;
       position: relative;
       overflow: hidden;
-      p {
-        pointer-events: none;;
-        background: white;;
-        position: absolute;
-        bottom: 0;
-        margin: 0;
-        padding: 5px;
-        border-radius: 0px 10px 0px 0px;
-      }
+
+
     }
   }
   img {
@@ -159,17 +192,17 @@ page-quiz {
     margin: 5vw 0%;
   }
   #cancel {
-    background: linear-gradient(rgb(53, 60, 75));
-    color: white;
+    background: linear-gradient(rgb(255, 255, 255));
+    color: rgb(31, 31, 31);
     transform: scale(0.8);
   }
   button {
-    margin: 5vw auto;
+    margin: 3vw auto;
   width: 60%;
   padding: 5vw;
-  font-size: 3vw;
+  font-size: 5vw;
   border-radius: 200px;
-  letter-spacing: 10px;
+  letter-spacing: 5px;
   text-transform: uppercase;
   background: rgb(245, 245, 245);
   text-shadow: 0px 2px 2px #17171781;

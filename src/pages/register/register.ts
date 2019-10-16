@@ -14,6 +14,7 @@ import { YouPage } from '../you/you';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+  loaderAnimate = false;
 user =  {} as Users;
 
   loginForm: FormGroup;
@@ -68,29 +69,31 @@ user =  {} as Users;
       content: 'Please wait...',
       duration: 2000
     })
-    loading.present();
+    // loading.present();
 
 
-
+    this.loaderAnimate = true;
     if (!user.email || !user.password) {
       loading.dismiss()
       this.toastCtrl.create({
         message: 'Provide all required credentials.',
-        duration: 2000
+        duration: 3000
       }).present();
-
+      this.loaderAnimate = false;
 
     } else {
        firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then((result) => {
-      this.navCtrl.push(YouPage);
-      loading.dismiss()
+        this.loaderAnimate = false;
+        this.navCtrl.push(YouPage);
+      // loading.dismiss()
 
 
 
     }).catch(error => {
       let errorCode = error.code;
       let errorMessage = error.message;
-      loading.dismiss()
+      this.loaderAnimate = false;
+      // loading.dismiss()
       console.log(errorMessage);
 
       // Handle Errors here.
