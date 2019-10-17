@@ -66,26 +66,39 @@ mapCenter = {
   }
   userReviews = []
   toggleReviews = false;
-  licenseCode = "code08"
+  licenseCode = "code01"
   code08 = document.getElementsByClassName('code08');
   code10 = document.getElementsByClassName('code10');
   code14 = document.getElementsByClassName('code14');
   code01 = document.getElementsByClassName('code01');
+  information = document.getElementsByClassName('information');
+  infoRead = document.getElementsByClassName('s-readmore');
+  lastScrollTop = 0;
   constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController,private callNumber: CallNumber, public appCtrl: App, public renderer: Renderer2, public plt: Platform, public elementref: ElementRef, public keyboard: Keyboard, private androudPermissions: AndroidPermissions, public splashscreen: SplashScreen) { }
 
   ionViewDidLoad(){
+    setTimeout(()=> {
+      this.information[0].addEventListener("scroll", (event) => {
+        // console.log(event);
+        this.lastScrollTop = this.lastScrollTop + 1;
+        console.log(this.lastScrollTop);
 
-    if (this.licenseCode== 'code08') {
+   if (this.lastScrollTop > 5){
+    this.renderer.setStyle(this.infoRead[0], 'opacity', '0');
+   }
+      });
+    }, 1000)
+    if (this.licenseCode== 'code01') {
       setTimeout(()=> {
-        this.renderer.setStyle(this.code08[0], 'width', '100%');
+        this.renderer.setStyle(this.code08[0], 'width', '0px');
         this.renderer.setStyle(this.code10[0], 'width', '0px');
         this.renderer.setStyle(this.code14[0], 'width', '0px');
-        this.renderer.setStyle(this.code01[0], 'width', '0px');
+        this.renderer.setStyle(this.code01[0], 'width', '100%');
 
-        this.renderer.setStyle(this.code08[0], 'height', '70%');
+        this.renderer.setStyle(this.code08[0], 'height', '0px');
         this.renderer.setStyle(this.code10[0], 'height', '0px');
         this.renderer.setStyle(this.code14[0], 'height', '0px');
-        this.renderer.setStyle(this.code01[0], 'height', '0px');
+        this.renderer.setStyle(this.code01[0], 'height', '70%');
       }, 1000)
     }
     this.splashscreen.hide();
@@ -269,6 +282,8 @@ this.users = filterd
      }
 
      setTimeout(()=> {
+       console.log(data);
+
         this.appCtrl.getRootNav().push(ContactPage, data);
      }, 400)
      //

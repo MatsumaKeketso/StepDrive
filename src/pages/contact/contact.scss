@@ -13,8 +13,8 @@ page-contact {
         top: 5px;
         left: 5px;
         button{
-          width: 50px;
-          height: 50px;
+          width: 40px;
+          height: 40px;
           display: grid;
           align-content: center;
           background: #B6465F;
@@ -111,7 +111,7 @@ page-contact {
           background-repeat: no-repeat;
 
         .form{
-          width: 100%;
+          // width: 100%;
           padding: 10% 5%;
           filter: blur(0px);
           background:none;

@@ -4,7 +4,8 @@ import { Http } from '@angular/http';
 import * as firebase from 'firebase'
 import { Question1Page } from '../question1/question1';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Storage } from '@ionic/storage'
+import { Storage } from '@ionic/storage';
+import * as moment from 'moment'
 declare var google;
 @Component({
   selector: 'page-contact',
@@ -31,7 +32,8 @@ export class ContactPage {
     location: { // always filled, from google
       address: '',
       lng: null,
-      lat: null
+      lat: null,
+      placeid: ''
     },
     package: { // from the params
       name: '',
@@ -44,8 +46,8 @@ export class ContactPage {
   dateNow = null;
   // defaults just incase
   school = {
-    open: '08:00',
-    closed: "20:00"
+    open: null,
+    closed: null
   }
   // after the google get request
   addressokay = false;
@@ -79,13 +81,28 @@ export class ContactPage {
     this.getAddress();
     // sets the date picker to today's time
     let today = new Date().toJSON().split('T')[0];
+    console.log(today);
+
     this.dateNow = today;
     console.log('now Date: ', today);
 
     this.getlocation();
     console.log('Contact', this.navParams.data);
     this.school.open = this.navParams.data.school.open;
-    this.school.closed = this.navParams.data.school.closed;
+    // this.school.closed = this.navParams.data.school.closed;
+    let closedDate = new Date(this.navParams.data.school.closed);
+    let closed = closedDate.setHours((closedDate.getHours() + 2) - 1)
+    let theDate = new Date(closed)
+    this.school.closed = theDate.toJSON();
+    // let Moment = moment(dateString)
+    // this.school.closed = dateString;
+    // console.log('Converted time', dateString);
+
+    // console.log('New Time String', Moment.format());
+    console.log('old Time ',this.navParams.data.school.closed);
+    console.log('new Time ',this.school.closed);
+
+
     const date = new Date();
     // returns the date in the form of 'Sat, 24 Sep 2019' number
     // use datein.valueOf() to get the date in the form of '25544346565663' to use calculations on it
@@ -120,10 +137,10 @@ export class ContactPage {
           this.geocoder.geocode({'address': res.data().location.address},(results, status) =>{
             if (status ) {
               if (results[0]) {
-                console.log(results);
                 this.request.location.lat = results[0].geometry.location.lat()
                 this.request.location.lng = results[0].geometry.location.lng()
                 this.request.city = results[0].address_components[3].long_name;
+                this.request.location.placeid = results[0].place_id
                 console.log('filterd by', results);
               } else {
                 console.log('No results found');
@@ -230,6 +247,7 @@ export class ContactPage {
           this.request.location.lat = data.lat;
           this.request.location.lng = data.lng;
           this.request.city = results[0].address_components[2].short_name
+          this.request.location.placeid = results[0].place_id
           this.infowindow.open(this.map, marker);
           this.message.text = "Address Okay"
           this.message.id = 0;
@@ -262,7 +280,87 @@ export class ContactPage {
       restriction: {
         latLngBounds: this.SOUTH_AFRICAN_BOUNDS,
         strictBounds: true
-      }
+      },
+      styles: [
+        {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+        {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+        {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+        {
+          featureType: 'administrative.locality',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#d59563'}]
+        },
+        {
+          featureType: 'poi',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#d59563'}]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'geometry',
+          stylers: [{color: '#263c3f'}]
+        },
+        {
+          featureType: 'poi.park',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#0078D7'}]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry',
+          stylers: [{color: '#38414e'}]
+        },
+        {
+          featureType: 'road',
+          elementType: 'geometry.stroke',
+          stylers: [{color: '#212a37'}]
+        },
+        {
+          featureType: 'road',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#9ca5b3'}]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry',
+          stylers: [{color: '#746855'}]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'geometry.stroke',
+          stylers: [{color: '#1f2835'}]
+        },
+        {
+          featureType: 'road.highway',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#f3d19c'}]
+        },
+        {
+          featureType: 'transit',
+          elementType: 'geometry',
+          stylers: [{color: '#2f3948'}]
+        },
+        {
+          featureType: 'transit.station',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#d59563'}]
+        },
+        {
+          featureType: 'water',
+          elementType: 'geometry',
+          stylers: [{color: '#17263c'}]
+        },
+        {
+          featureType: 'water',
+          elementType: 'labels.text.fill',
+          stylers: [{color: '#515c6d'}]
+        },
+        {
+          featureType: 'water',
+          elementType: 'labels.text.stroke',
+          stylers: [{color: '#17263c'}]
+        }
+      ]
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
@@ -277,7 +375,8 @@ export class ContactPage {
     // create the booking with an auto generated id
     this.db.collection('bookings').add(this.request).then(async res => {
       let address = {
-        location: this.request.location
+        location: this.request.location,
+        placeid: this.request.location.placeid
       }
       this.db.collection('users').doc(this.request.uid).set(address, {merge: true}).then(res => {
         loader.dismiss();
@@ -339,7 +438,8 @@ export class ContactPage {
           this.request.location.address = res.json().results[0].formatted_address;
           this.request.location.lat = res.json().results[0].geometry.location.lat;
           this.request.location.lng = res.json().results[0].geometry.location.lng;
-          this.request.city = res.json().results[0].address_components[2].short_name
+          this.request.city = res.json().results[0].address_components[2].short_name;
+          this.request.location.placeid = res.json().results[0].place_id;
           console.log('Data: ', res.json());
 
         } else {
@@ -440,6 +540,7 @@ this.request.city = place.address_components[3].long_name;
 this.request.location.address = place.formatted_address;
 this.request.location.lat = place.geometry.location.lat();
 this.request.location.lng = place.geometry.location.lng();
+this.request.location.placeid = place.place_id;
 this.addressokay = true;
 console.log(this.request);
 

@@ -220,16 +220,6 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
           }
 
   }
-  getReviews(school) {
-    this.db.collection('reviews').where('schooluid', '==', school).get().then(res => {
-
-      res.forEach(doc => {
-        this.userReviews.push(doc.data());
-      })
-    }).catch(err => {
-
-    })
-  }
   async getBooking() {
 
     let data = {
@@ -260,12 +250,8 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         docid: null
       }
     }
-    const loader = this.loadingCtrl.create({
-      content: 'Please Wait'
-    });
-
     // loader.present()
-   await this.db.collection('bookings').where('uid', '==', this.user.uid).get().then( async res => {
+   await this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot( async res => {
       this.request = []
       res.forEach(async doc => {
         data.request.docid = doc.id;
@@ -282,7 +268,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         let nowDate = new Date().toDateString();
         let bookDate = new Date(doc.data().datein).toDateString();
         // the date must be in the future for the alerter to be presented
-        if (nowDate !== bookDate) {
+        if (nowDate >= bookDate) {
           // console.log('now',nowDate , 'booling',bookDate);
 
           // console.log('Date is bigger');
@@ -402,9 +388,18 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
       })
       // loader.dismiss()
-
+      setTimeout(()=> {
+        this.loaderAnimate = false;
+      }, 1000)
       // console.log('Reqs: ', this.request);
     })
+  }
+  checkBookingExpiary() {
+    for (let i = 0; i < this.request.length; i++) {
+      console.log(this.request[i]);
+
+
+    }
   }
   showMore(index) {
     this.more.cond = !this.more
@@ -425,7 +420,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
               this.request = [];
               this.getBooking()
               this.toastCtrl.create({
-                message: 'Request deletes successfully',
+                message: 'Request deleted successfully',
                 duration: 2000
               }).present()
             })

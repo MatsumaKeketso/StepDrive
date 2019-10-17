@@ -1,5 +1,18 @@
-<ion-content (click)="checkkeyboard() " >
-  <div class="ultimate" >
+
+
+
+
+<ion-content (click)="checkkeyboard()">
+    <div [ngClass]="{'loader': loaderAnimate, 'loader-hide': !loaderAnimate}">
+
+
+        <div class="maploader">
+            <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            <p>Profiling</p>
+        </div>
+      </div>
+
+  <div class="ultimate">
       <div *ngIf="!isprofile" class='container'>
           <div class="header">
             <h1>Manage Profile</h1>
@@ -79,9 +92,16 @@
                   <button (click)="createnote()" ion-fab mini><ion-icon name="add"></ion-icon></button>
                 </div>
               </div>
-              <div class="n-cont">
-                <div *ngFor="let n of notes; let i = index" (click)="editNote(n)" class="n-bubble">
+              <div  class="n-cont">
+                  <div *ngIf="notes.length==0" style="width: 90%; margin: auto; text-align: center;">
+                      <h5>Your note list is empty.</h5>
+                      <p>To make a note click on the  round<strong> "+" </strong>button.<br>
+                      Tap and hold a note to "Delete" <br>
+                      Tap a note to "Edit".</p>
+                    </div>
+                <div *ngFor="let n of notes; let i = index" (press)="pressEvent($event, n)" (click)="editNote(n)" class="n-bubble">
                   <h5>Note {{i+1}}</h5>
+
                   <p>"{{n.doc.text}}" - <sub>{{n.doc.datecreated}}</sub> </p>
                 </div>
               </div>

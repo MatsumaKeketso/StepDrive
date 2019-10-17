@@ -1,5 +1,210 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 page-register {
+
+  .loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 20;
+    background: linear-gradient(#242424e1),url(../../assets/tutvid/pattern.svg);
+    background-repeat: repeat-x;
+    background-size: cover;
+    transform: scale(1);
+    overflow: hidden;
+    transition: 0.4s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    animation: backgroundmover 30s linear infinite;;
+    color: white;;
+    .maploader {
+
+      // overflow: hidden;
+      width: 64px;
+      height: 64px;
+      margin: 40vh auto;
+      text-align: center;
+      // animation: name duration timing-function delay iteration-count direction fill-mode;
+      // animation: maploader 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+      border-radius: 200px;
+      display: grid;
+      align-content: center;
+      position: relative;
+      // border-top: solid 2px gray;
+      .lds-grid {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 64px;
+      }
+      .lds-grid div {
+        position: absolute;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: rgb(255, 255, 255);
+        animation: lds-grid 1.2s linear infinite;
+      }
+      .lds-grid div:nth-child(1) {
+        top: 6px;
+        left: 6px;
+        animation-delay: 0s;
+      }
+      .lds-grid div:nth-child(2) {
+        top: 6px;
+        left: 26px;
+        animation-delay: -0.4s;
+      }
+      .lds-grid div:nth-child(3) {
+        top: 6px;
+        left: 45px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(4) {
+        top: 26px;
+        left: 6px;
+        animation-delay: -0.4s;
+      }
+      .lds-grid div:nth-child(5) {
+        top: 26px;
+        left: 26px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(6) {
+        top: 26px;
+        left: 45px;
+        animation-delay: -1.2s;
+      }
+      .lds-grid div:nth-child(7) {
+        top: 45px;
+        left: 6px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(8) {
+        top: 45px;
+        left: 26px;
+        animation-delay: -1.2s;
+      }
+      .lds-grid div:nth-child(9) {
+        top: 45px;
+        left: 45px;
+        animation-delay: -1.6s;
+      }
+      @keyframes lds-grid {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+    }
+  }
+  @keyframes backgroundmover {
+    0% {
+      background-position-x: 0vw;
+    }
+    100% {
+      background-position-x: 400vw;
+    }
+  }
+  .loader-hide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 20;
+    background: rgb(255, 255, 255);
+    transform: scale(0);
+    overflow: hidden;
+    transition: 0.4s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    .maploader {
+
+      overflow: hidden;
+      width: 64px;
+      height: 64px;
+      margin: 40vh auto;
+      text-align: center;
+      // animation: name duration timing-function delay iteration-count direction fill-mode;
+      animation: maploader 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+      border-radius: 200px;
+      display: grid;
+      align-content: center;
+      position: relative;
+      border-top: solid 2px gray;
+      .lds-grid {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 64px;
+      }
+      .lds-grid div {
+        position: absolute;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #fff;
+        animation: lds-grid 1.2s linear infinite;
+      }
+      .lds-grid div:nth-child(1) {
+        top: 6px;
+        left: 6px;
+        animation-delay: 0s;
+      }
+      .lds-grid div:nth-child(2) {
+        top: 6px;
+        left: 26px;
+        animation-delay: -0.4s;
+      }
+      .lds-grid div:nth-child(3) {
+        top: 6px;
+        left: 45px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(4) {
+        top: 26px;
+        left: 6px;
+        animation-delay: -0.4s;
+      }
+      .lds-grid div:nth-child(5) {
+        top: 26px;
+        left: 26px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(6) {
+        top: 26px;
+        left: 45px;
+        animation-delay: -1.2s;
+      }
+      .lds-grid div:nth-child(7) {
+        top: 45px;
+        left: 6px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(8) {
+        top: 45px;
+        left: 26px;
+        animation-delay: -1.2s;
+      }
+      .lds-grid div:nth-child(9) {
+        top: 45px;
+        left: 45px;
+        animation-delay: -1.6s;
+      }
+      @keyframes lds-grid {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+    }
+  }
     .no-scroll .scroll-content{
         overflow: hidden;
     }
@@ -26,11 +231,10 @@ page-register {
       align-content: center;
         width: 100%;
         height:100%;
-        background: url(../../assets/tapes/HEADER-TAPE.svg),rgb(30, 30, 30);
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: 20vw -30vh;
-        background-repeat: no-repeat;
+        background: url(../../assets/watermarks.svg) repeat, url(../../assets/register_tape.svg) 30vw -9vh no-repeat,rgb(31, 31, 31);
+        // background-size: 150%;
+        // background-position: 5%;
+        // background-repeat: no-repeat;
       .form{
         width: 100%;
         padding: 10% 5%;

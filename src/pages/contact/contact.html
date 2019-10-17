@@ -17,11 +17,11 @@
 <p *ngIf="!request.package.number">Requested {{request.package.number}} lessons for R{{request.package.amount}}.00</p>
         <div class="input">
           <p>Start Date</p>
-          <ion-datetime [(ngModel)]="request.datein" style="border: solid 1px white;border-radius: 200px;" displayFormat="YYYY-MM-DD" pickerFormat="DD MMMM YYYY"  min="{{dateNow}}"></ion-datetime>
+          <ion-datetime [(ngModel)]="request.datein" style="border: solid 1px white;border-radius: 200px;" displayFormat="D MMMM YYYY" pickerFormat="DD MMMM YYYY"  min="{{dateNow}}"></ion-datetime>
         </div>
         <div class="input">
             <p>Start Time</p>
-            <ion-datetime [disabled]="!request.datein" [(ngModel)]="request.time" style="border: solid 1px white;border-radius: 200px;" displayFormat="HH:mm" pickerFormat="HH:mm" min="{{school.open}}" max="{{school.closed}}"></ion-datetime>
+            <ion-datetime [disabled]="!request.datein" [(ngModel)]="request.time" style="border: solid 1px white;border-radius: 200px;" displayFormat="h:mm a" pickerFormat="HH:mm" min="{{school.open}}" max="{{school.closed}}"></ion-datetime>
           </div>
           <div class="input">
               <p>Address</p>
