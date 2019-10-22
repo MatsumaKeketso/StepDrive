@@ -309,7 +309,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
           handler: () => {
             this.db.collection('bookings').doc(docid).delete().then(res => {
               this.request = [];
-              this.getBooking()
+              this.getBooking();
               this.toastCtrl.create({
                 message: 'Request deleted successfully',
                 duration: 2000
