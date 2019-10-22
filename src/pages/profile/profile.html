@@ -101,23 +101,23 @@
   </div>
   <div class="card" *ngFor="let s of request; let i = index">
     <div *ngIf="!request[0]" class="image">
-      <img *ngIf="request[0]"  src="{{s.school.image}}">
+      <img *ngIf="request[0]"  src="{{s.image}}">
     </div>
     <div class="details">
-      <h3>{{s.school.schoolname}}</h3>
+      <h3>{{s.schoolname}}</h3>
       <div *ngIf="more.id==i" class="more">
-          <p>{{s.school.desc}}</p>
+          <p>{{s.desc}}</p>
       </div>
       <div class="dates">
-          <p>Lesson starts {{s.request.datein | date}} to {{s.request.dateout}}</p>
+          <p>Lesson starts {{s.datein | date}} to {{s.dateout}}</p>
       </div>
       <div class="pack">
-          <p>{{s.request.package.name}} <span *ngIf="!s.request.package.name" >Custom</span>: {{s.request.package.number}} {{s.request.package.code}} lessons(s) for R{{s.request.package.amount}}.00</p>
+          <p>{{s.package.name}} <span *ngIf="!s.package.name" >Custom</span>: {{s.number}} {{s.package.code}} lessons(s) for R{{s.amount}}.00</p>
       </div>
       <div class="confirmation">
-        <p *ngIf="s.request.confirmed=='waiting'" style="float: left; color: rgb(255, 153, 0);">Awaiting Confirmation</p>
-        <p *ngIf="s.request.confirmed=='accepted'" style="float: left; color: rgb(0, 185, 15);">Accepted</p>
-        <p *ngIf="s.request.confirmed=='rejected'" style="float: left; color: rgb(255, 0, 0);">Rejected</p>
+        <p *ngIf="s.confirmed=='waiting'" style="float: left; color: rgb(255, 153, 0);">Awaiting Confirmation</p>
+        <p *ngIf="s.confirmed=='accepted'" style="float: left; color: rgb(0, 185, 15);">Accepted</p>
+        <p *ngIf="s.confirmed=='rejected'" style="float: left; color: rgb(255, 0, 0);">Rejected</p>
       </div>
     </div>
     <div class="show" (click)="showMore(i)">
@@ -125,13 +125,13 @@
       <br>
       <p *ngIf="more.id==i&&request.length>1">  LESS </p>
     </div>
-    <div (click)="delete(s.request.docid)" class="delete">
+    <div (click)="delete(s.docid)" class="delete">
       <ion-icon style="margin: auto; color: white;" name="trash"></ion-icon>
     </div>
     <div (click)="popReview(s)" class="comment">
         <ion-icon style="margin: auto; color: white;" name="chatbubbles"></ion-icon>
       </div>
-      <div *ngIf="s.request.confirmed=='waiting'||s.request.confirmed=='rejected'" class="comment-waiting">
+      <div *ngIf="s.confirmed=='waiting'||s.confirmed=='rejected'" class="comment-waiting">
           <ion-icon style="margin: auto; color: white;" name="chatbubbles"></ion-icon>
         </div>
   </div>

@@ -194,7 +194,7 @@ export class ProfilePage {
     })
   }
   popReview(school) {
-    let createdDate = new Date(school.request.datein);
+    let createdDate = new Date(school.datein);
 
     let d = new Date();
 
@@ -222,162 +222,52 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
   }
   async getBooking() {
 
-    let data = {
-      school: {
-        allday: null,
-        cellnumber: '',
-        closed: null,
-        coords: {},
-        cost: 0,
-        desc: null,
-        email: null,
-        image: null,
-        open: null,
-        registration: null,
-        schoolname: null,
-        uid: null,
-      },
-      request: {
-        book: null,
-        confirmed: null,
-        location: {},
-        package: {},
-        datecreated: null,
-        datein: null,
-        dateout: null,
-        schooluid: null,
-        uid: null,
-        docid: null
-      }
-    }
+    let data = {   }
     // loader.present()
    await this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot( async res => {
-      this.request = []
-     await res.forEach(async doc => {
-        data.request.docid = doc.id;
-        // this is extreme bad programming :(
-        data.request.book = doc.data().book;
-        data.request.confirmed = doc.data().confirmed
-        data.request.location = doc.data().location
-        data.request.package = doc.data().package
-        data.request.datecreated = doc.data().datecreated
-        data.request.datein = doc.data().datein
-        data.request.dateout = doc.data().dateout
-        data.request.schooluid = doc.data().schooluid
-        data.request.uid = doc.data().uid;
-        let nowDate = new Date().toDateString();
-        let bookDate = new Date(doc.data().datein).toDateString();
-        // the date must be in the future for the alerter to be presented
-        if (nowDate >= bookDate) {
-          // cofirmed must be accepted for the alerter to be present
-          if (doc.data().confirmed == 'accepted') {
-            // the notified must be false
-            if (!doc.data().notified) {
-              // update the notified field to true after presenting the alert
-             let alerter = await this.alertCtrl.create({
-                title: `Hi ${this.user.name}`,
-                message: 'Did you enjoy your Learning experience?',
-                buttons:[{
-                  text: "I didn't go.",
-                  handler: ()=> {
-                   let alerter = this.alertCtrl.create({
-                      title: "It's Okay!",
-                      message: "We hope nothing bad kept you from becoming one of South Africa's awesome motorist. But here's the good news, after your next session feel free to comeback and talk about your learning experience to other aspiring drivers.",
-                      buttons: [{
-                        text: 'Okay',
-                        handler: ()=> {
-                          this.db.collection('bookings').doc(doc.id).update({notified: true});
-                        }
-                      }]
-                    })
-                    alerter.present();
-                  }
-                }, {
-                  text: "Yes definitely.",
-                  handler:async ()=> {
-                   let alerter = await this.alertCtrl.create({
-                      title: 'Awesome!',
-                      message: 'In order for our driving instructors to improve their services, please take a moment of your time and review this driving school. Your feedback is of high importance. <br> <i>Click on the blue button on your booking card, rate the service and send a review.</i>',
-                      buttons: [{
-                        text: 'Okay',
-                        handler: ()=>{
-                          this.db.collection('bookings').doc(doc.id).update({notified: true});
-                        }
-                      }]
-                    })
-                    alerter.present();
-                  }
-                }]
-              })
-              alerter.present();
-            }
-          }
-        }
-       await this.db.collection('drivingschools').where('schooluid', '==', data.request.schooluid).get().then( async res => {
-
-          await res.forEach(doc => {
-            data.school.allday = doc.data().allday;
-            data.school.cellnumber = doc.data().cellnumber;
-            data.school.closed = doc.data().closed;
-            data.school.coords = doc.data().coords;
-            data.school.cost = doc.data().cost;
-            data.school.desc = doc.data().desc;
-            data.school.email = doc.data().email;
-            data.school.image = doc.data().image;
-            data.school.open = doc.data().open;
-            data.school.registration = doc.data().registration;
-            data.school.schoolname = doc.data().schoolname;
-            data.school.uid = doc.data().schooluid;
+      this.request.length = 0
+     await res.forEach(async rDoc => {
+       await this.db.collection('drivingschools').where('schooluid', '==', rDoc.data().schooluid).get().then( async school => {
+          await school.forEach(sDoc => {
+            data = {
+              // school data
+              allday: sDoc.data().allday,
+              cellnumber: sDoc.data().cellnumber,
+              closed: sDoc.data().closed,
+              coords: sDoc.data().coords,
+              cost: sDoc.data().cost,
+              desc: sDoc.data().desc,
+              email: sDoc.data().email,
+              image: sDoc.data().image,
+              open: sDoc.data().open,
+              registration: sDoc.data().registration,
+              schoolname:  sDoc.data().schoolname,
+              sUid:  sDoc.data().schooluid,
+              // request data
+              book: rDoc.data().book,
+              confirmed: rDoc.data().confirmed,
+              location:rDoc.data().location,
+              package:  rDoc.data().package,
+              datecreated: rDoc.data().datecreated,
+              datein: rDoc.data().datein,
+              dateout: rDoc.data().dateout,
+              schooluid: rDoc.data().schooluid,
+              uid: rDoc.data().uid,
+              docid: rDoc.id
+             }
             this.request.push(data);
+            console.log('our obj', this.request);
             this.loaderAnimate = false;
         // this.more = this.request.indexOf()
         this.count += 1;
         setTimeout(()=>{
-          data = {
-            school: {
-              allday: null,
-              cellnumber: '',
-              closed: null,
-              coords: {},
-              cost: 0,
-              desc: null,
-              email: null,
-              image: null,
-              open: null,
-              registration: null,
-              schoolname: null,
-              uid: null,
-            },
-            request: {
-              book: null,
-              confirmed: null,
-              location: {},
-              package: {},
-              datecreated: null,
-              datein: null,
-              dateout: null,
-              schooluid: null,
-              uid: null,
-              docid: null
-            }
-          }
+
         }, 0)
 
           })
-          if (doc.data().confirmed == 'rejected' && !doc.data().notified) {
-            // say something about the rejected booking
-         let alerter =   await this.alertCtrl.create({
-              title: `Hey ${this.user.name}`,
-              message: "You booking has been rejected by this instructor. You can always go back to the map and look for another one, it's best to make more than 1 booking with different driving schools for cases such as these. <br> <br> <i>*Note: you can delete booking to keep your space clean.</i>",
-              buttons: [{
-                text: 'Okay',
-                handler: ()=>{
-                  this.db.collection('bookings').doc(doc.id).update({notified: true});
-                }
-              }]
-            })
-            alerter.present();
-          }
+          // the date must be in the future for the alerter to be presented
+
+
         })
 
 
