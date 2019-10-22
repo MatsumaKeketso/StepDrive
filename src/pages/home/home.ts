@@ -146,11 +146,8 @@ mapCenter = {
     });
   }
   fillInAddress() {
-
-
     // Get the place details from the autocomplete object.
      let place = this.autocomplete.getPlace();
-
 
     let filter = place.address_components[3].short_name
     this.db.collection('drivingschools').where('city','==',filter).get().then(res=> {
@@ -348,7 +345,9 @@ this.users = filterd
     }
   }
   //=================This is the method Nkwe altered========
-  requestLesson(school, lessons, event, pckgType) {
+  requestLesson(school, lsns, event, pckgType) {
+    console.log();
+
     let data = {
        school: null,
        lessons: {
@@ -360,13 +359,10 @@ this.users = filterd
      }
      if (pckgType == "Custom") {
        data.school = school
-       data.lessons.amount = this.school.cost
-       data.lessons.code = this.licenseCode
-       data.lessons.name = pckgType
-       data.lessons.number = lessons
+       data.lessons = lsns
      } else {
        data.school = school
-       data.lessons = lessons
+       data.lessons = lsns
      }
      if (event.path.length != 0) {
       this.renderer.setStyle(event.path[0], 'transition', '0.4s');
@@ -539,15 +535,37 @@ this.getlocation();
             this.filterby = results[1].address_components[3].short_name;
             console.log('filterd by', this.filterby);
             // get schools depending on the city
+            // this.loadMap(14)
             this.getfilterdusers();
           } else {
-
+                        // if the user denies the location then set the value to no
+                        this.store.set('acceptedPermission', 'no')
+                        this.mapCenter.lat = -29.465306;
+                  this.mapCenter.lng = 24.741967;
+                  // this.initMap()
+                  // load the map with the zoom of 2
+                  this.loadMap(2);
+                        this.getusers();
           }
         } else {
-
+                      // if the user denies the location then set the value to no
+                      this.store.set('acceptedPermission', 'no')
+                      this.mapCenter.lat = -29.465306;
+                this.mapCenter.lng = 24.741967;
+                // this.initMap()
+                // load the map with the zoom of 2
+                this.loadMap(2);
+                      this.getusers();
         }
       }, err => {
-
+                    // if the user denies the location then set the value to no
+                    this.store.set('acceptedPermission', 'no')
+                    this.mapCenter.lat = -29.465306;
+              this.mapCenter.lng = 24.741967;
+              // this.initMap()
+              // load the map with the zoom of 2
+              this.loadMap(2);
+                    this.getusers();
       });
       // generate marker info for the user
       let data = {
@@ -607,9 +625,6 @@ this.getlocation();
   }
 // loads our main map
   async loadMap(zoomlevel: number){
-
-
-
     let location;
     var ref = this;
     let watch = this.geolocation.watchPosition();
@@ -712,13 +727,12 @@ this.getlocation();
   addMarker(props) {
     // add marker
     let markerLabel = props.schoolname.split(' ')
-
+    let bLetter = markerLabel[0].split('')
 
     const marker = new google.maps.Marker({
       position: props.coords,
       map: this.map,
       icon: '../../assets/icon/icons8-car-16.png',
-      label: markerLabel[0]
     })
     // check for custom icon
     // check for content
