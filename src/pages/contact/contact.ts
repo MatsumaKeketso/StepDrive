@@ -39,6 +39,7 @@ export class ContactPage {
     package: { // from the params
       name: '',
       number: null,
+      code: null,
       amount: null
     }
   }
@@ -123,9 +124,10 @@ export class ContactPage {
     // set the cost
     this.request.package.amount = this.navParams.data.lessons.amount ;
     this.request.package.name = this.navParams.data.lessons.name ;
+    this.request.package.code = this.navParams.data.lessons.code ;
     } else {
       this.request.package.number = this.navParams.data.lessons
-      this.request.package.amount = this.navParams.data.school.cost * parseInt(this.request.package.number );
+      this.request.package.amount = this.navParams.data.amount
     }
   }
   getAddress() {

@@ -241,13 +241,13 @@ this.renderer.setStyle(this.code01[0], 'height', '0%');
       this.store.set('readTips', true)
             if (elements) {
               Object.keys(elements).map((key) => {
-                elements[key].style.transform = 'translateY(50vh)';
+                // elements[key].style.transform = 'translateY(50vh)';
                 elements[key].style.transition = '0.4s';
               });
             }
     } else {
       Object.keys(elements).map((key) => {
-        elements[key].style.transform = 'translateY(0vh)';
+        // elements[key].style.transform = 'translateY(0vh)';
         elements[key].style.transition = '0.4s';
       });
     }
@@ -295,7 +295,6 @@ this.users = filterd
   hideTabs(cmd) {
 
     if ('close') {
-      this.store.set('readTips', true)
             if (this.tabElements) {
               Object.keys(this.tabElements).map((key) => {
                 this.tabElements[key].style.transform = 'translateY(50vh)';
@@ -359,11 +358,15 @@ this.users = filterd
      }
      if (pckgType == "Custom") {
        data.school = school
-       data.lessons = lsns
+       data.lessons.number = lsns
+       data.lessons.code = this.licenseCode
+       data.lessons.name = pckgType
+       data.lessons.amount = parseFloat(this.school.cost) * parseFloat(lsns)
      } else {
        data.school = school
        data.lessons = lsns
      }
+     console.log(data);
      if (event.path.length != 0) {
       this.renderer.setStyle(event.path[0], 'transition', '0.4s');
       this.renderer.setStyle(event.path[0], 'transform', 'scale(1.07)');
