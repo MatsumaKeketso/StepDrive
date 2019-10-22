@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Platform, NavController, IonicApp, App, ToastController, Nav } from 'ionic-angular';
+import { Platform, App, ToastController, AlertController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { firebaseConfig } from '../app/Enveronment';
 import * as firebase from 'firebase';
@@ -11,7 +10,6 @@ import { Storage } from '@ionic/storage';
 import { LoginPage } from '../pages/login/login';
 import {google} from 'google-maps';
 
-import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import { Network } from '@ionic-native/network';
 declare var google: google;
@@ -24,73 +22,105 @@ export class MyApp {
     // set up hardware back button event.
     lastTimeBackPress = 0;
     timePeriodToExit = 2000;
+    disconnectSubscription;
+    connectSubscription;
   constructor(public platform: Platform,
     public statusBar: StatusBar,
-    splashScreen: SplashScreen,
     private screenOrien: ScreenOrientation,
     public store: Storage,
     public toastCtrl: ToastController,
     public network: Network,
+    public alertCtrl: AlertController,
     public app: App) {
     statusBar.backgroundColorByHexString('#D28B2B');
 
     platform.ready().then(async () => {
+      this.disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+        this.alertCtrl.create({
+          message: 'Network was disconnected.',
+          buttons:[{
+            text: "Close App",
+            handler: () => {
+              this.stopNetworkWatch();
+            }
+          }]
+        }).present()
+      });
+      this.connectSubscription = this.network.onConnect().subscribe(() => {
+        console.log('network connected!');
+        // We just got a connection but we need to wait briefly
+         // before we determine the connection type. Might need to wait.
+        // prior to doing any api requests as well.
+        setTimeout(() => {
+          if (this.network.type === 'wifi') {
+            this.toastCtrl.create({
+              message: `Connected to a ${this.network.type} network.`,
+              duration: 2000
+            }).present()
+          } else if (this.network.type === 'unknown') {
+            this.toastCtrl.create({
+              message: `Connected to an ${this.network.type} network.`,
+              duration: 2000
+            }).present()
+          } else if (this.network.type === '2g'||this.network.type === '3g'||this.network.type === '4g') {
+            this.toastCtrl.create({
+              message: `Connected to a ${this.network.type} network.`,
+              duration: 2000
+            }).present()
+          } else if (this.network.type === 'cellular') {
+            this.toastCtrl.create({
+              message: `Connected to a ${this.network.type} network.`,
+              duration: 2000
+            }).present()
+          } else {
+            this.alertCtrl.create({
+               title:'Network Error',
+              message: 'Slow network or No internet connection.',
+              buttons: [
+                {text: 'Close App', handler: ()=> {
+                  this.platform.exitApp()
+                }}
+              ]
+            }).present()
+          }
+        }, 30000);
+      });
       let checkDownLinkSpeed = this.network.downlinkMax
       setTimeout(()=> {
         console.log(checkDownLinkSpeed);
-      }, 3000)
+      }, 3000);
 
       this.initialiseApp();
       firebase.initializeApp(firebaseConfig);
       // platform.backButton.subscribe(res => {
       // })
       if (platform.is('android')) {
-        // screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
+        screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
       }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       // statusBar.styleDefault();
-      setTimeout(() => {
-
-      }, 2000)
-      console.log('Checking if onboarding was done');
       // this.store.clear()
       this.store.get('onboarding').then((res) => {
         if (res) {
-          console.log('Onboarding done');
-
-          console.log('Checking if user logged in');
           firebase.auth().onAuthStateChanged(user => {
 
             if (user) {
-              console.log('user logged in');
-
-              setTimeout(()=>{
-                // splashScreen.hide();
-              }, 3000)
               this.rootPage = TabsPage;
-
             } else {
-              console.log('user logged in');
-
-              setTimeout(()=>{
-                // splashScreen.hide();
-              }, 3000)
               this.rootPage = LoginPage;
-
             }
           })
         } else {
-          console.log('Onboarding not done');
-
-          setTimeout(()=>{
-            // splashScreen.hide();
-          }, 3000)
           this.rootPage = OnBoardingPage;
         }
       })
     });
 
+  }
+  stopNetworkWatch() {
+    this.disconnectSubscription.unsubscribe()
+    this.platform.exitApp();
   }
   initialiseApp() {
     this.platform.registerBackButtonAction(() => {

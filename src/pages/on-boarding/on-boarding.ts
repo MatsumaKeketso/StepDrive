@@ -16,6 +16,7 @@ export class OnBoardingPage {
 
   ionViewDidLoad() {
     // this.slides.effect = 'cube';
+    this.slides.paginationType = 'progress';
     this.slides.speed = 700;
     // this.slides.lockSwipes(true);
     // this.storage.clear()

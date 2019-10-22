@@ -13,6 +13,7 @@ declare var google;
 })
 export class ContactPage {
   @ViewChild('map') mapElement: ElementRef;
+  loaderAnimate = false;
   map: any;
   db = firebase.firestore();
   storage = firebase.storage().ref();
@@ -84,7 +85,7 @@ export class ContactPage {
     console.log(today);
 
     this.dateNow = today;
-    console.log('now Date: ', today);
+    console.log('custom lesson', this.navParams.data);
 
     this.getlocation();
     console.log('Contact', this.navParams.data);
@@ -368,10 +369,7 @@ export class ContactPage {
   async saveAddress() {
     console.log(this.request);
 
-    const loader = await this.loadingCtrl.create({
-      content: 'Just a sec...',
-    })
-    loader.present();
+    this.loaderAnimate = true;
     // create the booking with an auto generated id
     this.db.collection('bookings').add(this.request).then(async res => {
       let address = {
@@ -379,7 +377,7 @@ export class ContactPage {
         placeid: this.request.location.placeid
       }
       this.db.collection('users').doc(this.request.uid).set(address, {merge: true}).then(res => {
-        loader.dismiss();
+        this.loaderAnimate = false;
         this.navCtrl.push(Question1Page ,{request: this.request, school: this.navParams.data});
       }).catch( async err=> {
         const alerter = await this.alertCtrl.create({
@@ -391,7 +389,7 @@ export class ContactPage {
         alerter.present();
       })
     }).catch(async err => {
-      loader.dismiss();
+      this.loaderAnimate = false;
       const alerter = this.alertCtrl.create({
         message: 'Something went wrong. Please try again later.',
         buttons: [
@@ -402,16 +400,12 @@ export class ContactPage {
     })
   }
   async justRequest() {
-    console.log(this.request);
-    const loader = await this.loadingCtrl.create({
-      content: 'Just a sec...',
-    })
-    loader.present();
+    this.loaderAnimate = true;
     this.db.collection('bookings').add(this.request).then(async res => {
-      loader.dismiss();
+      this.loaderAnimate = false;
       this.navCtrl.push(Question1Page, {request: this.request, school: this.navParams.data});
     }).catch(async err => {
-      loader.dismiss();
+      this.loaderAnimate = false;
       const alerter = this.alertCtrl.create({
         message: 'Something went wrong. Please try again later.',
         buttons: [
@@ -452,7 +446,7 @@ export class ContactPage {
     })
   }
   async createrequest() {
-    if (this.navParams.data.lessons.amount) {
+    if (this.navParams.data.lessons.name == "Custom") {
             // give package name a custom value
             // get the date out
             let Dateout = new Date(this.request.datein);
@@ -460,7 +454,7 @@ export class ContactPage {
             this.request.datein = newDateout;
       let lessons = parseInt(this.navParams.data.lessons.number);
       console.log('Number of lessons', lessons);
-
+      this.request.package.amount = parseFloat(this.navParams.data.lessons.amount) *  parseFloat(this.navParams.data.lessons.number)
       let date = new Date(this.request.datein);
       // set the date out foward in time by the number of lessons
       let calc = date.setTime(date.getTime() + (lessons * 24 * 60 * 60 * 1000));
@@ -469,8 +463,6 @@ export class ContactPage {
       console.log(this.request);
 
     } else {
-      // give package name a custom value
-      this.request.package.name = 'Custom';
       // get the date out
       let Dateout = new Date(this.request.datein);
       let newDateout = Dateout.toDateString();

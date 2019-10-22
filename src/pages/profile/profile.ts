@@ -253,7 +253,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
     // loader.present()
    await this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot( async res => {
       this.request = []
-      res.forEach(async doc => {
+     await res.forEach(async doc => {
         data.request.docid = doc.id;
         // this is extreme bad programming :(
         data.request.book = doc.data().book;
@@ -269,23 +269,18 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         let bookDate = new Date(doc.data().datein).toDateString();
         // the date must be in the future for the alerter to be presented
         if (nowDate >= bookDate) {
-          // console.log('now',nowDate , 'booling',bookDate);
-
-          // console.log('Date is bigger');
           // cofirmed must be accepted for the alerter to be present
           if (doc.data().confirmed == 'accepted') {
             // the notified must be false
-            // console.log('Request is accepted');
             if (!doc.data().notified) {
-              // console.log('Notified is false');
               // update the notified field to true after presenting the alert
-              this.alertCtrl.create({
+             let alerter = await this.alertCtrl.create({
                 title: `Hi ${this.user.name}`,
                 message: 'Did you enjoy your Learning experience?',
                 buttons:[{
                   text: "I didn't go.",
                   handler: ()=> {
-                    this.alertCtrl.create({
+                   let alerter = this.alertCtrl.create({
                       title: "It's Okay!",
                       message: "We hope nothing bad kept you from becoming one of South Africa's awesome motorist. But here's the good news, after your next session feel free to comeback and talk about your learning experience to other aspiring drivers.",
                       buttons: [{
@@ -294,12 +289,13 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                           this.db.collection('bookings').doc(doc.id).update({notified: true});
                         }
                       }]
-                    }).present();
+                    })
+                    alerter.present();
                   }
                 }, {
                   text: "Yes definitely.",
-                  handler: ()=> {
-                    this.alertCtrl.create({
+                  handler:async ()=> {
+                   let alerter = await this.alertCtrl.create({
                       title: 'Awesome!',
                       message: 'In order for our driving instructors to improve their services, please take a moment of your time and review this driving school. Your feedback is of high importance. <br> <i>Click on the blue button on your booking card, rate the service and send a review.</i>',
                       buttons: [{
@@ -308,20 +304,18 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                           this.db.collection('bookings').doc(doc.id).update({notified: true});
                         }
                       }]
-                    }).present();
+                    })
+                    alerter.present();
                   }
                 }]
-              }).present();
+              })
+              alerter.present();
             }
           }
-        } else {
-          // console.log('now',nowDate , 'booling',bookDate);
-          // console.log('Dates are thesame');
-
         }
-       await this.db.collection('drivingschools').where('schooluid', '==', data.request.schooluid).get().then(res => {
+       await this.db.collection('drivingschools').where('schooluid', '==', data.request.schooluid).get().then( async res => {
 
-          res.forEach(doc => {
+          await res.forEach(doc => {
             data.school.allday = doc.data().allday;
             data.school.cellnumber = doc.data().cellnumber;
             data.school.closed = doc.data().closed;
@@ -372,7 +366,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
           })
           if (doc.data().confirmed == 'rejected' && !doc.data().notified) {
             // say something about the rejected booking
-            this.alertCtrl.create({
+         let alerter =   await this.alertCtrl.create({
               title: `Hey ${this.user.name}`,
               message: "You booking has been rejected by this instructor. You can always go back to the map and look for another one, it's best to make more than 1 booking with different driving schools for cases such as these. <br> <br> <i>*Note: you can delete booking to keep your space clean.</i>",
               buttons: [{
@@ -381,7 +375,8 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                   this.db.collection('bookings').doc(doc.id).update({notified: true});
                 }
               }]
-            }).present();
+            })
+            alerter.present();
           }
         })
 
@@ -394,6 +389,10 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // console.log('Reqs: ', this.request);
     })
   }
+  // iterate over all the bookings and
+  // check the checkout dates
+  // delete the expired ones and
+  // delete them
   checkBookingExpiary() {
     for (let i = 0; i < this.request.length; i++) {
       console.log(this.request[i]);

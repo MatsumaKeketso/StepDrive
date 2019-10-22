@@ -22,7 +22,8 @@
         <!-- <div [ngClass]="{'pac-card': display, 'pac-card-hide': !display}" id="pac-card"> -->
         <div id="pac-container">
             <button (click)="requestPrompt()" ion-fab mini><ion-icon name="locate"></ion-icon></button>
-          <ion-searchbar placeholder="Search by location" (ionInput)="onSearchChange($event)">
+          <ion-searchbar (ionFocus)="hideTabs('close')" (ionBlur)="hideTabs('open')" placeholder="Search by location" >
+              <!-- (ionInput)="onSearchChange($event)" -->
           </ion-searchbar>
         </div>
         <div class="searchresult">
@@ -123,7 +124,7 @@
           <!-- CODE 01 -->
           <div class="code01">
               <p *ngIf="code01packs.length==0" id="nopacks" >This Driving School does not provide code 01 lessons.</p>
-              <div class="lesson" *ngFor="let pack of code01packs" (click)="requestLesson(school, pack, $event)">
+              <div class="lesson" *ngFor="let pack of code01packs" (click)="requestLesson(school, pack, $event, 'Package')">
                 <h4>{{pack.name}}</h4>
                 <p >Costs R{{pack.cost}}.00 <br> includes {{pack.number}} lessons</p>
               </div>
@@ -131,7 +132,7 @@
           <!-- CODE O8 -->
             <div class="code08">
                 <p *ngIf="code08packs.length==0" id="nopacks">This Driving School does not provide code 08 lessons.</p>
-              <div class="lesson" *ngFor="let pack of code08packs" (click)="requestLesson(school, pack, $event)">
+              <div class="lesson" *ngFor="let pack of code08packs" (click)="requestLesson(school, pack, $event, 'Package')">
 
                   <h3>{{pack.name}}</h3>
                   <p >Costs R{{pack.cost}}.00 <br> includes {{pack.number}} lessons</p>
@@ -140,7 +141,7 @@
             <!-- CODE 10 -->
             <div class="code10">
                 <p *ngIf="code10packs.length==0" id="nopacks">This Driving School does not provide code 10 lessons.</p>
-              <div class="lesson" *ngFor="let pack of code10packs" (click)="requestLesson(school, pack, $event)">
+              <div class="lesson" *ngFor="let pack of code10packs" (click)="requestLesson(school, pack, $event, 'Package')">
                   <h3>{{pack.name}}</h3>
                   <p >Costs R{{pack.cost}}.00 <br> includes {{pack.number}} lessons</p>
               </div>
@@ -148,7 +149,7 @@
             <!-- CODE 14 -->
             <div class="code14">
                 <p *ngIf="code14packs.length==0" id="nopacks">This Driving School does not provide code 14 lessons.</p>
-              <div class="lesson" *ngFor="let pack of code14packs" (click)="requestLesson(school, pack, $event)">
+              <div class="lesson" *ngFor="let pack of code14packs" (click)="requestLesson(school, pack, $event, 'Package')">
                 <h3>{{pack.name}} </h3>
                 <p >Costs R{{pack.cost}}.00 <br> includes {{pack.number}} lessons</p>
               </div>
@@ -184,7 +185,7 @@
                           </div>
                           </div>
                           <div class="r-bbutton">
-                              <button [disabled]="!noLessons" (click)="requestLesson(school, noLessons, $event)">Request lesson</button>
+                              <button [disabled]="!noLessons" (click)="requestLesson(school, noLessons, $event, 'Custom')">Request lesson</button>
                           </div>
             </div>
         </div>

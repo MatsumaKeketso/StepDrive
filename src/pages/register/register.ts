@@ -74,13 +74,8 @@ user =  {} as Users;
 
     this.loaderAnimate = true;
     if (!user.email || !user.password) {
-      loading.dismiss()
-      this.toastCtrl.create({
-        message: 'Provide all required credentials.',
-        duration: 3000
-      }).present();
+      // loading.dismiss()
       this.loaderAnimate = false;
-
     } else {
        firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then((result) => {
         this.loaderAnimate = false;

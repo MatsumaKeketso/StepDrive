@@ -1,7 +1,3 @@
-
-
-
-
 <ion-content (click)="checkkeyboard()">
     <div [ngClass]="{'loader': loaderAnimate, 'loader-hide': !loaderAnimate}">
 
@@ -19,6 +15,7 @@
             </div>
             <div *ngIf="!user.image" class="button">
                   <button (click)="getImage()" >Select Image</button>
+                  <p>{{imageuploadstate}} {{imageupload}}</p>
               </div>
               <div *ngIf="user.image" class="profileimage">
                 <img src="{{user.image}}" alt="">

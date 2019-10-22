@@ -76,7 +76,7 @@ page-home {
     margin: 0 !important;
   }
   * {
-    transition: 0.4s;
+    // transition: 0.4s;
   }
   .viewImage {
     transition: 0.4s;
@@ -507,7 +507,6 @@ page-home {
         height: 100%;
         position: relative;
         overflow: hidden;
-
       }
       .aboutschool {
         transition: 0.3s;
@@ -805,19 +804,31 @@ background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9
             position: relative;
             .a-back {
               transition: 0.5s;
-              top: 10px;
-              left: 10px;
+              top: 5px;
+              left: 5px;
               position: fixed;
               transform: scale(1);
               box-shadow: none !important;
+              .fab[mini] {
+                margin: 0px !important
+              }
+              .fab-md {
+                box-shadow: none !important;
+              }
             }
             .a-reviews {
               transition: 0.5s;
-              top: 10px;
-              right: 10px;
+              top: 5px;
+              right: 5px;
               position: fixed;
               transform: scale(1);
               box-shadow: none !important;
+              .fab[mini] {
+                margin: 0px !important
+              }
+              .fab-md {
+                box-shadow: none !important;
+              }
             }
             img {
               width: 100%;
@@ -911,9 +922,10 @@ background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9
             height: 70%;
             display: flex;
             overflow-x: auto;
+            align-items: center;
             p {
               text-align: center;
-              // width: 70%;
+              width: 100%;
               // margin: auto;
               pointer-events: none;
             }
@@ -1135,11 +1147,18 @@ background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9
           overflow-y: auto;
           .a-reviews {
             transition: 0.5s;
-            top: 10px;
-            right: 10px;
+            top: 5px;
+            right: 5px;
             position: fixed;
             transform: scale(0);
             box-shadow: none !important;
+            .fab[mini] {
+              margin: 0px !important
+
+            }
+            .fab-md {
+              box-shadow: none !important;
+            }
           }
           .s-image {
             width: 100%;
@@ -1147,11 +1166,17 @@ background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9
             height: 50%;
             overflow: hidden;
             .a-back {
-              top: 10px;
-              left: 10px;
+              top: 5px;
+              left: 5px;
               position: fixed;
               transform: scale(0);
               transition: 0.5s;
+              .fab[mini] {
+                margin: 0px !important
+              }
+              .fab-md {
+                box-shadow: none !important;
+              }
             }
             img {
               width: 100%;

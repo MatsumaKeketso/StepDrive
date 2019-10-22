@@ -161,10 +161,6 @@ export class LoginPage {
     if (!user.email || !user.password) {
       // loading.dismiss()
       this.loaderAnimate = false;
-      this.toastCtrl.create({
-        message: 'Provide all required credentials.',
-        duration: 2000
-      }).present();
     } else {
       firebase.auth().signInWithEmailAndPassword(user.email, user.password).then((result) => {
         // loading.dismiss();

@@ -56,7 +56,7 @@ import { Network } from '@ionic-native/network';
     IonicModule.forRoot(MyApp),
     HttpModule,
     IonicStorageModule.forRoot(),
-    StarRatingModule,
+    StarRatingModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

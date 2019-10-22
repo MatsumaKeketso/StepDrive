@@ -1,4 +1,14 @@
 <ion-content class="no-scroll">
+    <div [ngClass]="{'loader': loaderAnimate, 'loader-hide': !loaderAnimate}">
+        <!-- <div class="loader"> -->
+        <div class="maploader">
+            <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            <p>Sending<br>Request</p>
+        </div>
+        <div class="loading-text">
+
+        </div>
+      </div>
   <div (click)="cancelBooking()" class="cancel">
     <button><ion-icon name="close"></ion-icon></button>
   </div>

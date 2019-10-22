@@ -13,9 +13,9 @@ page-on-boarding {
    width: 100vw;
    height: 100vh;
   overflow: hidden;
-   background: url(../../assets/onboarding/onboarding_header.svg),rgb(233, 193, 0);
+   background: url(../../assets/onboarding/onboarding_header.svg)  50vw -5vh,url(../../assets/watermarks.svg) repeat-x top left,rgb(233, 193, 0);
    background-repeat: no-repeat;
-   background-position: 50vw -5vh;
+  //  background-position:;
    .welcome {
      display: flex;
      flex-direction: column;
