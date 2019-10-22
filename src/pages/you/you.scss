@@ -204,7 +204,7 @@ page-you {
   .ultimate {
     width: 100%;
     height: 100vh;
-    overflow: hidden;
+    overflow: hidden !important;
   }
   .container {
     // display: block;
@@ -503,11 +503,12 @@ page-you {
       .prof-notes {
         // background: red;
         background: linear-gradient(rgb(233, 233, 233),rgba(255, 255, 255, 0.74));
-        height: 60%;
+        height: 45%;
         // margin-bottom: 20%;
         // overflow: hidden;
+        padding-bottom: 53px;
         .n-head {
-          height: 10%;
+          height: 30px;
           // background: red;
           display: grid;
           align-items: center;
