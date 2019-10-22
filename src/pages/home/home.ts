@@ -11,6 +11,7 @@ import { ContactPage } from '../contact/contact';
 import { Subject } from 'rxjs/Subject';
 import { SplashScreen } from '@ionic-native/splash-screen';
 declare var google: google;
+import { Device } from "@ionic-native/device";
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -81,7 +82,10 @@ mapCenter = {
   autocomplete: any;
   lastScrollTop = 0;
   tabElements = document.querySelectorAll(".tabbar");
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController,private callNumber: CallNumber, public appCtrl: App, public renderer: Renderer2, public plt: Platform, public elementref: ElementRef, public keyboard: Keyboard, private androudPermissions: AndroidPermissions, public splashscreen: SplashScreen) { }
+  deviceVersion: any;
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController,private callNumber: CallNumber, public appCtrl: App, public renderer: Renderer2, public plt: Platform, public elementref: ElementRef, public keyboard: Keyboard, private androudPermissions: AndroidPermissions, public splashscreen: SplashScreen, private device: Device) {
+    this.deviceVersion = device.version
+   }
 
   ionViewDidLoad(){
     setTimeout(()=> {
@@ -110,7 +114,12 @@ mapCenter = {
     }
     this.splashscreen.hide();
     this.loaderAnimate = true;
-    this.promptLocation();
+
+    if (this.deviceVersion == '5.1.1') {
+      this.getlocation()
+    } else {
+      this.promptLocation();
+    }
     this.plt.ready().then(res => {
       let viewimage = this.elementref.nativeElement.children[0].children[1].children[0];
       this.renderer.setStyle(viewimage, 'transform', 'scale(0)');
@@ -471,6 +480,42 @@ this.getlocation();
             this.getusers();
       }
     })
+  }
+  getUserPosition() {
+       let options = {
+        enableHighAccuracy: true,
+      };
+      this.geolocation.getCurrentPosition(options).then((pos) => {
+        let geoData = {
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude
+        }
+        // get the address from the current position's coords
+        this.geocoder.geocode({ 'location': geoData }, (results, status) => {
+          console.log('Geocode responded with', results, 'and status of', status)
+          if (status) {
+            if (results[0]) {
+              // get the city from the address components
+              this.filterby = results[1].address_components[3].short_name;
+              console.log('filterd by', this.filterby);
+              this.getfilterdusers();
+            } else {
+              console.log('No results found');
+            }
+          } else {
+            console.log('Geocoder failed due to: ' + status);
+          }
+        }, err => {
+          console.log('Geocoder failed with', err)
+        })
+        this.mapCenter.lat = pos.coords.latitude;
+      this.mapCenter.lng = pos.coords.longitude;
+      }, (err: PositionError) => {
+        console.log("error : " + err.message);
+      }).catch(err => {
+
+      })
+
   }
   // gets the location of the user and the driving schools in that area
   // can only be called after the user has accepted the permission

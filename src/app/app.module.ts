@@ -31,6 +31,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { LocalNotifications } from "@ionic-native/local-notifications";
 import { Network } from '@ionic-native/network';
+import { Device } from "@ionic-native/device";
 @NgModule({
   declarations: [
     MyApp,
@@ -90,7 +91,8 @@ import { Network } from '@ionic-native/network';
     ScreenOrientation,
     LocalNotifications,
     AndroidPermissions,
-    Network
+    Network,
+    Device
   ]
 })
 export class AppModule {}
