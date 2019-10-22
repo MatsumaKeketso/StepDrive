@@ -47,7 +47,7 @@ page-question4 {
         height: 20vw;
         // margin: 3px auto;
         // background: rgb(241, 241, 241);
-        background-attachment: fixed;
+        // background-attachment: fixed;
         background-repeat: no-repeat;
         background-position: center;
         // border-radius: 10px;
@@ -88,40 +88,40 @@ page-question4 {
     .about{
       border-top:  solid 5px rgb(255, 92, 122);
       background: url(../../assets/tapes/images.jpg),rgba(241, 241, 241, 0.699);
-        background-size: auto 100%;
-        background-attachment: fixed;
+        background-size: cover;
+
         background-repeat: no-repeat;
         background-position: center;
     }
     .terms {
       border-top:  solid 5px rgb(109, 119, 255);
       background: url(../../assets/tapes/images.jpg),rgba(241, 241, 241, 0.699);
-        background-size: auto 100%;
-        background-attachment: fixed;
+        background-size: cover;
+
         background-repeat: no-repeat;
         background-position: center;
     }
     .dis {
       border-top:  solid 5px rgb(103, 255, 126);
       background: url(../../assets/tapes/images.jpg),rgba(241, 241, 241, 0.699);
-        background-size: auto 100%;
-        background-attachment: fixed;
+        background-size: cover;
+
         background-repeat: no-repeat;
         background-position: center;
     }
     .poli {
       border-top:  solid 5px rgb(255, 224, 129);
       background: url(../../assets/tapes/images.jpg),rgba(241, 241, 241, 0.699);
-        background-size: auto 100%;
-        background-attachment: fixed;
+        background-size: cover;
+
         background-repeat: no-repeat;
         background-position: center;
     }
     .quiz {
       border-top:  solid 5px rgb(145, 145, 145);
       background: url(../../assets/tapes/images.jpg),rgba(241, 241, 241, 0.699);
-        background-size: auto 100%;
-        background-attachment: fixed;
+        background-size: cover;
+
         background-repeat: no-repeat;
         background-position: center;
   }

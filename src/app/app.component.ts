@@ -12,6 +12,7 @@ import {google} from 'google-maps';
 
 import { TabsPage } from '../pages/tabs/tabs';
 import { Network } from '@ionic-native/network';
+import { YouPage } from '../pages/you/you';
 declare var google: google;
 @Component({
   templateUrl: 'app.html'
@@ -106,7 +107,13 @@ export class MyApp {
           firebase.auth().onAuthStateChanged(user => {
 
             if (user) {
-              this.rootPage = TabsPage;
+              firebase.firestore().collection('users').doc(user.uid).get().then(res => {
+                if (res.exists) {
+                  this.rootPage = TabsPage;
+                } else {
+                  this.rootPage = YouPage;
+                }
+              })
             } else {
               this.rootPage = LoginPage;
             }

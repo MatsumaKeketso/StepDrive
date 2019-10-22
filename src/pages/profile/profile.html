@@ -112,7 +112,7 @@
           <p>Lesson starts {{s.request.datein | date}} to {{s.request.dateout}}</p>
       </div>
       <div class="pack">
-          <p>{{s.request.package.name}}: {{s.request.package.number}} lessons(s) for R{{s.request.package.amount}}.00</p>
+          <p>{{s.request.package.name}} <span *ngIf="!s.request.package.name" >Custom</span>: {{s.request.package.number}} {{s.request.package.code}} lessons(s) for R{{s.request.package.amount}}.00</p>
       </div>
       <div class="confirmation">
         <p *ngIf="s.request.confirmed=='waiting'" style="float: left; color: rgb(255, 153, 0);">Awaiting Confirmation</p>

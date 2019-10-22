@@ -345,7 +345,9 @@ this.users = filterd
     }
   }
   //=================This is the method Nkwe altered========
-  requestLesson(school, lessons, event, pckgType) {
+  requestLesson(school, lsns, event, pckgType) {
+    console.log();
+
     let data = {
        school: null,
        lessons: {
@@ -357,13 +359,10 @@ this.users = filterd
      }
      if (pckgType == "Custom") {
        data.school = school
-       data.lessons.amount = this.school.cost
-       data.lessons.code = this.licenseCode
-       data.lessons.name = pckgType
-       data.lessons.number = lessons
+       data.lessons = lsns
      } else {
        data.school = school
-       data.lessons = lessons
+       data.lessons = lsns
      }
      if (event.path.length != 0) {
       this.renderer.setStyle(event.path[0], 'transition', '0.4s');
