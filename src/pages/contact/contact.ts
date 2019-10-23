@@ -463,7 +463,9 @@ export class ContactPage {
       var dateNew = new Date(calc).toDateString();
       this.request.dateout = dateNew;
       console.log(this.request);
-
+      this.request.package.number = this.navParams.data.lessons.number
+      this.request.package.code = this.navParams.data.lessons.code
+      this.request.package.name = this.navParams.data.lessons.name
     } else {
       // get the date out
       let Dateout = new Date(this.request.datein);

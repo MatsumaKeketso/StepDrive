@@ -307,6 +307,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         {
           text: 'Yes',
           handler: () => {
+            
             this.db.collection('bookings').doc(docid).delete().then(res => {
               this.request = [];
               this.getBooking();
