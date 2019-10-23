@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 import { Storage } from "@ionic/storage";
 import { LoginPage } from '../login/login';
 import { TabsPage } from '../tabs/tabs';
+import { SplashScreen } from '@ionic-native/splash-screen';
 @IonicPage()
 @Component({
   selector: 'page-you',
@@ -14,6 +15,7 @@ import { TabsPage } from '../tabs/tabs';
 export class YouPage {
   db = firebase.firestore();
   storage = firebase.storage().ref();
+  loaderAnimate =true;
   user = {
     name: '',
     surname: '',
@@ -36,7 +38,10 @@ export class YouPage {
   profileForm:FormGroup
   moveto = false
   isediting = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private keyBoard: Keyboard, private renderer: Renderer2, private camera: Camera, public loadingCtrl: LoadingController, public forms: FormBuilder, public store: Storage, public toastCtrl: ToastController, private appCtrl: App,public alertCtrl: AlertController) {
+  imageupload = null
+  imageuploadstate = ''
+  // profileLoader = document.getElementsByClassName('uploadImage');
+  constructor(public navCtrl: NavController, public navParams: NavParams, private keyBoard: Keyboard, private renderer: Renderer2, private camera: Camera, public loadingCtrl: LoadingController, public forms: FormBuilder, public store: Storage, public toastCtrl: ToastController, private appCtrl: App,public alertCtrl: AlertController,public splashScreen: SplashScreen) {
     this.profileForm = this.forms.group({
       name: new FormControl(this.user.name, Validators.compose([Validators.required])),
       surname: new FormControl(this.user.surname, Validators.compose([Validators.required])),
@@ -46,27 +51,53 @@ export class YouPage {
   }
   ionViewDidEnter() {
     // get the profile
+    // progressbar.js@1.0.0 version is used
+// Docs: http://progressbarjs.readthedocs.org/en/1.0.0/
 
+    
   }
   ionViewDidLoad() {
 this.getprofile();
     firebase.auth().onAuthStateChanged(res => {
+      this.splashScreen.hide()
       this.user.uid = res.uid
     })
-    console.log('Current user ', this.user);
-
     this.store.get('homelocation').then(res => {
       this.user.location = res;
     })
     this.getnote();
   }
+  pressEvent(event, n) {
+    this.alertCtrl.create({
+      title: 'Delete Note?',
+      message: 'Do you want to delete this note?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel'
+        },{
+          text: 'Yes',
+          handler: ()=> {
+            firebase.auth().onAuthStateChanged(user => {
+              this.db.collection('users').doc(user.uid).collection('notes').doc(n.docid).delete().then(res => {
+                this.notes = []
+                this.getnote()
+                this.toastCtrl.create({
+                  message: 'Note deleted',
+                  duration: 2000
+                }).present()
+              })
+            })
+          }
+        }
+      ]
+    }).present()
+  }
   checkkeyboard() {
     if (this.keyBoard.isOpen()) {
-      console.log('Key open');
+
       let elements = document.querySelectorAll(".tabbar");
       this.store.set('readTips', true)
-      console.log('tabs should show');
-
             if (elements) {
               Object.keys(elements).map((key) => {
                 elements[key].style.transform = 'translateY(50vh)';
@@ -74,10 +105,9 @@ this.getprofile();
               });
             }
     } else {
-      console.log('Key closed');
+
       let elements = document.querySelectorAll(".tabbar");
       this.store.set('readTips', true)
-      console.log('tabs should show');
 
             if (elements) {
               Object.keys(elements).map((key) => {
@@ -92,7 +122,6 @@ this.getprofile();
 
   }
   getImage() {
-    console.log('Opem image');
 
     let options: CameraOptions = {
       quality: 100,
@@ -105,22 +134,21 @@ this.getprofile();
     this.camera.getPicture(options).then(imagedata => {
 
       let base64Image = `data:image/jpeg;base64,${imagedata}` ;
-      console.log(base64Image);
       let uploadTask = this.storage.child(this.user.name).putString(base64Image, 'data_url');
       uploadTask.on('state_changed', snapshot => {
-        let progress = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
+        this.imageupload = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
         switch (snapshot.state) {
           case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log('Upload is paused');
+            this.imageuploadstate = 'Upload is paused';
             break;
           case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log('Upload is running');
+            this.imageuploadstate = 'Upload is running';
             break;
             case firebase.storage.TaskState.SUCCESS: // or 'running'
-            console.log('Upload is done');
+            this.imageuploadstate = 'Upload is done';
             break;
             case firebase.storage.TaskState.ERROR: // or 'running'
-            console.log('An error occured');
+            this.imageuploadstate = 'An error occured';
             break;
         }
       }, err => {
@@ -142,8 +170,6 @@ this.getprofile();
       }, () => {
         uploadTask.snapshot.ref.getDownloadURL().then(downUrl => {
           this.user.image = downUrl
-          console.log(this.user);
-
         })
       })
     })
@@ -170,7 +196,7 @@ this.getprofile();
             }).present()
           } else {
             this.note.text = data.noteText
-            console.log('data', this.note);
+
             this.db.collection('users').doc(this.user.uid).collection('notes').add(this.note).then(res => {
               this.getnote();
 
@@ -197,13 +223,73 @@ this.getprofile();
 
     */
   }
+  editNote(note) {
+    this.note.text = note.doc.text
+    let date = new Date();
+    this.note.datecreated = date.toDateString();
+    this.alertCtrl.create({
+      title: 'Edit note.',
+      enableBackdropDismiss: false,
+      inputs:[
+        {placeholder: 'Say something',
+        type: 'text',
+        name: 'noteText',
+        value: this.note.text
+      }
+      ],
+      buttons: [
+        {text: 'Cancel',role: 'cancel'},
+        {text: 'Edit', handler: (data) => {
+          if (!data.noteText) {
+            this.toastCtrl.create({
+              message: "Cannot edit empty note",
+              duration: 3000
+            }).present()
+          } else {
+            this.note.text = data.noteText
+            this.db.collection('users').doc(this.user.uid).collection('notes').doc(note.docid).set(this.note).then(res => {
+              this.getnote();
+
+              this.toastCtrl.create({
+                message: 'Note updated',
+                duration: 2000
+              }).present();
+              this.note.text = '';
+              this.note.datecreated = ''
+            }).catch(err => {
+              this.store.set('note', this.note);
+              this.getnote()
+              this.toastCtrl.create({
+                message: 'Saved',
+                duration: 2000
+              }).present();
+            })
+          }
+        }}
+      ]
+
+    }).present()
+    /*
+
+    */
+  }
   getnote(){
     this.notes = [];
+    let note = {
+      doc: {},
+      docid: ''
+    }
     firebase.auth().onAuthStateChanged(user => {
       this.db.collection('users').doc(user.uid).collection('notes').get().then(res => {
         if (!res.empty) {
           res.forEach(doc => {
-            this.notes.push(doc.data());
+            note.doc = doc.data();
+            note.docid = doc.id;
+            this.notes.push(note);
+            note = {
+              doc: {},
+              docid: ''
+            }
           })
         }
       })
@@ -233,15 +319,16 @@ this.getprofile();
         this.user.surname = res.data().surname
         this.user.uid = res.data().uid
           this.isprofile = true;
-        console.log('Got Profile: ', this.user);
-
+          setTimeout(()=>{
+            this.loaderAnimate = false;
+          }, 1000)
+        } else {
+          this.loaderAnimate = false;
         }
       })
     })
   }
   createUser() {
-    console.log(this.user);
-
     const loader = this.loadingCtrl.create({
       content: 'Just a sec...',
     })
@@ -249,7 +336,6 @@ this.getprofile();
     firebase.auth().onAuthStateChanged(user => {
       this.user.uid = user.uid
       this.db.collection('users').doc(this.user.uid).set(this.user).then(res => {
-      console.log('Profile Created');
       this.db.collection('users').doc(user.uid).get().then(res => {
 
         if (res.exists) {
@@ -259,14 +345,11 @@ this.getprofile();
         this.user.phone = res.data().phone
         this.user.surname = res.data().surname
         this.user.uid = res.data().uid
-
-        console.log('Got Profile: ', this.user);
         loader.dismiss();
         if (this.isediting) {
           this.isprofile = true;
           let elements = document.querySelectorAll(".tabbar");
           this.store.set('readTips', true)
-          console.log('tabs should show');
 
                 if (elements) {
                   Object.keys(elements).map((key) => {
@@ -291,8 +374,6 @@ this.getprofile();
     if (this.isediting) {
       let elements = document.querySelectorAll(".tabbar");
       this.store.set('readTips', true)
-      console.log('tabs should show');
-
             if (elements) {
               Object.keys(elements).map((key) => {
                 elements[key].style.display = 'none';
@@ -302,7 +383,6 @@ this.getprofile();
     } else {
       let elements = document.querySelectorAll(".tabbar");
       this.store.set('readTips', true)
-      console.log('tabs should hide');
 
             if (elements) {
               Object.keys(elements).map((key) => {

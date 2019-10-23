@@ -1,5 +1,28 @@
 // http://ionicframework.com/docs/theming/
-
+@font-face {
+  src: '../../assets/fonts/Cocomat_Light.ttf';
+  font-family: 'Cocomat Light';
+}
+@font-face {
+  src: '../../assets/fonts/Geometos.ttf';
+  font-family: 'Geometos';
+}
+@font-face {
+  src: '../../assets/fonts/criticized.ttf';
+  font-family: 'Criticized';
+}
+ // font-family: 'Josefin Sans', sans-serif;
+// font-family: 'Questrial', sans-serif;
+// font-family: 'Didact Gothic', sans-serif;
+p {
+  font-family: 'Questrial', sans-serif;
+}
+h1, h2, h3, h4, h5 {
+  font-family: 'Josefin Sans', sans-serif;
+}
+span {
+  font-family: 'Questrial', sans-serif;
+}
 
 // App Global Sass
 // --------------------------------------------------

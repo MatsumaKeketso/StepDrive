@@ -1,6 +1,7 @@
 <ion-content>
 
-  <div [ngClass]="{'welcome': landing.active, 'welcome-inactive': landing.inactive}">
+
+  <div [ngClass]="{'welcome': landing, 'welcome-inactive': !landing}">
     <div class="instructions">
       <div class="icon">
           <p id="inst">How should I use this Practice Test ?</p>
@@ -24,9 +25,10 @@
           <img src="../../assets/imgs/whitelogo.svg">
           <h4>Recap Quiz</h4>
           <div class="category-cont">
-            <div (click)="sendQs('lmv', $event)" class="lmv"></div>
-            <div (click)="sendQs('hmv', $event)" class="hmv"></div>
-            <div (click)="sendQs('m', $event)" class="m"></div>
+            <div (click)="sendQs('lmv', $event)" class="lmv"> <p>Code 08</p></div>
+            <div (click)="sendQs('hmv', $event)" class="hmv"><p>Code 10</p></div>
+            <div (click)="sendQs('m', $event)" class="m"> <p>Code 01</p></div>
+            <div (click)="sendQs('tmv', $event)" class="tmv"> <p>Code 14</p></div>
           </div>
           <button id="cancel" (click)="cancel()">Quit</button>
       </div>
@@ -36,6 +38,7 @@
     </div>
   </div>
   <div class="header">
+
     <img  id="bg" src="../../assets/imgs/header.svg" alt="">
   </div>
   <div class="container">

@@ -1,10 +1,22 @@
-<ion-content class="no-scroll">
-  <div class="logo">
-      <img src="../../assets/imgs/White logo.svg" alt="">
+<ion-content (click)="checkKeyboard()" class="no-scroll">
+    <div [ngClass]="{'loader': loaderAnimate, 'loader-hide': !loaderAnimate}">
+        <!-- <div class="loader"> -->
+        <div class="maploader">
+            <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            <p>Loggin <br> In</p>
+        </div>
+        <div class="loading-text">
+
+        </div>
+      </div>
+  <div *ngIf="!isKeyOpen" class="logo">
+      <h1 style="color: white !important;">SIGN IN</h1>
+      <img src="../../assets/tapes/STEPDRIVE-YELLOW-LOGO.svg" alt="">
     </div>
 <div class="container">
+
   <div class="form">
-      <h1>SIGN IN</h1>
+
     <div>
         <form  [formGroup]="loginForm" class="login">
         <div class="input">
@@ -28,13 +40,12 @@
             <div class="forgot" >
                 <button (click)="forget()">Forgot Password?</button>
             </div>
-          <div class="create">
-              <button (click)="Reg()">Create Account</button>
-          </div>
+
 <br>
 
           <div class="button">
             <button (click) ="login(user)">SIGN IN</button>
+            <button id="signup" (click)="Reg()">SIGN Up</button>
           </div>
 
         </form>

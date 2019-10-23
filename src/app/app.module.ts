@@ -30,6 +30,8 @@ import { CallNumber } from '@ionic-native/call-number';
 import { HttpClientModule } from '@angular/common/http';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { LocalNotifications } from "@ionic-native/local-notifications";
+import { Network } from '@ionic-native/network';
+import { Device } from "@ionic-native/device";
 @NgModule({
   declarations: [
     MyApp,
@@ -55,7 +57,7 @@ import { LocalNotifications } from "@ionic-native/local-notifications";
     IonicModule.forRoot(MyApp),
     HttpModule,
     IonicStorageModule.forRoot(),
-    StarRatingModule,
+    StarRatingModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -88,7 +90,9 @@ import { LocalNotifications } from "@ionic-native/local-notifications";
     HttpClientModule,
     ScreenOrientation,
     LocalNotifications,
-    AndroidPermissions
+    AndroidPermissions,
+    Network,
+    Device
   ]
 })
 export class AppModule {}

@@ -1,4 +1,206 @@
 page-profile {
+  .loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 20;
+    background: linear-gradient(rgba(255, 240, 217, 0.973)),url(../../assets/icon/Vanishing-Stripes.svg);
+    background-repeat: repeat-x;
+    transform: scale(1);
+    overflow: hidden;
+    transition: 0.4s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    animation: backgroundmover 30s linear infinite;;
+    .maploader {
+
+      // overflow: hidden;
+      width: 64px;
+      height: 64px;
+      margin: 40vh auto;
+      text-align: center;
+      // animation: name duration timing-function delay iteration-count direction fill-mode;
+      // animation: maploader 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+      border-radius: 200px;
+      display: grid;
+      align-content: center;
+      position: relative;
+      // border-top: solid 2px gray;
+      .lds-grid {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 64px;
+      }
+      .lds-grid div {
+        position: absolute;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: rgb(29, 29, 29);
+        animation: lds-grid 1.2s linear infinite;
+      }
+      .lds-grid div:nth-child(1) {
+        top: 6px;
+        left: 6px;
+        animation-delay: 0s;
+      }
+      .lds-grid div:nth-child(2) {
+        top: 6px;
+        left: 26px;
+        animation-delay: -0.4s;
+      }
+      .lds-grid div:nth-child(3) {
+        top: 6px;
+        left: 45px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(4) {
+        top: 26px;
+        left: 6px;
+        animation-delay: -0.4s;
+      }
+      .lds-grid div:nth-child(5) {
+        top: 26px;
+        left: 26px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(6) {
+        top: 26px;
+        left: 45px;
+        animation-delay: -1.2s;
+      }
+      .lds-grid div:nth-child(7) {
+        top: 45px;
+        left: 6px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(8) {
+        top: 45px;
+        left: 26px;
+        animation-delay: -1.2s;
+      }
+      .lds-grid div:nth-child(9) {
+        top: 45px;
+        left: 45px;
+        animation-delay: -1.6s;
+      }
+      @keyframes lds-grid {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+    }
+  }
+  .loader-hide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 20;
+    background: rgb(255, 255, 255);
+    transform: scale(0);
+    overflow: hidden;
+    transition: 0.4s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    .maploader {
+
+      overflow: hidden;
+      width: 64px;
+      height: 64px;
+      margin: 40vh auto;
+      text-align: center;
+      // animation: name duration timing-function delay iteration-count direction fill-mode;
+      animation: maploader 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+      border-radius: 200px;
+      display: grid;
+      align-content: center;
+      position: relative;
+      border-top: solid 2px gray;
+      .lds-grid {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 64px;
+      }
+      .lds-grid div {
+        position: absolute;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #fff;
+        animation: lds-grid 1.2s linear infinite;
+      }
+      .lds-grid div:nth-child(1) {
+        top: 6px;
+        left: 6px;
+        animation-delay: 0s;
+      }
+      .lds-grid div:nth-child(2) {
+        top: 6px;
+        left: 26px;
+        animation-delay: -0.4s;
+      }
+      .lds-grid div:nth-child(3) {
+        top: 6px;
+        left: 45px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(4) {
+        top: 26px;
+        left: 6px;
+        animation-delay: -0.4s;
+      }
+      .lds-grid div:nth-child(5) {
+        top: 26px;
+        left: 26px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(6) {
+        top: 26px;
+        left: 45px;
+        animation-delay: -1.2s;
+      }
+      .lds-grid div:nth-child(7) {
+        top: 45px;
+        left: 6px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(8) {
+        top: 45px;
+        left: 26px;
+        animation-delay: -1.2s;
+      }
+      .lds-grid div:nth-child(9) {
+        top: 45px;
+        left: 45px;
+        animation-delay: -1.6s;
+      }
+      @keyframes lds-grid {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+    }
+  }
+  .n-tips {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    .fab {
+      margin: 0px !important;
+    }
+  }
   .scroll-content {
     overflow:  hidden !important;
   }
@@ -53,11 +255,12 @@ page-profile {
     position: absolute;
     z-index: 20;
     // background: rgb(255, 99, 99);
-    top: 80%;
+    // top: 80%;
     bottom: 0;
     left: 0;
     right: 0;
     padding-bottom: 15vw;
+    height: 10vw;;
   }
   .r-title{
     background: #FAB62B;
@@ -78,47 +281,7 @@ page-profile {
     overflow-x: hidden;
     border-top: solid 1px #FAB62B;
     background: white;
-    .r-card {
-      box-shadow: 0px 0px 8px #17171717;
-      border-radius: 10px;
-      overflow: hidden;
-      width: 90%;
-      margin: 20px auto;
-      display: flex;
-      position: relative;
-      .ionic3-star-rating {
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
-      .r-image {
-        min-width: 30%;
-        min-height: 100%;
-        overflow: hidden;
-        display: grid;
-        img {
-          object-fit: cover;
-          width: 100%;
-          height: 100%;
-        }
-      }
-      .r-content{
-        min-width: 70%;
-        padding: 0px 10px;
-        .name-rating {
-          display: flex;
-          width: 100%;
-          #name {
-            flex-basis: 50%;
-          }
-          p {
-            margin: 0;
-            padding: 7px 0px;
-          }
 
-        }
-      }
-    }
     .tips-card {
       box-shadow: 0px 0px 8px #17171717;
       border-radius: 10px;
@@ -138,13 +301,14 @@ page-profile {
     }
   }
   .tutorial {
+    transition: 0.3s;;
     position: fixed;
-    top: 0vh;
-    left: 0vw;
-    right: 0vh;
-    bottom: 0vw;
-    width: 100vw;
-    height: 100vh;
+    top: 5vw;
+    left: 5vw;
+    right: 5vw;
+    bottom: 5vw;
+    width: 90vw;
+    height: 95vh;
     background:  url(../../assets/icon/schoollistbg.svg),linear-gradient(rgb(240, 240, 240));
     animation: bacgroundmove 20000s linear infinite;
     background-attachment: fixed;
@@ -154,6 +318,9 @@ page-profile {
     z-index: 700;
     transform: scale(1);
     padding: 10px;
+    border-radius: 20px;
+    transition: 0.3s;;
+    box-shadow: 0px 0px 10px #10101059;;
     blockquote {
       border-left: solid 3px orange;
       padding: 10px;
@@ -171,6 +338,34 @@ page-profile {
       border-radius: 200px;
     }
   }
+  .tutorial-inactive {
+    position: fixed;
+    border-radius: 20px;
+    transition: 0.3s;;
+    top: 5vw;
+    left: 5vw;
+    right: 5vw;
+    bottom: 5vw;
+    width: 90vw;
+    height: 95vh;
+    background: rgba(255, 255, 255, 0.904);
+    overflow-y: auto;
+    z-index: 1700;
+    transform: scale(0);
+    display: none;
+    .close {
+      width: 90%;
+      margin: 5vw auto;
+      height: 13vw;
+      background: orange;
+      color: black;
+      display: grid;
+      align-content: center;
+      text-align: center;
+      border-radius: 200px;
+    }
+  }
+
   @keyframes bacgroundmove {
     0% {
       background-position: 105% 10%;
@@ -192,29 +387,6 @@ page-profile {
       transform: scale(1);
     }
   }
-  .tutorial-inactive {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(255, 255, 255, 0.904);
-    overflow-y: auto;
-    z-index: 1700;
-    transform: scale(1);
-    display: none;
-    .close {
-      width: 90%;
-      margin: 5vw auto;
-      height: 13vw;
-      background: orange;
-      color: black;
-      display: grid;
-      align-content: center;
-      text-align: center;
-      border-radius: 200px;
-    }
-  }
 
 .head {
   width: 100%;
@@ -227,12 +399,12 @@ page-profile {
   align-items: center;
 
   .img {
-    border: solid 3px white;
+    // border: solid 3px white;
     margin: auto;
     border-radius: 200px;
     overflow: hidden;
-    width: 20vw;
-    height: 20vw;
+    width: 25vw;
+    height: 25vw;
     display: grid;
     align-items: center;
     img {
@@ -255,10 +427,11 @@ page-profile {
     align-content: center;
     opacity: 0.5;
   }
+
   .card {
     width: 90%;
     margin: 5vw auto;
-    box-shadow: 0px 0px 5px #17171731;
+    box-shadow: 0px 2px 2px #17171731;
     text-align: center;
     border-radius: 10px;
     overflow: hidden;
@@ -274,9 +447,18 @@ page-profile {
       }
     }
     .details {
+      h3 {
+        font-family: 'Questrial', sans-serif;
+        text-transform: capitalize;
+        font-weight: bold;
+        padding: 20px 0px;
+      }
       .more {
         display: block;
         transition: 0.4s;
+        p {
+          font-family: 'Questrial', sans-serif;
+        }
       }
       .moreinactive {
         transition: 0.4s;
@@ -285,12 +467,18 @@ page-profile {
       .dates {
         text-align: left;
         padding: 0px 20px;
+         p{
+          font-family: 'Questrial', sans-serif;
+
+          opacity: 0.6;
+         }
       }
       .pack {
         text-align: right;
         padding: 0px 20px;
         p {
           font-weight: bold;
+          font-family: 'Didact Gothic', sans-serif;
         }
       }
       .confirmation {
@@ -299,9 +487,14 @@ page-profile {
         right: 0;
         background: white;
         border-radius: 5px;
+        box-shadow: 0px -2px 2px #1818181e;
         p {
           margin: 0;
-          padding: 0 10px;
+          padding: 5px 10px;
+          font-family: 'Josefin Sans', sans-serif;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          // text-shadow: 0px 3px 3px #18181831;
         }
       }
     }

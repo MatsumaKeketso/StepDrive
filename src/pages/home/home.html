@@ -1,16 +1,20 @@
 <ion-content (click)="checkKeyBoard()">
+
   <div class="viewImage">
     <div (click)="openImage('', 'close')" class="close"><p>x</p></div>
     <img *ngIf="viewImage.image" src="{{viewImage.image}}" alt="">
     <img *ngIf="!viewImage.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
 
   </div>
+
   <div [ngClass]="{'loader': loaderAnimate, 'loader-hide': !loaderAnimate}">
+      <!-- <div class="loader"> -->
     <div class="maploader">
-      <ion-icon name="navigate"></ion-icon>
+        <div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <p><strong>Mapping</strong> Driving Schools</p>
     </div>
     <div class="loading-text">
-      <p>Loading Map</p>
+
     </div>
   </div>
     <div class="pac-card" id="pac-card">
@@ -18,7 +22,8 @@
         <!-- <div [ngClass]="{'pac-card': display, 'pac-card-hide': !display}" id="pac-card"> -->
         <div id="pac-container">
             <button (click)="requestPrompt()" ion-fab mini><ion-icon name="locate"></ion-icon></button>
-          <ion-searchbar placeholder="Search by location" (ionInput)="onSearchChange($event)">
+          <ion-searchbar (ionFocus)="hideTabs('close')" (ionBlur)="hideTabs('open')" placeholder="Search by location" >
+              <!-- (ionInput)="onSearchChange($event)" -->
           </ion-searchbar>
         </div>
         <div class="searchresult">
@@ -31,10 +36,56 @@
       <div #map id="map"></div>
 
     <div class="aboutschool" [ngClass]="{'aboutschool-inactive': about, 'aboutschool': !about}">
-        <div class="information">
+      <div class="s-readmore">
+          <div class="round">
+              <div id="cta">
+                  <span class="arrow primera next "></span>
+                  <span class="arrow segunda next "></span>
+              </div>
+          </div>
+      </div>
+      <div [ngClass]="{'reviews': toggleReviews, 'reviews-inactive': !toggleReviews}">
+        <h4>Reviews</h4>
+        <div class="r-list-cont">
+            <div style="text-align: center; width: 90%; margin: auto;" *ngIf="!userReviews[0]">
+                <p>No reviews made yet.</p>
+                <!-- <p><b>A day after your lesson, click on the blue button to make a review.</b></p> -->
+              </div>
+            <div class="r-card" *ngFor="let r of userReviews">
+                <ionic3-star-rating #rating
+                activeIcon = "ios-star"
+                defaultIcon = "ios-star-outline"
+                activeColor = "#FAB62B"
+                defaultColor = "#FAB62B"
+                readonly = "true"
+                rating = "{{r.rating}}"
+                fontSize = "7px"
+                (ratingChanged)="logRatingChange($event)">
+                </ionic3-star-rating>
+              <div class="r-image">
+                <img src="{{r.image}}" alt="">
+              </div>
+              <div class="r-content">
+                <div class="name-rating">
+          <p id="name"><b>{{r.username}}</b></p>
+                </div>
+
+                <p>{{r.text}}</p>
+              </div>
+            </div>
+        </div>
+        <div class="toggle" (click)="reviewsToggler()">
+          <p>close</p>
+        </div>
+        <button ion-button >Send Review</button>
+      </div>
+        <div id="infor" class="information" >
           <div class="s-image">
             <div class="a-back">
               <button style="background: none !important;" ion-fab mini (click)="viewSchool(school)" ><ion-icon name="arrow-back"></ion-icon></button>
+            </div>
+            <div class="a-reviews">
+              <button style="background: none !important;" ion-fab mini (click)="reviewsToggler()" ><ion-icon name="chatbubbles"></ion-icon></button>
             </div>
             <img *ngIf="school.image" src="{{school.image}}">
             <img *ngIf="!school.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
@@ -52,16 +103,63 @@
         rating = "{{school.average}}"
         fontSize = "15px">
     </ionic3-star-rating>
+
         </div>
+        <ion-segment [(ngModel)]="licenseCode" color="primary" (ionChange)="segmentChanged($event)">
+            <ion-segment-button value="code01">
+                code 01
+              </ion-segment-button>
+          <ion-segment-button value="code08">
+            code 08
+          </ion-segment-button>
+          <ion-segment-button value="code10">
+            code 10
+          </ion-segment-button>
+          <ion-segment-button value="code14">
+            code 14
+          </ion-segment-button>
+
+        </ion-segment>
         <div class="lesson-cont">
-            <div class="lessons" *ngFor="let p of school.packages" (click)="requestLesson(school, p, $event)">
-                <p><b>{{p.name}}</b> <br> {{p.number}} lessons R{{p.amount}}.00</p>
+          <!-- CODE 01 -->
+          <div class="code01">
+              <p *ngIf="code01packs.length==0" id="nopacks" >This Driving School does not provide code 01 lessons.</p>
+              <div class="lesson" *ngFor="let pack of code01packs" (click)="requestLesson(school, pack, $event, 'Package')">
+                <h4>{{pack.name}}</h4>
+                <p >Costs R{{pack.cost}}.00 <br> includes {{pack.number}} lessons</p>
               </div>
-                    <div class="custom">
+            </div>
+          <!-- CODE O8 -->
+            <div class="code08">
+                <p *ngIf="code08packs.length==0" id="nopacks">This Driving School does not provide code 08 lessons.</p>
+              <div class="lesson" *ngFor="let pack of code08packs" (click)="requestLesson(school, pack, $event, 'Package')">
+
+                  <h3>{{pack.name}}</h3>
+                  <p >Costs R{{pack.cost}}.00 <br> includes {{pack.number}} lessons</p>
+              </div>
+            </div>
+            <!-- CODE 10 -->
+            <div class="code10">
+                <p *ngIf="code10packs.length==0" id="nopacks">This Driving School does not provide code 10 lessons.</p>
+              <div class="lesson" *ngFor="let pack of code10packs" (click)="requestLesson(school, pack, $event, 'Package')">
+                  <h3>{{pack.name}}</h3>
+                  <p >Costs R{{pack.cost}}.00 <br> includes {{pack.number}} lessons</p>
+              </div>
+            </div>
+            <!-- CODE 14 -->
+            <div class="code14">
+                <p *ngIf="code14packs.length==0" id="nopacks">This Driving School does not provide code 14 lessons.</p>
+              <div class="lesson" *ngFor="let pack of code14packs" (click)="requestLesson(school, pack, $event, 'Package')">
+                <h3>{{pack.name}} </h3>
+                <p >Costs R{{pack.cost}}.00 <br> includes {{pack.number}} lessons</p>
+              </div>
+            </div>
+
+            <div class="custom">
                         <div class="input">
                            <div> <p>Custom Lessons <br> R{{school.cost}}.00 p/l</p>
                             <!-- <input type="tel" [(ngModel)]="noLessons"> -->
-                            <!-- <ion-label>Gender</ion-label> -->
+                            <ion-label>{{licenseCode}}</ion-label>
                             <ion-select style="background: rgba(255, 255, 255, 0) !important; margin-right: 0 !important;"[(ngModel)]="noLessons">
                               <ion-option >1</ion-option>
                               <ion-option >2</ion-option>
@@ -87,13 +185,13 @@
                           </div>
                           </div>
                           <div class="r-bbutton">
-                              <button [disabled]="!noLessons" (click)="requestLesson(school, noLessons)">Request lesson</button>
+                              <button [disabled]="!noLessons" (click)="requestLesson(school, noLessons, $event, 'Custom')">Request lesson</button>
                           </div>
-                    </div>
+            </div>
         </div>
       </div>
   <div class="container">
-      <div #list  [ngClass]="{'list': display, 'listinactive': !display}">
+      <div #list  [ngClass]="{'list': display==true, 'listinactive': display==false}">
           <div (click)="swipeUp()" class="toggler">
               <ion-icon *ngIf="display" class="arrow" name="arrow-dropdown"></ion-icon>
               <ion-icon *ngIf="!display" class="arrow" name="arrow-dropup"></ion-icon>

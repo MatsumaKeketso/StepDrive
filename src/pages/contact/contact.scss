@@ -3,6 +3,210 @@ page-contact {
       .no-scroll .scroll-content{
           overflow: hidden;
       }
+      .loader {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 20000;
+        background: linear-gradient(#242424e1),url(../../assets/tutvid/pattern.svg);
+        background-repeat: repeat-x;
+        background-size: cover;
+        transform: scale(1);
+        overflow: hidden;
+        transition: 0.4s;
+        transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+        animation: backgroundmover 30s linear infinite;;
+        color: white;;
+        .maploader {
+
+          // overflow: hidden;
+          width: 64px;
+          height: 64px;
+          margin: 40vh auto;
+          text-align: center;
+          // animation: name duration timing-function delay iteration-count direction fill-mode;
+          // animation: maploader 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+          border-radius: 200px;
+          display: grid;
+          align-content: center;
+          position: relative;
+          // border-top: solid 2px gray;
+          .lds-grid {
+            display: inline-block;
+            position: relative;
+            width: 64px;
+            height: 64px;
+          }
+          .lds-grid div {
+            position: absolute;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: rgb(255, 255, 255);
+            animation: lds-grid 1.2s linear infinite;
+          }
+          .lds-grid div:nth-child(1) {
+            top: 6px;
+            left: 6px;
+            animation-delay: 0s;
+          }
+          .lds-grid div:nth-child(2) {
+            top: 6px;
+            left: 26px;
+            animation-delay: -0.4s;
+          }
+          .lds-grid div:nth-child(3) {
+            top: 6px;
+            left: 45px;
+            animation-delay: -0.8s;
+          }
+          .lds-grid div:nth-child(4) {
+            top: 26px;
+            left: 6px;
+            animation-delay: -0.4s;
+          }
+          .lds-grid div:nth-child(5) {
+            top: 26px;
+            left: 26px;
+            animation-delay: -0.8s;
+          }
+          .lds-grid div:nth-child(6) {
+            top: 26px;
+            left: 45px;
+            animation-delay: -1.2s;
+          }
+          .lds-grid div:nth-child(7) {
+            top: 45px;
+            left: 6px;
+            animation-delay: -0.8s;
+          }
+          .lds-grid div:nth-child(8) {
+            top: 45px;
+            left: 26px;
+            animation-delay: -1.2s;
+          }
+          .lds-grid div:nth-child(9) {
+            top: 45px;
+            left: 45px;
+            animation-delay: -1.6s;
+          }
+          @keyframes lds-grid {
+            0%, 100% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0.5;
+            }
+          }
+
+        }
+      }
+      @keyframes backgroundmover {
+        0% {
+          background-position-x: 0vw;
+        }
+        100% {
+          background-position-x: 400vw;
+        }
+      }
+      .loader-hide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 2000;
+        background: rgb(255, 255, 255);
+        transform: scale(0);
+        overflow: hidden;
+        transition: 0.4s;
+        transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+        .maploader {
+
+          overflow: hidden;
+          width: 64px;
+          height: 64px;
+          margin: 40vh auto;
+          text-align: center;
+          // animation: name duration timing-function delay iteration-count direction fill-mode;
+          animation: maploader 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+          border-radius: 200px;
+          display: grid;
+          align-content: center;
+          position: relative;
+          border-top: solid 2px gray;
+          .lds-grid {
+            display: inline-block;
+            position: relative;
+            width: 64px;
+            height: 64px;
+          }
+          .lds-grid div {
+            position: absolute;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: #fff;
+            animation: lds-grid 1.2s linear infinite;
+          }
+          .lds-grid div:nth-child(1) {
+            top: 6px;
+            left: 6px;
+            animation-delay: 0s;
+          }
+          .lds-grid div:nth-child(2) {
+            top: 6px;
+            left: 26px;
+            animation-delay: -0.4s;
+          }
+          .lds-grid div:nth-child(3) {
+            top: 6px;
+            left: 45px;
+            animation-delay: -0.8s;
+          }
+          .lds-grid div:nth-child(4) {
+            top: 26px;
+            left: 6px;
+            animation-delay: -0.4s;
+          }
+          .lds-grid div:nth-child(5) {
+            top: 26px;
+            left: 26px;
+            animation-delay: -0.8s;
+          }
+          .lds-grid div:nth-child(6) {
+            top: 26px;
+            left: 45px;
+            animation-delay: -1.2s;
+          }
+          .lds-grid div:nth-child(7) {
+            top: 45px;
+            left: 6px;
+            animation-delay: -0.8s;
+          }
+          .lds-grid div:nth-child(8) {
+            top: 45px;
+            left: 26px;
+            animation-delay: -1.2s;
+          }
+          .lds-grid div:nth-child(9) {
+            top: 45px;
+            left: 45px;
+            animation-delay: -1.6s;
+          }
+          @keyframes lds-grid {
+            0%, 100% {
+              opacity: 1;
+            }
+            50% {
+              opacity: 0.5;
+            }
+          }
+
+        }
+      }
       .cancel {
         position: fixed;
         z-index: 30;
@@ -13,8 +217,8 @@ page-contact {
         top: 5px;
         left: 5px;
         button{
-          width: 50px;
-          height: 50px;
+          width: 40px;
+          height: 40px;
           display: grid;
           align-content: center;
           background: #B6465F;
@@ -33,12 +237,13 @@ page-contact {
         bottom: 0;
         left: 0;
         right: 0;
+        z-index: 40;
         // transform: rotateX(90deg);
       }
       .map-hide {
         transition: 0.4s;
         position: absolute;
-        z-index: 10;
+        z-index: 40;
         background: rgb(218, 218, 218);
         top: 100%;
         bottom: 0;
@@ -52,7 +257,7 @@ page-contact {
         bottom: 10px;
         left: 0;
         right: 0;
-        z-index: 15;
+        z-index: 45;
         text-align: center;
         button{
           width: 60%;
@@ -69,7 +274,7 @@ page-contact {
         bottom: -100px;
         left: 0;
         right: 0;
-        z-index: 15;
+        z-index: 45;
         text-align: center;
         button{
           width: 60%;
@@ -89,7 +294,6 @@ page-contact {
         width: 30vw;
         margin: auto;
         text-align: center;
-        background: red;
         border-radius: 200px;
         overflow: hidden;
         img{
@@ -103,17 +307,19 @@ page-contact {
         align-content: center;
           width: 100%;
           height:100%;
-          background: url(../../assets/imgs/photo-1562877961-efcec8439f9d.jpg);
+          background:url(../../assets/tapes/footer_tape.svg),rgb(24, 24, 24);
           background-attachment: fixed;
           background-size: cover;
-          background-position: center;
+          background-size: 150% 100%;
+     background-position: 30vw -30vh;
+          // background-position: center;
           background-repeat: no-repeat;
 
         .form{
-          width: 100%;
+          // width: 100%;
           padding: 10% 5%;
           filter: blur(0px);
-          background:url(../../assets/imgs/photo-1562877961-efcec8439f9d_blurred.jpg);
+          background:none;
           background-attachment: fixed;
           background-position: center;
           background-size: cover;
@@ -131,7 +337,7 @@ page-contact {
               margin: 20px 0px;
               p{
                   font-size: 100%;
-                  background: white;
+                  background: #FED201;
                   color: #4C0A0A;
                   width: 45%;
                   padding: 2px;
@@ -146,10 +352,16 @@ page-contact {
                   width: 97%;
                   padding: 15px 5px;
                   border: none;
-                  border: solid 1px white;
-                  background: white;
-                  color: white;
+                  border: solid 1px #FED201 !important;
+                  background: rgb(26, 26, 26);
+                  color: #FED201 !important;
                   border-radius: 200px;
+                  span {
+                    color: #FED201 !important;
+                  }
+                  .datetime {
+                    background: #171717;
+                  }
                 }
           }
           .input{
@@ -157,10 +369,15 @@ page-contact {
             width: 100%;
             position: relative;
             margin: 20px 0px;
+            .datetime {
+              border: solid 1px #FED201 !important;
+              color: #FED201 !important;
+              background: #171717;
+            }
             p{
               font-size: 80%;
-              background: white;
-              color: #4C0A0A;
+              background: #FED201;
+              color: rgb(31, 31, 31);
               width: 25%;
               padding: 2px;
               border-radius: 200px;
@@ -173,10 +390,10 @@ page-contact {
               width: 97%;
               padding: 15px 5px;
               border: none;
-              border: solid 1px white;
-              background: none;
-              color: white;
+              border: solid 1px #FED201;
+              color: #FED201;
               border-radius: 200px;
+              background: rgb(26, 26, 26);
             }
             span {
               a {
@@ -208,11 +425,11 @@ page-contact {
               text-shadow: 0px 2px 2px #1717174f;
               text-transform: uppercase;
               letter-spacing: 3px;
-              color:#ffffff;
+              color:#1a1a1a;
               border-radius: 30px;
               margin: 0;
               padding: 15px;
-              background: linear-gradient(#767B91, #2E354E);
+              background: #FED201;
               width: 60%;
             }
           }

@@ -15,7 +15,10 @@ export class OnBoardingPage {
   }
 
   ionViewDidLoad() {
-    this.slides.lockSwipes(true);
+    // this.slides.effect = 'cube';
+    this.slides.paginationType = 'progress';
+    this.slides.speed = 700;
+    // this.slides.lockSwipes(true);
     // this.storage.clear()
     this.storage.get('onboarding').then((res) => {
       if (res) {
@@ -27,9 +30,9 @@ export class OnBoardingPage {
     })
   }
   nextslides(){
-    this.slides.lockSwipes(false);
+    // this.slides.lockSwipes(false);
     this.slides.slideNext();
-    this.slides.lockSwipes(true);
+    // this.slides.lockSwipes(true);
   }
   formPage(val) {
     this.storage.set('onboarding', true);

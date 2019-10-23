@@ -1,44 +1,262 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
 .scroll-content {
   bottom: 0 !important;
 }
 page-login {
+  .loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 20;
+    background: linear-gradient(#242424e1),url(../../assets/tutvid/pattern.svg);
+    background-repeat: repeat-x;
+    background-size: cover;
+    transform: scale(1);
+    overflow: hidden;
+    transition: 0.4s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    animation: backgroundmover 30s linear infinite;;
+    color: white;;
+    .maploader {
 
+      // overflow: hidden;
+      width: 64px;
+      height: 64px;
+      margin: 40vh auto;
+      text-align: center;
+      // animation: name duration timing-function delay iteration-count direction fill-mode;
+      // animation: maploader 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+      border-radius: 200px;
+      display: grid;
+      align-content: center;
+      position: relative;
+      // border-top: solid 2px gray;
+      .lds-grid {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 64px;
+      }
+      .lds-grid div {
+        position: absolute;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: rgb(255, 255, 255);
+        animation: lds-grid 1.2s linear infinite;
+      }
+      .lds-grid div:nth-child(1) {
+        top: 6px;
+        left: 6px;
+        animation-delay: 0s;
+      }
+      .lds-grid div:nth-child(2) {
+        top: 6px;
+        left: 26px;
+        animation-delay: -0.4s;
+      }
+      .lds-grid div:nth-child(3) {
+        top: 6px;
+        left: 45px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(4) {
+        top: 26px;
+        left: 6px;
+        animation-delay: -0.4s;
+      }
+      .lds-grid div:nth-child(5) {
+        top: 26px;
+        left: 26px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(6) {
+        top: 26px;
+        left: 45px;
+        animation-delay: -1.2s;
+      }
+      .lds-grid div:nth-child(7) {
+        top: 45px;
+        left: 6px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(8) {
+        top: 45px;
+        left: 26px;
+        animation-delay: -1.2s;
+      }
+      .lds-grid div:nth-child(9) {
+        top: 45px;
+        left: 45px;
+        animation-delay: -1.6s;
+      }
+      @keyframes lds-grid {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+    }
+  }
+  @keyframes backgroundmover {
+    0% {
+      background-position-x: 0vw;
+    }
+    100% {
+      background-position-x: 400vw;
+    }
+  }
+  .loader-hide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 20;
+    background: rgb(255, 255, 255);
+    transform: scale(0);
+    overflow: hidden;
+    transition: 0.4s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    .maploader {
+
+      overflow: hidden;
+      width: 64px;
+      height: 64px;
+      margin: 40vh auto;
+      text-align: center;
+      // animation: name duration timing-function delay iteration-count direction fill-mode;
+      animation: maploader 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) infinite;
+      border-radius: 200px;
+      display: grid;
+      align-content: center;
+      position: relative;
+      border-top: solid 2px gray;
+      .lds-grid {
+        display: inline-block;
+        position: relative;
+        width: 64px;
+        height: 64px;
+      }
+      .lds-grid div {
+        position: absolute;
+        width: 13px;
+        height: 13px;
+        border-radius: 50%;
+        background: #fff;
+        animation: lds-grid 1.2s linear infinite;
+      }
+      .lds-grid div:nth-child(1) {
+        top: 6px;
+        left: 6px;
+        animation-delay: 0s;
+      }
+      .lds-grid div:nth-child(2) {
+        top: 6px;
+        left: 26px;
+        animation-delay: -0.4s;
+      }
+      .lds-grid div:nth-child(3) {
+        top: 6px;
+        left: 45px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(4) {
+        top: 26px;
+        left: 6px;
+        animation-delay: -0.4s;
+      }
+      .lds-grid div:nth-child(5) {
+        top: 26px;
+        left: 26px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(6) {
+        top: 26px;
+        left: 45px;
+        animation-delay: -1.2s;
+      }
+      .lds-grid div:nth-child(7) {
+        top: 45px;
+        left: 6px;
+        animation-delay: -0.8s;
+      }
+      .lds-grid div:nth-child(8) {
+        top: 45px;
+        left: 26px;
+        animation-delay: -1.2s;
+      }
+      .lds-grid div:nth-child(9) {
+        top: 45px;
+        left: 45px;
+        animation-delay: -1.6s;
+      }
+      @keyframes lds-grid {
+        0%, 100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+
+    }
+  }
     .no-scroll .scroll-content{
         overflow: hidden;
     }
     .logo{
       position: absolute;
-      top: 0;
+      top: 0vh;
       left: 0;
       right: 0;
       bottom: auto;
       overflow: hidden;
       text-align: center;
       padding: 20px;
-      z-index: -1;
+      z-index: 10;
       text-align: center;
+      h1 {
+          letter-spacing: 10px;
+          font-size: 4vw;
+          margin: 10vw 0px;
+          font-family: 'Cocomat';
+          text-transform: uppercase;
+      }
       img{
-        width: 10vw;
+        width: 20vw;
       }
     }
     .container {
      width: 100%;
      height: 100%;
-     background: url(../../assets/imgs/averie-woodard-5d20kdvFCfA-unsplash.jpg);
-     background-attachment: fixed;
-     background-size: auto 100%;
-     background-position: center;
-     background-repeat: no-repeat;
+     background: url(../../assets/watermarks.svg) repeat, url(../../assets/login_tape.svg) -30vw 88vh no-repeat,rgb(233, 151, 0);
+
+        // background-size: 150%;
+        // background-position: -40vw 0%;
+    //  background-repeat: no-repeat;
      display: grid;
      align-items: center;
      align-content: center;
       padding: 0 !important;
+      h1{
+        text-align: center;
+        text-transform: uppercase;
+        font-weight: normal;
+        // margin: 20px 0px;
+        letter-spacing: 5px;
+        font-family: 'Geometos';
+      }
       .form{
         width: 100%;
         padding: 5%;
         filter: blur(0px);
-        background:url(../../assets/imgs/averie-woodard-5d20kdvFCfA-unsplash_blured.jpg);
+        background:rgba(254, 212, 1, 0);
         background-attachment: fixed;
         background-position: center;
         background-size: cover;
@@ -46,20 +264,14 @@ page-login {
         text-align: right;
         position: relative;
         // display: grid;
-        margin-top: 50vh;
-        transform: translateY(-25vh);
         align-content: center;
+        margin-top: 50vh;
+        transform: translateY(-20vh);
         .messages{
           text-shadow: 0px 0px 1px rgb(255, 114, 114);
           color: rgb(255, 0, 0);
         }
-        h1{
-          text-align: center;
-          text-transform: uppercase;
-          font-weight: normal;
-          // margin: 20px 0px;
-          letter-spacing: 5px;
-        }
+
         .input{
           text-align: center;
           width: 100%;
@@ -67,8 +279,8 @@ page-login {
           margin: 20px 0px;
           p{
             font-size: 80%;
-            background: white;
-            color: #4C0A0A;
+            background: rgb(48, 48, 48);
+            color: rgb(255, 255, 255);
             width: 25%;
             padding: 2px;
             border-radius: 200px;
@@ -81,20 +293,20 @@ page-login {
             width: 97%;
             padding: 15px 10px;
             border: none;
-            border: solid 1px white;
-            background: none;
-            color: white;
+            border: solid 1px rgb(48, 48, 48);
+            background: rgb(233, 151, 0);
+            color: rgb(48, 48, 48);
             border-radius: 200px;
           }
         }
         .forgot{
           width: 100%;
-          text-align: center;
+          text-align: right;
           margin: 5px 0px;
           button {
             padding: 10px;
             background: none;
-            color: white;
+            color: rgb(48, 48, 48);
           }
         }
         .create{
@@ -113,19 +325,28 @@ page-login {
         .button{
           text-align: center;
           position: absolute;
-          bottom: -10px;
+          bottom: -80px;
           right: 0px;
           left:  0px;
           overflow: hidden;
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          #signup {
+            background: none !important;
+            box-shadow: none;
+          }
           button{
+
             text-shadow: 0px 2px 2px #1717174f;
+            box-shadow: 0px 2px 2px #1717174f;
             text-transform: uppercase;
             letter-spacing: 3px;
             color:#171717;
             border-radius: 30px;
-            margin: 0;
+            margin: 5px 0px;
             padding: 15px;
-            background: linear-gradient(#FFFFFF, #D1D1D1);
+            background: linear-gradient(#FFFFFF);
             width: 60%;
           }
         }

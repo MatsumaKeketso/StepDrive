@@ -5,6 +5,12 @@
     </div>
     <div class="imag">
       <img src="../../assets/imgs/RequestSuccessful.svg">
+      <div class="details">
+        <h2>Booking Details</h2>
+        <p>Your booking with <span>{{booking.schoolname}}</span> starts on</p>
+        <p>the {{booking.start}} until {{booking.end}} at {{booking.time}}</p>
+        <p>We'll tell you when they've agreed</p>
+      </div>
     </div>
     <div class="butt">
       <button (click)="home()">Okay</button>

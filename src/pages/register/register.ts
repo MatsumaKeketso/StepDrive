@@ -4,7 +4,7 @@ import { LoginPage } from '../login/login';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { Users } from '../../app/user';
 import * as firebase from 'firebase';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, ToastController, Keyboard } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { YouPage } from '../you/you';
 
@@ -14,11 +14,12 @@ import { YouPage } from '../you/you';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+  loaderAnimate = false;
 user =  {} as Users;
 
   loginForm: FormGroup;
 
-
+  isKeyOpen = false;
     email: string;
     password: string;
     RepeatedPassword: string;
@@ -40,7 +41,7 @@ user =  {} as Users;
   }
 
 
-  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams,  public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, public forms: FormBuilder, public navParams: NavParams,  public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, public keyboard: Keyboard) {
 
     this.loginForm = this.forms.group({
       email: new FormControl('', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-.]+$')])),
@@ -52,7 +53,13 @@ user =  {} as Users;
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
   }
-
+  checkKeyboard() {
+    if(this.keyboard.isOpen()) {
+      this.isKeyOpen = true
+    } else {
+      this.isKeyOpen = false;
+    }
+  }
   goToLogin(){
     this.navCtrl.setRoot(LoginPage);
   }
@@ -62,29 +69,26 @@ user =  {} as Users;
       content: 'Please wait...',
       duration: 2000
     })
-    loading.present();
+    // loading.present();
 
 
-
+    this.loaderAnimate = true;
     if (!user.email || !user.password) {
-      loading.dismiss()
-      this.toastCtrl.create({
-        message: 'Provide all required credentials.',
-        duration: 2000
-      }).present();
-
-
+      // loading.dismiss()
+      this.loaderAnimate = false;
     } else {
        firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then((result) => {
-      this.navCtrl.push(YouPage);
-      loading.dismiss()
+        this.loaderAnimate = false;
+        this.navCtrl.push(YouPage);
+      // loading.dismiss()
 
 
 
     }).catch(error => {
       let errorCode = error.code;
       let errorMessage = error.message;
-      loading.dismiss()
+      this.loaderAnimate = false;
+      // loading.dismiss()
       console.log(errorMessage);
 
       // Handle Errors here.
