@@ -150,7 +150,7 @@ mapCenter = {
     // Get the place details from the autocomplete object.
      let place = this.autocomplete.getPlace();
 
-    let filter = place.address_components[3].short_name
+    let filter = place.address_components[0].short_name
     this.db.collection('drivingschools').where('city','==',filter).get().then(res=> {
       this.users = []
       this.markers = []
@@ -301,7 +301,7 @@ this.users = filterd
   }
   hideTabs(cmd) {
 
-    if ('close') {
+    if (cmd=='close') {
             if (this.tabElements) {
               Object.keys(this.tabElements).map((key) => {
                 this.tabElements[key].style.transform = 'translateY(50vh)';
