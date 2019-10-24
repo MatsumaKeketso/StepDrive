@@ -143,6 +143,7 @@ mapCenter = {
     // address fields in the form.
     this.autocomplete.addListener('place_changed', ()=>{
       this.fillInAddress()
+
     });
   }
   fillInAddress() {
@@ -169,6 +170,12 @@ mapCenter = {
      }
 this.map.panTo(latLng);
 this.map.setZoom(4);
+this.hideTabs('open');
+Object.keys(this.tabElements).map((key) => {
+  // this.tabElements[key].style.transform = 'translateY(0vh)';
+  this.renderer.setStyle(this.tabElements[key], 'transform', 'translateY(0vh)')
+  this.tabElements[key].style.transition = '0.4s';
+});
 for (let i = 0; i < this.users.length; i++) {
 
 }
@@ -298,14 +305,19 @@ this.users = filterd
             if (this.tabElements) {
               Object.keys(this.tabElements).map((key) => {
                 this.tabElements[key].style.transform = 'translateY(50vh)';
+                this.renderer.setStyle(this.tabElements[key], 'transform', 'translateY(50vh)')
                 this.tabElements[key].style.transition = '0.4s';
               });
             }
+            console.log('close tabs');
     } else {
       Object.keys(this.tabElements).map((key) => {
-        this.tabElements[key].style.transform = 'translateY(0vh)';
+        // this.tabElements[key].style.transform = 'translateY(0vh)';
+        this.renderer.setStyle(this.tabElements[key], 'transform', 'translateY(0vh)')
         this.tabElements[key].style.transition = '0.4s';
       });
+      console.log('show tabs');
+
     }
   }
   viewSchool(data) {
