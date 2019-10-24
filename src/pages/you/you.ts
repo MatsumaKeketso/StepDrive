@@ -54,7 +54,7 @@ export class YouPage {
     // progressbar.js@1.0.0 version is used
 // Docs: http://progressbarjs.readthedocs.org/en/1.0.0/
 
-    
+
   }
   ionViewDidLoad() {
 this.getprofile();
@@ -329,10 +329,7 @@ this.getprofile();
     })
   }
   createUser() {
-    const loader = this.loadingCtrl.create({
-      content: 'Just a sec...',
-    })
-    loader.present();
+    this.loaderAnimate = true;
     firebase.auth().onAuthStateChanged(user => {
       this.user.uid = user.uid
       this.db.collection('users').doc(this.user.uid).set(this.user).then(res => {
@@ -345,7 +342,7 @@ this.getprofile();
         this.user.phone = res.data().phone
         this.user.surname = res.data().surname
         this.user.uid = res.data().uid
-        loader.dismiss();
+
         if (this.isediting) {
           this.isprofile = true;
           let elements = document.querySelectorAll(".tabbar");
@@ -358,13 +355,15 @@ this.getprofile();
                   });
                 }
         } else {
+          this.loaderAnimate = false;
           this.navCtrl.setRoot(TabsPage);
         }
         }
       })
     }).catch(err => {
+      this.loaderAnimate = false;
       console.log('Profile Creation error');
-      loader.dismiss()
+
     })
     })
   }

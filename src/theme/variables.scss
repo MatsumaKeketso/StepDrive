@@ -19,7 +19,17 @@ $font-path: "../assets/fonts";
 }
 $popover-ios-width : 91vw;
 $popover-md-width: 91vw;
-
+$toast-md-background: #1E1E1E;
+$toast-md-title-color: #FFFFFF;
+$alert-md-head-color: #FFFFFF;
+$alert-md-background-color: #1E1E1E;
+$alert-md-message-text-color: #E9C100;
+$alert-md-input-border-color: #E9C100;
+$alert-md-radio-label-text-color: #E9C100;
+$alert-md-checkbox-icon-border-color: white;
+$alert-md-button-text-color: white;
+$alert-md-button-background-color: #E9C100;
+$alert-md-button-background-color-activated: rgb(129, 111, 17);
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
