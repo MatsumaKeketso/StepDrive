@@ -225,7 +225,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
     let data = {   }
     // loader.present()
    await this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot( async res => {
-      this.request.length = 0
+      this.request = []
      await res.forEach(async rDoc => {
        await this.db.collection('drivingschools').where('schooluid', '==', rDoc.data().schooluid).get().then( async school => {
           await school.forEach(sDoc => {
@@ -256,6 +256,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
               docid: rDoc.id
              }
             this.request.push(data);
+            data ={}
             console.log('our obj', this.request);
             this.loaderAnimate = false;
         // this.more = this.request.indexOf()
@@ -265,6 +266,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         }, 0)
 
           })
+
           // the date must be in the future for the alerter to be presented
 
 
@@ -307,9 +309,12 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
         {
           text: 'Yes',
           handler: () => {
+
             this.db.collection('bookings').doc(docid).delete().then(res => {
               this.request = [];
-              this.getBooking();
+              setTimeout(()=>{
+                this.getBooking();
+              }, 500)
               this.toastCtrl.create({
                 message: 'Request deleted successfully',
                 duration: 2000

@@ -121,6 +121,8 @@ export class ContactPage {
     // set the number of lessons
     if (this.navParams.data.lessons.amount) {
       this.request.package.number = this.navParams.data.lessons.number;
+      console.log(this.navParams.data);
+
     // set the cost
     this.request.package.amount = this.navParams.data.lessons.amount ;
     this.request.package.name = this.navParams.data.lessons.name ;
@@ -462,16 +464,18 @@ export class ContactPage {
       let calc = date.setTime(date.getTime() + (lessons * 24 * 60 * 60 * 1000));
       var dateNew = new Date(calc).toDateString();
       this.request.dateout = dateNew;
-      console.log(this.request);
-
+      this.request.package.number = this.navParams.data.lessons.number;
+      this.request.package.code = this.navParams.data.lessons.code;
+      this.request.package.name = this.navParams.data.lessons.name;
     } else {
       // get the date out
       let Dateout = new Date(this.request.datein);
       let newDateout = Dateout.toDateString();
       this.request.datein = newDateout;
       // get lessons as number of days
-      let lessons = parseInt(this.navParams.data.lessons);
+      let lessons = parseInt(this.navParams.data.lessons.number);
       // declare the date in
+
       let date = new Date(this.request.datein);
       // calculate the number of days
       let calc = date.setTime(date.getTime() + (lessons * 24 * 60 * 60 * 1000));
@@ -479,7 +483,7 @@ export class ContactPage {
       var newDate = new Date(calc).toDateString()
       // assign to property
       this.request.dateout = newDate;
-      console.log(this.request);
+      console.log('date from input ', this.request.datein , 'calculated date' ,date, 'lessons to calculate', lessons);
     }
     if (this.dummyAddress !== this.request.location.address) {
        const alerter = await this.alertCtrl.create({
@@ -491,6 +495,7 @@ export class ContactPage {
           handler: () => {
             // create the request and save the address in the profile
             this.saveAddress()
+
           }
         },
         {

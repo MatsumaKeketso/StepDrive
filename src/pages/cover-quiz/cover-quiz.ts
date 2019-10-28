@@ -34,12 +34,12 @@ export class CoverQuizPage {
   ionViewDidLoad() {
     this.review.datecreated = new Date().toDateString();
     console.log(this.navParams);
-    this.school = this.navParams.data.school
-    this.request = this.navParams.data.request
+    this.school = this.navParams.data
+    this.request = this.navParams.data
     this.getProfilre()
     console.log('ionViewDidLoad CoverQuizPage');
     setTimeout(()=> {
-      this.review.schooluid = this.navParams.data.school.uid;
+      this.review.schooluid = this.navParams.data.sUid;
       console.log(this.review);
       console.log('school' ,this.school, 'request', this.request);
 
