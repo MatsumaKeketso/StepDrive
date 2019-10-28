@@ -109,7 +109,7 @@
           <p>{{s.desc}}</p>
       </div>
       <div class="dates">
-          <p>Lesson starts {{s.datein | date}}</p>
+          <p>Lesson starts {{s.datein | date}} to {{s.dateout | date}}</p>
       </div>
       <div class="pack">
           <p>{{s.package.name}} <span *ngIf="!s.package.name" >Custom</span>: {{s.package.number}} {{s.package.code}} lessons(s) for R{{s.package.amount}}.00</p>
@@ -131,9 +131,6 @@
     <div (click)="popReview(s)" class="comment">
         <ion-icon style="margin: auto; color: white;" name="chatbubbles"></ion-icon>
       </div>
-      <div *ngIf="s.confirmed=='waiting'||s.confirmed=='rejected'" class="comment-waiting">
-          <ion-icon style="margin: auto; color: white;" name="chatbubbles"></ion-icon>
-        </div>
   </div>
 </div>
 </div>

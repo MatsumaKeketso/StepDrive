@@ -100,6 +100,10 @@
                   <h5>Note {{i+1}}</h5>
 
                   <p>"{{n.doc.text}}" - <sub>{{n.doc.datecreated}}</sub> </p>
+                  <ion-item style="background: none !important; color: white; width: 60%;float: right;" no-lines>
+                    <ion-label style="font-size: 3vw;">Private</ion-label>
+                    <ion-toggle [(ngModel)]="n.doc.private" (ionChange)="changeNotePrivacy(n, $event)"></ion-toggle>
+                  </ion-item>
                 </div>
               </div>
             </div>

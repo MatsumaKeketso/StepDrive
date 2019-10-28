@@ -30,7 +30,9 @@ export class YouPage {
   }
   note = {
     text: '',
-    datecreated: null
+    private: true,
+    datecreated: null,
+    uid: null
   }
   notes = [];
   isprofile = false;
@@ -59,6 +61,7 @@ export class YouPage {
   ionViewDidLoad() {
 this.getprofile();
     firebase.auth().onAuthStateChanged(res => {
+      this.note.uid = res.uid
       this.splashScreen.hide()
       this.user.uid = res.uid
     })
@@ -79,7 +82,7 @@ this.getprofile();
           text: 'Yes',
           handler: ()=> {
             firebase.auth().onAuthStateChanged(user => {
-              this.db.collection('users').doc(user.uid).collection('notes').doc(n.docid).delete().then(res => {
+              this.db.collection('notes').doc(n.docid).delete().then(res => {
                 this.notes = []
                 this.getnote()
                 this.toastCtrl.create({
@@ -197,7 +200,7 @@ this.getprofile();
           } else {
             this.note.text = data.noteText
 
-            this.db.collection('users').doc(this.user.uid).collection('notes').add(this.note).then(res => {
+            this.db.collection('notes').add(this.note).then(res => {
               this.getnote();
 
               this.toastCtrl.create({
@@ -247,7 +250,7 @@ this.getprofile();
             }).present()
           } else {
             this.note.text = data.noteText
-            this.db.collection('users').doc(this.user.uid).collection('notes').doc(note.docid).set(this.note).then(res => {
+            this.db.collection('notes').doc(note.docid).set(this.note).then(res => {
               this.getnote();
 
               this.toastCtrl.create({
@@ -273,6 +276,57 @@ this.getprofile();
 
     */
   }
+  changeNotePrivacy(note, event) {
+    console.log(event.checked);
+
+if (event.checked==false) {
+  this.alertCtrl.create({
+    title: 'Make this note public?',
+    message: "This will make everyone see this note when they read about user's thoughts.",
+    buttons: [
+      {
+        text: "Don't make public",
+        role: 'cancel'
+      },
+      {
+        text: 'I understand',
+        handler: ()=> {
+              this.db.collection('notes').doc(note.docid).update({private: event.checked}).then(res => {
+    this.getnote();
+    this.toastCtrl.create({
+      message: 'Note privacy changed to public.',
+      duration: 2000
+    }).present();
+  }).catch(err => {
+    this.store.set('note', this.note);
+    this.getnote()
+    this.toastCtrl.create({
+      message: 'Eish! Could not update the note.',
+      duration: 2000
+    }).present();
+  })
+        }
+      }
+    ]
+  }).present()
+} else {
+  this.db.collection('notes').doc(note.docid).update({private: event.checked}).then(res => {
+    this.getnote();
+    this.toastCtrl.create({
+      message: 'Note privacy changed to private.',
+      duration: 2000
+    }).present();
+  }).catch(err => {
+    this.store.set('note', this.note);
+    this.getnote()
+    this.toastCtrl.create({
+      message: 'Eish! Could not update the note.',
+      duration: 2000
+    }).present();
+  })
+}
+
+  }
   getnote(){
     this.notes = [];
     let note = {
@@ -280,7 +334,7 @@ this.getprofile();
       docid: ''
     }
     firebase.auth().onAuthStateChanged(user => {
-      this.db.collection('users').doc(user.uid).collection('notes').get().then(res => {
+      this.db.collection('notes').where('uid','==',user.uid).get().then(res => {
         if (!res.empty) {
           res.forEach(doc => {
             note.doc = doc.data();

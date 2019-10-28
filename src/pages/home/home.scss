@@ -864,7 +864,7 @@ background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9
             height: 70%;
             display: flex;
             overflow-x: auto;
-
+            align-items: center;
             p {
               text-align: center;
 
@@ -968,6 +968,7 @@ background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9
             display: flex;
             overflow-x: auto;
             transition: 0.3s;
+            align-items: center;
             p {
               text-align: center;
 
@@ -1009,6 +1010,7 @@ background-image: url(data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9
             display: flex;
             overflow-x: auto;
             transition: 0.3s;
+            align-items: center;
             #nopacks {
               text-align: center;
               width: 70vw;

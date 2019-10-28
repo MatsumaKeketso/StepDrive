@@ -152,7 +152,7 @@ mapCenter = {
 
     let filter = place.address_components[0].short_name
     console.log('search filter ', place);
-    
+
     this.db.collection('drivingschools').where('city','==',filter).get().then(res=> {
       this.users = []
       this.markers = []
@@ -255,10 +255,13 @@ this.renderer.setStyle(this.code01[0], 'height', '0%');
               });
             }
     } else {
-      Object.keys(elements).map((key) => {
-        elements[key].style.transform = 'translateY(0vh)';
-        elements[key].style.transition = '0.4s';
-      });
+      if (this.about) {
+        Object.keys(elements).map((key) => {
+          elements[key].style.transform = 'translateY(0vh)';
+          elements[key].style.transition = '0.4s';
+        });
+      }
+
     }
   }
   // views the image on a bigger size
@@ -657,6 +660,13 @@ this.getlocation();
       },
       tilt: 45,
       styles: [
+        {
+          featureType: "poi",
+          elementType: "labels",
+          stylers: [
+                { visibility: "off" }
+          ]
+      },
         {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
         {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
         {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
@@ -739,6 +749,9 @@ this.getlocation();
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    setTimeout(()=> {
+      this.map.setClickableIcons(false);
+    },500)
     // this.loaderAnimate = false;
   }
   // add marker function
