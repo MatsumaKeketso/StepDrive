@@ -151,6 +151,8 @@ mapCenter = {
      let place = this.autocomplete.getPlace();
 
     let filter = place.address_components[0].short_name
+    console.log('search filter ', place);
+    
     this.db.collection('drivingschools').where('city','==',filter).get().then(res=> {
       this.users = []
       this.markers = []
@@ -244,17 +246,17 @@ this.renderer.setStyle(this.code01[0], 'height', '0%');
   }
   checkKeyBoard() {
     let elements = document.querySelectorAll(".tabbar");
-    if (this.keyboard.isOpen()&&this.about==true) {
+    if (this.keyboard.isOpen()) {
       this.store.set('readTips', true)
             if (elements) {
               Object.keys(elements).map((key) => {
-                // elements[key].style.transform = 'translateY(50vh)';
+                elements[key].style.transform = 'translateY(50vh)';
                 elements[key].style.transition = '0.4s';
               });
             }
     } else {
       Object.keys(elements).map((key) => {
-        // elements[key].style.transform = 'translateY(0vh)';
+        elements[key].style.transform = 'translateY(0vh)';
         elements[key].style.transition = '0.4s';
       });
     }
