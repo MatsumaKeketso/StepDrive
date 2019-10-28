@@ -204,7 +204,7 @@
             <div  class="card" *ngFor="let u of users" >
               <div (click)="openImage(u.image, 'open')" class="image">
                 <img *ngIf="u.image" src="{{u.image}}" alt="">
-                <img *ngIf="!u.image" src="https://icon-library.net/images/image-placeholder-icon/image-placeholder-icon-3.jpg" alt="">
+                <img *ngIf="!u.image" src="https://firebasestorage.googleapis.com/v0/b/instructor-f2be7.appspot.com/o/1.png?alt=media&token=c7672e9e-be23-4992-9ab7-b16b0594a0f8" alt="">
               </div>
               <div class="details" (click)="viewSchool(u)">
                 <p id="s-name"><b> {{u.schoolname}} </b></p>

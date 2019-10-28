@@ -653,6 +653,7 @@ this.getlocation();
         latLngBounds: this.SOUTH_AFRICAN_BOUNDS,
         strictBounds: true
       },
+      tilt: 45,
       styles: [
         {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
         {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
@@ -747,7 +748,7 @@ this.getlocation();
     const marker = new google.maps.Marker({
       position: props.coords,
       map: this.map,
-      icon: '../../assets/icon/icons8-car-16.png',
+      icon: 'https://cdn.mapmarker.io/api/v1/pin?size=50&background=%23FFFFFF&icon=fa-car&color=%239F0500&voffset=0&hoffset=1&',
     })
     // check for custom icon
     // check for content
