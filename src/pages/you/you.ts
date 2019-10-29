@@ -135,11 +135,12 @@ this.getprofile();
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
     }
     this.camera.getPicture(options).then(imagedata => {
-
-      let base64Image = `data:image/jpeg;base64,${imagedata}` ;
+      
+      let base64Image = `data:image/jpeg;base64,${imagedata}`;
       let uploadTask = this.storage.child(this.user.name).putString(base64Image, 'data_url');
       uploadTask.on('state_changed', snapshot => {
-        this.imageupload = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
+       let progress = (snapshot.bytesTransferred/snapshot.totalBytes) * 100;
+       this.imageupload = progress.toFixed(0)+'%';
         switch (snapshot.state) {
           case firebase.storage.TaskState.PAUSED: // or 'paused'
             this.imageuploadstate = 'Upload is paused';
@@ -173,8 +174,13 @@ this.getprofile();
       }, () => {
         uploadTask.snapshot.ref.getDownloadURL().then(downUrl => {
           this.user.image = downUrl
+          this.imageuploadstate = ''
+          this.imageupload = null
         })
       })
+    }).catch(error => {
+      console.log(error);
+      
     })
   }
   createnote() {
@@ -408,6 +414,7 @@ if (event.checked==false) {
                     elements[key].style.transition = '0.4s';
                   });
                 }
+                this.loaderAnimate = false;
         } else {
           this.loaderAnimate = false;
           this.navCtrl.setRoot(TabsPage);
