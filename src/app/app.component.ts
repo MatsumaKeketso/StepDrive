@@ -96,7 +96,7 @@ export class MyApp {
       // platform.backButton.subscribe(res => {
       // })
       if (platform.is('android')) {
-        screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
+        // screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
       }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.

@@ -22,8 +22,8 @@
         <!-- <div [ngClass]="{'pac-card': display, 'pac-card-hide': !display}" id="pac-card"> -->
         <div id="pac-container">
             <button (click)="requestPrompt()" ion-fab mini><ion-icon name="locate"></ion-icon></button>
-          <ion-searchbar placeholder="Search by location" >
-              <!-- (ionInput)="onSearchChange($event)" -->
+          <ion-searchbar placeholder="Search by location" (ionInput)="onSearchChange($event)" >
+              <!--  -->
           </ion-searchbar>
         </div>
         <div class="searchresult">

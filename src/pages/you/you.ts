@@ -293,7 +293,9 @@ if (event.checked==false) {
     buttons: [
       {
         text: "Don't make public",
-        role: 'cancel'
+        handler: ()=>{
+          this.getnote();
+        }
       },
       {
         text: 'I understand',
