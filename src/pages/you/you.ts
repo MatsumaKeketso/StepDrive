@@ -135,7 +135,6 @@ this.getprofile();
       sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM
     }
     this.camera.getPicture(options).then(imagedata => {
-      console.log(imagedata)
 
       let base64Image = `data:image/jpeg;base64,${imagedata}` ;
       let uploadTask = this.storage.child(this.user.name).putString(base64Image, 'data_url');
@@ -287,7 +286,9 @@ if (event.checked==false) {
     buttons: [
       {
         text: "Don't make public",
-        role: 'cancel'
+        handler: ()=>{
+          this.getnote();
+        }
       },
       {
         text: 'I understand',

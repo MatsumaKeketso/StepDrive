@@ -3,7 +3,7 @@ import { NavController, AlertController, App, Platform, Keyboard, Slides } from 
 import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from "@ionic/storage";
 import { CallNumber } from '@ionic-native/call-number';
-import {google} from 'google-maps'
+import { google } from 'google-maps'
 import { AndroidPermissions } from '@ionic-native/android-permissions';
 
 import * as firebase from 'firebase';
@@ -25,22 +25,26 @@ export class HomePage {
   @ViewChild('map') mapElement: ElementRef;
   filterby = ''
   map: any;
- // restriction for the map
- users = [];
- user = {
-   uid: ''
- }
- SOUTH_AFRICAN_BOUNDS = {
-  north: -21.914461,
-  south: -35.800139,
-  west: 15.905430,
-  east: 34.899504
-}
-height = 50;
-mapCenter = {
-  lng: 0,
-  lat: 0
-}
+  // restriction for the map
+  users = [];
+  user = {
+    uid: '',
+    coords: {
+      lat: 0,
+      lng: 0
+    }
+  }
+  SOUTH_AFRICAN_BOUNDS = {
+    north: -21.914461,
+    south: -35.800139,
+    west: 15.905430,
+    east: 34.899504
+  }
+  height = 50;
+  mapCenter = {
+    lng: 0,
+    lat: 0
+  }
   about = true;
   school = {
     schoolname: '',
@@ -83,24 +87,28 @@ mapCenter = {
   lastScrollTop = 0;
   tabElements = document.querySelectorAll(".tabbar");
   deviceVersion: any;
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController,private callNumber: CallNumber, public appCtrl: App, public renderer: Renderer2, public plt: Platform, public elementref: ElementRef, public keyboard: Keyboard, private androudPermissions: AndroidPermissions, public splashscreen: SplashScreen, private device: Device) {
+  directionsService = new google.maps.DirectionsService;
+  directionsRenderer = new google.maps.DirectionsRenderer;
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController, private callNumber: CallNumber, public appCtrl: App, public renderer: Renderer2, public plt: Platform, public elementref: ElementRef, public keyboard: Keyboard, private androudPermissions: AndroidPermissions, public splashscreen: SplashScreen, private device: Device) {
     this.deviceVersion = device.version
-   }
 
-  ionViewDidLoad(){
-    setTimeout(()=> {
+  }
+
+  ionViewDidLoad() {
+    setTimeout(() => {
+      this.clearMarkers()
       this.information[0].addEventListener("scroll", (event) => {
 
         this.lastScrollTop = this.lastScrollTop + 1;
 
-   if (this.lastScrollTop > 5){
-    this.renderer.setStyle(this.infoRead[0], 'opacity', '0');
-   }
+        if (this.lastScrollTop > 5) {
+          this.renderer.setStyle(this.infoRead[0], 'opacity', '0');
+        }
       });
       this.initAutocomplete()
     }, 1000)
-    if (this.licenseCode== 'code01') {
-      setTimeout(()=> {
+    if (this.licenseCode == 'code01') {
+      setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '0px');
         this.renderer.setStyle(this.code10[0], 'width', '0px');
         this.renderer.setStyle(this.code14[0], 'width', '0px');
@@ -131,9 +139,15 @@ mapCenter = {
 
   }
   initAutocomplete() {
+    let node = this.db.collection('drivingschools').orderBy('South').startAt('!').endAt('SUBSTRING\uf8ff').get().then(res => {
+      res.forEach(doc => {
+        console.log('query got ...', doc);
+
+      })
+    })
     // Create the autocomplete object, restricting the search predictions to
     // geographical location types.
-    this.autocomplete = new google.maps.places.Autocomplete(this.autoCompSearch[0], {types: ['geocode']});
+    this.autocomplete = new google.maps.places.Autocomplete(this.autoCompSearch[0], { types: ['geocode'] });
 
     // Avoid paying for data that you don't need by restricting the set of
     // place fields that are returned to just the address components.
@@ -141,46 +155,49 @@ mapCenter = {
 
     // When the user selects an address from the drop-down, populate the
     // address fields in the form.
-    this.autocomplete.addListener('place_changed', ()=>{
+    this.autocomplete.addListener('place_changed', () => {
       this.fillInAddress()
 
     });
   }
   fillInAddress() {
     // Get the place details from the autocomplete object.
-     let place = this.autocomplete.getPlace();
+    let place = this.autocomplete.getPlace();
 
     let filter = place.address_components[0].short_name
-    console.log('search filter ', place);
+    console.log('search filter ', filter);
 
-    this.db.collection('drivingschools').where('city','==',filter).get().then(res=> {
+    this.db.collection('drivingschools').where('city', '==', filter).get().then(res => {
       this.users = []
       this.markers = []
       res.forEach(doc => {
         this.users.push(doc.data())
         this.markers.push(doc.data())
       })
-      setTimeout( async () => {
-        await this.markers.forEach( async element => {
+      setTimeout(async () => {
+        await this.markers.forEach(async element => {
           this.addMarker(element);
         })
-       }, 1000)
+      }, 1000)
     })
-     let latLng = {
-       lat: place.geometry.location.lat(),
-       lng: place.geometry.location.lng(),
-     }
-this.map.panTo(latLng);
-this.map.setZoom(4);
-this.hideTabs('open');
-Object.keys(this.tabElements).map((key) => {
-  // this.tabElements[key].style.transform = 'translateY(0vh)';
-  this.renderer.setStyle(this.tabElements[key], 'transform', 'translateY(0vh)')
-  this.tabElements[key].style.transition = '0.4s';
-});
-for (let i = 0; i < this.users.length; i++) {
+    let latLng = {
+      lat: place.geometry.location.lat(),
+      lng: place.geometry.location.lng(),
+    }
+    this.loadMap(4)
+    setTimeout(() => {
+      this.map.panTo(latLng);
+      this.map.setZoom(4);
+      this.hideTabs('open');
+    }, 500)
+    Object.keys(this.tabElements).map((key) => {
+      // this.tabElements[key].style.transform = 'translateY(0vh)';
+      this.renderer.setStyle(this.tabElements[key], 'transform', 'translateY(0vh)')
+      this.tabElements[key].style.transition = '0.4s';
+    });
+    for (let i = 0; i < this.users.length; i++) {
 
-}
+    }
   }
   segmentChanged(event) {
     // this.code08packs = data.packages[1].code08;
@@ -188,36 +205,36 @@ for (let i = 0; i < this.users.length; i++) {
     // this.code14packs = data.packages[3].code14;
     // this.code01packs = data.packages[0].code01;
 
-    if (this.licenseCode== 'code08') {
+    if (this.licenseCode == 'code08') {
       this.school.cost = this.activePack[1].price
-      setTimeout(()=> {
+      setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '100%');
         this.renderer.setStyle(this.code10[0], 'width', '0px');
         this.renderer.setStyle(this.code14[0], 'width', '0px');
-this.renderer.setStyle(this.code01[0], 'width', '0%');
+        this.renderer.setStyle(this.code01[0], 'width', '0%');
 
         this.renderer.setStyle(this.code08[0], 'height', '70%');
         this.renderer.setStyle(this.code10[0], 'height', '0px');
         this.renderer.setStyle(this.code14[0], 'height', '0px');
         this.renderer.setStyle(this.code01[0], 'height', '0%');
       })
-    } else if (this.licenseCode== 'code10') {
+    } else if (this.licenseCode == 'code10') {
 
       this.school.cost = this.activePack[2].price
-      setTimeout(()=> {
+      setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '0px');
         this.renderer.setStyle(this.code10[0], 'width', '100%');
         this.renderer.setStyle(this.code14[0], 'width', '0px');
-this.renderer.setStyle(this.code01[0], 'width', '0%');
+        this.renderer.setStyle(this.code01[0], 'width', '0%');
         this.renderer.setStyle(this.code08[0], 'height', '0%');
         this.renderer.setStyle(this.code10[0], 'height', '70%');
         this.renderer.setStyle(this.code14[0], 'height', '0px');
         this.renderer.setStyle(this.code01[0], 'height', '0%');
       })
-    } else if (this.licenseCode== 'code14') {
+    } else if (this.licenseCode == 'code14') {
 
       this.school.cost = this.activePack[3].price
-      setTimeout(()=> {
+      setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '0px');
         this.renderer.setStyle(this.code10[0], 'width', '0px');
         this.renderer.setStyle(this.code14[0], 'width', '100%');
@@ -226,12 +243,12 @@ this.renderer.setStyle(this.code01[0], 'width', '0%');
         this.renderer.setStyle(this.code08[0], 'height', '0%');
         this.renderer.setStyle(this.code10[0], 'height', '0px');
         this.renderer.setStyle(this.code14[0], 'height', '70%');
-this.renderer.setStyle(this.code01[0], 'height', '0%');
+        this.renderer.setStyle(this.code01[0], 'height', '0%');
       })
-    } else if (this.licenseCode== 'code01') {
+    } else if (this.licenseCode == 'code01') {
 
       this.school.cost = this.activePack[0].price
-      setTimeout(()=> {
+      setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '0px');
         this.renderer.setStyle(this.code10[0], 'width', '0px');
         this.renderer.setStyle(this.code14[0], 'width', '0%');
@@ -248,12 +265,12 @@ this.renderer.setStyle(this.code01[0], 'height', '0%');
     let elements = document.querySelectorAll(".tabbar");
     if (this.keyboard.isOpen()) {
       this.store.set('readTips', true)
-            if (elements) {
-              Object.keys(elements).map((key) => {
-                elements[key].style.transform = 'translateY(50vh)';
-                elements[key].style.transition = '0.4s';
-              });
-            }
+      if (elements) {
+        Object.keys(elements).map((key) => {
+          elements[key].style.transform = 'translateY(50vh)';
+          elements[key].style.transition = '0.4s';
+        });
+      }
     } else {
       if (this.about) {
         Object.keys(elements).map((key) => {
@@ -279,25 +296,12 @@ this.renderer.setStyle(this.code01[0], 'height', '0%');
       this.renderer.setStyle(viewimage, 'transform', 'scale(0)');
     }
   }
-  logRatingChange(rating){
-    // do your stuff
-}
+
   async onSearchChange(event) {
     let filterd = []
     if (event.target.value) {
-  this.users.forEach(element => {
-
-    let n:string = element.city.includes(event.target.value)
-    if (n) {
-      filterd.push(element)
     } else {
-
-    }
-this.users = filterd
-
-  });
-    } else {
-      if(this.filterby) {
+      if (this.filterby) {
         this.getfilterdusers()
       } else {
         this.getusers();
@@ -306,15 +310,15 @@ this.users = filterd
   }
   hideTabs(cmd) {
 
-    if (cmd=='close') {
-            if (this.tabElements) {
-              Object.keys(this.tabElements).map((key) => {
-                this.tabElements[key].style.transform = 'translateY(50vh)';
-                this.renderer.setStyle(this.tabElements[key], 'transform', 'translateY(50vh)')
-                this.tabElements[key].style.transition = '0.4s';
-              });
-            }
-            console.log('close tabs');
+    if (cmd == 'close') {
+      if (this.tabElements) {
+        Object.keys(this.tabElements).map((key) => {
+          this.tabElements[key].style.transform = 'translateY(50vh)';
+          this.renderer.setStyle(this.tabElements[key], 'transform', 'translateY(50vh)')
+          this.tabElements[key].style.transition = '0.4s';
+        });
+      }
+      console.log('close tabs');
     } else {
       Object.keys(this.tabElements).map((key) => {
         // this.tabElements[key].style.transform = 'translateY(0vh)';
@@ -342,22 +346,22 @@ this.users = filterd
     let elements = document.getElementsByClassName("tabbar");
     if (this.about) {
 
-             setTimeout(()=> {
-              this.renderer.setStyle(elements[0],'transform', 'translateY(0vh)')
-              Object.keys(elements).map((key) => {
-                elements[key].style.transform = 'translateY(0vh)';
-                elements[key].style.transition = '0.4s';
-              });
-             }, 200)
+      setTimeout(() => {
+        this.renderer.setStyle(elements[0], 'transform', 'translateY(0vh)')
+        Object.keys(elements).map((key) => {
+          elements[key].style.transform = 'translateY(0vh)';
+          elements[key].style.transition = '0.4s';
+        });
+      }, 200)
 
     } else {
-      setTimeout(()=> {
-        this.renderer.setStyle(elements[0],'transform', 'translateY(50vh)')
+      setTimeout(() => {
+        this.renderer.setStyle(elements[0], 'transform', 'translateY(50vh)')
         Object.keys(elements).map((key) => {
           elements[key].style.transform = 'translateY(50vh)';
           elements[key].style.transition = '0.4s';
         });
-       }, 200)
+      }, 200)
     }
   }
   //=================This is the method Nkwe altered========
@@ -365,172 +369,172 @@ this.users = filterd
     console.log();
 
     let data = {
-       school: null,
-       lessons: {
-         amount: null,
-         code: null,
-         name: null,
-         number: null
-       }
-     }
-     if (pckgType == "Custom") {
-       data.school = school
-       data.lessons.number = lsns
-       data.lessons.code = this.licenseCode
-       data.lessons.name = pckgType
-       data.lessons.amount = parseFloat(this.school.cost) * parseFloat(lsns)
-     } else {
-       data.school = school
-       data.lessons = lsns
-     }
-     console.log(data);
-     if (event.path.length != 0) {
+      school: null,
+      lessons: {
+        amount: null,
+        code: null,
+        name: null,
+        number: null
+      }
+    }
+    if (pckgType == "Custom") {
+      data.school = school
+      data.lessons.number = lsns
+      data.lessons.code = this.licenseCode
+      data.lessons.name = pckgType
+      data.lessons.amount = parseFloat(this.school.cost) * parseFloat(lsns)
+    } else {
+      data.school = school
+      data.lessons = lsns
+    }
+    console.log(data);
+    if (event.path.length != 0) {
       this.renderer.setStyle(event.path[0], 'transition', '0.4s');
       this.renderer.setStyle(event.path[0], 'transform', 'scale(1.07)');
       this.renderer.setStyle(event.path[0], 'background', 'linear-gradient(140deg, rgba(255, 242, 217, 0.616),rgb(255, 228, 173)),linear-gradient(45deg, rgba(179, 0, 104, 0.616),rgb(255, 228, 173))');
-      setTimeout(()=>{
+      setTimeout(() => {
         this.renderer.setStyle(event.path[0], 'transform', 'scale(1)');
         this.renderer.setStyle(event.path[0], 'background', 'linear-gradient(40deg, rgba(255, 242, 217, 0.616),rgb(255, 228, 173)),linear-gradient(155deg, rgba(179, 0, 104, 0.616),rgb(255, 228, 173))');
 
         ///
-       //  this.renderer.setStyle(event.path[0], 'background', 'url(../../assets/icon/package-background.svg),linear-gradient(45deg, rgba(255, 255, 255, 0.616),rgb(250, 182, 43)');
+        //  this.renderer.setStyle(event.path[0], 'background', 'url(../../assets/icon/package-background.svg),linear-gradient(45deg, rgba(255, 255, 255, 0.616),rgb(250, 182, 43)');
 
       }, 200);
-     }
+    }
 
-     setTimeout(()=> {
-        this.appCtrl.getRootNav().push(ContactPage, data);
-     }, 400)
-     //
-   }
-   reviewsToggler() {
+    setTimeout(() => {
+      this.appCtrl.getRootNav().push(ContactPage, data);
+    }, 400)
+    //
+  }
+  reviewsToggler() {
     this.toggleReviews = !this.toggleReviews
-   }
+  }
   //  requests permission when the user clicks the location button
-   async requestPrompt() {
-     this.loaderAnimate = true;
-    await this.androudPermissions.requestPermission(this.androudPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then( async res => {
+  async requestPrompt() {
+    this.loaderAnimate = true;
+    await this.androudPermissions.requestPermission(this.androudPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(async res => {
       if (res.hasPermission) {
         await this.store.set('acceptedPermission', 'yes').then(res => {
-this.getlocation();
+          this.getlocation();
         })
 
       } else {
         await this.store.set('acceptedPermission', 'no')
         this.mapCenter.lat = -29.465306;
+        this.mapCenter.lng = 24.741967;
+        // this.initMap()
+        // load the map with the zoom of 2
+        this.loadMap(2);
+        this.getusers();
+      }
+    }).catch(async err => {
+      await this.store.set('acceptedPermission', 'no')
+      this.mapCenter.lat = -29.465306;
       this.mapCenter.lng = 24.741967;
       // this.initMap()
       // load the map with the zoom of 2
       this.loadMap(2);
-        this.getusers();
-      }
-   }).catch(async err => {
-    await this.store.set('acceptedPermission', 'no')
-    this.mapCenter.lat = -29.465306;
-  this.mapCenter.lng = 24.741967;
-  // this.initMap()
-  // load the map with the zoom of 2
-  this.loadMap(2);
-    this.getusers();
-   })
+      this.getusers();
+    })
   }
   // initiates the first time the app opens
-   async promptLocation() {
+  async promptLocation() {
     this.loaderAnimate = true;
-    this.store.get('acceptedPermission').then( async res => {
+    this.store.get('acceptedPermission').then(async res => {
       // checks the acceptedPermission value if its null
-      if(res==null) {
+      if (res == null) {
         // checks the permission
-        this.androudPermissions.checkPermission(this.androudPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then( async res => {
+        this.androudPermissions.checkPermission(this.androudPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(async res => {
           // if we dont have location permission
-          if (res.hasPermission==false) {
+          if (res.hasPermission == false) {
             // request it here
-        await this.androudPermissions.requestPermission(this.androudPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(res => {
-          // check if the access is  true
-          if (res.hasPermission) {
-            // if access is true store update acceptedPermission to yes
-            this.store.set('acceptedPermission', 'yes').then(res => {
+            await this.androudPermissions.requestPermission(this.androudPermissions.PERMISSION.ACCESS_COARSE_LOCATION).then(res => {
+              // check if the access is  true
+              if (res.hasPermission) {
+                // if access is true store update acceptedPermission to yes
+                this.store.set('acceptedPermission', 'yes').then(res => {
 
+                })
+                this.getlocation();
+              } else {
+                // if the user denies the location then set the value to no
+                this.store.set('acceptedPermission', 'no')
+                this.mapCenter.lat = -29.465306;
+                this.mapCenter.lng = 24.741967;
+                // this.initMap()
+                // load the map with the zoom of 2
+                this.loadMap(2);
+                this.getusers();
+              }
+            }).catch(err => {
+              // if the user denies the location then set the value to no
+              this.store.set('acceptedPermission', 'no')
+              this.mapCenter.lat = -29.465306;
+              this.mapCenter.lng = 24.741967;
+              // this.initMap()
+              // load the map with the zoom of 2
+              this.loadMap(2);
+              this.getusers();
             })
-            this.getlocation();
-          } else {
-            // if the user denies the location then set the value to no
-            this.store.set('acceptedPermission', 'no')
-            this.mapCenter.lat = -29.465306;
-      this.mapCenter.lng = 24.741967;
-      // this.initMap()
-      // load the map with the zoom of 2
-      this.loadMap(2);
-            this.getusers();
           }
         }).catch(err => {
-               // if the user denies the location then set the value to no
-            this.store.set('acceptedPermission', 'no')
-            this.mapCenter.lat = -29.465306;
-      this.mapCenter.lng = 24.741967;
-      // this.initMap()
-      // load the map with the zoom of 2
-      this.loadMap(2);
-            this.getusers();
+          this.loaderAnimate = false;
+          // if the user denies the location then set the value to no
+          this.store.set('acceptedPermission', 'no')
+          this.mapCenter.lat = -29.465306;
+          this.mapCenter.lng = 24.741967;
+          // this.initMap()
+          // load the map with the zoom of 2
+          this.loadMap(2);
+          this.getusers();
         })
-      }
-    }).catch(err => {
-      this.loaderAnimate = false;
-        // if the user denies the location then set the value to no
-        this.store.set('acceptedPermission', 'no')
-        this.mapCenter.lat = -29.465306;
-  this.mapCenter.lng = 24.741967;
-  // this.initMap()
-  // load the map with the zoom of 2
-  this.loadMap(2);
-        this.getusers();
-    })
-      } else if(res=='yes') {
+      } else if (res == 'yes') {
         this.getlocation()
-      } else if (res=='no') {
+      } else if (res == 'no') {
         this.mapCenter.lat = -29.465306;
-      this.mapCenter.lng = 24.741967;
-      // this.initMap()
-      // load the map with the zoom of 2
-      this.loadMap(2);
-            this.getusers();
+        this.mapCenter.lng = 24.741967;
+        // this.initMap()
+        // load the map with the zoom of 2
+        this.loadMap(2);
+        this.getusers();
       }
     })
   }
   getUserPosition() {
-       let options = {
-        enableHighAccuracy: true,
-      };
-      this.geolocation.getCurrentPosition(options).then((pos) => {
-        let geoData = {
-          lat: pos.coords.latitude,
-          lng: pos.coords.longitude
-        }
-        // get the address from the current position's coords
-        this.geocoder.geocode({ 'location': geoData }, (results, status) => {
-          console.log('Geocode responded with', results, 'and status of', status)
-          if (status) {
-            if (results[0]) {
-              // get the city from the address components
-              this.filterby = results[1].address_components[3].short_name;
-              console.log('filterd by', this.filterby);
-              this.getfilterdusers();
-            } else {
-              console.log('No results found');
-            }
+    let options = {
+      enableHighAccuracy: true,
+    };
+    this.geolocation.getCurrentPosition(options).then((pos) => {
+      let geoData = {
+        lat: pos.coords.latitude,
+        lng: pos.coords.longitude
+      }
+      // get the address from the current position's coords
+      this.geocoder.geocode({ 'location': geoData }, (results, status) => {
+        console.log('Geocode responded with', results, 'and status of', status)
+        if (status) {
+          if (results[0]) {
+            // get the city from the address components
+            this.filterby = results[1].address_components[3].short_name;
+            console.log('filterd by', this.filterby);
+            this.getfilterdusers();
           } else {
-            console.log('Geocoder failed due to: ' + status);
+            console.log('No results found');
           }
-        }, err => {
-          console.log('Geocoder failed with', err)
-        })
-        this.mapCenter.lat = pos.coords.latitude;
-      this.mapCenter.lng = pos.coords.longitude;
-      }, (err: PositionError) => {
-        console.log("error : " + err.message);
-      }).catch(err => {
-
+        } else {
+          console.log('Geocoder failed due to: ' + status);
+        }
+      }, err => {
+        console.log('Geocoder failed with', err)
       })
+      this.mapCenter.lat = pos.coords.latitude;
+      this.mapCenter.lng = pos.coords.longitude;
+    }, (err: PositionError) => {
+      console.log("error : " + err.message);
+    }).catch(err => {
+
+    })
 
   }
   // gets the location of the user and the driving schools in that area
@@ -547,9 +551,9 @@ this.getlocation();
         lng: resp.coords.longitude
       }
       // get the address from the current position's coords
-      this.geocoder.geocode({'location': geoData},(results, status) =>{
+      this.geocoder.geocode({ 'location': geoData }, (results, status) => {
 
-        if (status ) {
+        if (status) {
           if (results[0]) {
             // get the city from the address components
             this.filterby = results[1].address_components[3].short_name;
@@ -558,34 +562,34 @@ this.getlocation();
             // this.loadMap(14)
             this.getfilterdusers();
           } else {
-                        // if the user denies the location then set the value to no
-                        this.store.set('acceptedPermission', 'no')
-                        this.mapCenter.lat = -29.465306;
-                  this.mapCenter.lng = 24.741967;
-                  // this.initMap()
-                  // load the map with the zoom of 2
-                  this.loadMap(2);
-                        this.getusers();
+            // if the user denies the location then set the value to no
+            this.store.set('acceptedPermission', 'no')
+            this.mapCenter.lat = -29.465306;
+            this.mapCenter.lng = 24.741967;
+            // this.initMap()
+            // load the map with the zoom of 2
+            this.loadMap(2);
+            this.getusers();
           }
         } else {
-                      // if the user denies the location then set the value to no
-                      this.store.set('acceptedPermission', 'no')
-                      this.mapCenter.lat = -29.465306;
-                this.mapCenter.lng = 24.741967;
-                // this.initMap()
-                // load the map with the zoom of 2
-                this.loadMap(2);
-                      this.getusers();
+          // if the user denies the location then set the value to no
+          this.store.set('acceptedPermission', 'no')
+          this.mapCenter.lat = -29.465306;
+          this.mapCenter.lng = 24.741967;
+          // this.initMap()
+          // load the map with the zoom of 2
+          this.loadMap(2);
+          this.getusers();
         }
       }, err => {
-                    // if the user denies the location then set the value to no
-                    this.store.set('acceptedPermission', 'no')
-                    this.mapCenter.lat = -29.465306;
-              this.mapCenter.lng = 24.741967;
-              // this.initMap()
-              // load the map with the zoom of 2
-              this.loadMap(2);
-                    this.getusers();
+        // if the user denies the location then set the value to no
+        this.store.set('acceptedPermission', 'no')
+        this.mapCenter.lat = -29.465306;
+        this.mapCenter.lng = 24.741967;
+        // this.initMap()
+        // load the map with the zoom of 2
+        this.loadMap(2);
+        this.getusers();
       });
       // generate marker info for the user
       let data = {
@@ -619,11 +623,11 @@ this.getlocation();
       })
       // add an info window to the user marker
       let infoWindow = new google.maps.InfoWindow({
-        content: `<h5 style="margin:0;padding:0;">${data.schoolname} </h5>`+data.address
+        content: `<h5 style="margin:0;padding:0;">${data.schoolname} </h5>` + data.address
       });
       marker.addListener('click', () => {
         infoWindow.open(this.map, marker);
-       })
+      })
       // this.addMarker(data);
 
 
@@ -643,8 +647,17 @@ this.getlocation();
     this.display = !this.display;
 
   }
-// loads our main map
-  async loadMap(zoomlevel: number){
+  // must clear markers when the user searches for a location
+  clearMarkers() {
+    for (let i = 0; i < this.markers.length; i++) {
+      const element = this.markers[i];
+
+    }
+  }
+  // get the driving schools around the user location;
+
+  // loads our main map
+  async loadMap(zoomlevel: number) {
     let location;
     var ref = this;
     let watch = this.geolocation.watchPosition();
@@ -664,121 +677,138 @@ this.getlocation();
           featureType: "poi",
           elementType: "labels",
           stylers: [
-                { visibility: "off" }
+            { visibility: "off" }
           ]
-      },
-        {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
-        {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
-        {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+        },
+        { elementType: 'geometry', stylers: [{ color: '#242f3e' }] },
+        { elementType: 'labels.text.stroke', stylers: [{ color: '#242f3e' }] },
+        { elementType: 'labels.text.fill', stylers: [{ color: '#746855' }] },
         {
           featureType: 'administrative.locality',
           elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
+          stylers: [{ color: '#d59563' }]
         },
         {
           featureType: 'poi',
           elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
+          stylers: [{ color: '#d59563' }]
         },
         {
           featureType: 'poi.park',
           elementType: 'geometry',
-          stylers: [{color: '#263c3f'}]
+          stylers: [{ color: '#263c3f' }]
         },
         {
           featureType: 'poi.park',
           elementType: 'labels.text.fill',
-          stylers: [{color: '#0078D7'}]
+          stylers: [{ color: '#0078D7' }]
         },
         {
           featureType: 'road',
           elementType: 'geometry',
-          stylers: [{color: '#38414e'}]
+          stylers: [{ color: '#38414e' }]
         },
         {
           featureType: 'road',
           elementType: 'geometry.stroke',
-          stylers: [{color: '#212a37'}]
+          stylers: [{ color: '#212a37' }]
         },
         {
           featureType: 'road',
           elementType: 'labels.text.fill',
-          stylers: [{color: '#9ca5b3'}]
+          stylers: [{ color: '#9ca5b3' }]
         },
         {
           featureType: 'road.highway',
           elementType: 'geometry',
-          stylers: [{color: '#746855'}]
+          stylers: [{ color: '#746855' }]
         },
         {
           featureType: 'road.highway',
           elementType: 'geometry.stroke',
-          stylers: [{color: '#1f2835'}]
+          stylers: [{ color: '#1f2835' }]
         },
         {
           featureType: 'road.highway',
           elementType: 'labels.text.fill',
-          stylers: [{color: '#f3d19c'}]
+          stylers: [{ color: '#f3d19c' }]
         },
         {
           featureType: 'transit',
           elementType: 'geometry',
-          stylers: [{color: '#2f3948'}]
+          stylers: [{ color: '#2f3948' }]
         },
         {
           featureType: 'transit.station',
           elementType: 'labels.text.fill',
-          stylers: [{color: '#d59563'}]
+          stylers: [{ color: '#d59563' }]
         },
         {
           featureType: 'water',
           elementType: 'geometry',
-          stylers: [{color: '#17263c'}]
+          stylers: [{ color: '#17263c' }]
         },
         {
           featureType: 'water',
           elementType: 'labels.text.fill',
-          stylers: [{color: '#515c6d'}]
+          stylers: [{ color: '#515c6d' }]
         },
         {
           featureType: 'water',
           elementType: 'labels.text.stroke',
-          stylers: [{color: '#17263c'}]
+          stylers: [{ color: '#17263c' }]
         }
       ]
     }
 
     this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    setTimeout(()=> {
+    setTimeout(() => {
       this.map.setClickableIcons(false);
-    },500)
+      this.directionsRenderer.setMap(this.map);
+    }, 500)
     // this.loaderAnimate = false;
   }
   // add marker function
   addMarker(props) {
-    // add marker
-    let markerLabel = props.schoolname.split(' ')
-    let bLetter = markerLabel[0].split('')
+    this.directionsService.route({
+      origin: this.mapCenter,
+      destination: props.coords,
+      travelMode: 'DRIVING'
+    }, (response, status)=> {
+      if (status === 'OK') {
+        console.log(response.routes[0].legs[0].end_address, ' is ', response.routes[0].legs[0].distance.text, 'from you')
+        // this.directionsRenderer.setDirections(response);
+        // add marker
 
-    const marker = new google.maps.Marker({
-      position: props.coords,
-      map: this.map,
-      icon: 'https://cdn.mapmarker.io/api/v1/pin?size=50&background=%23FFFFFF&icon=fa-car&color=%239F0500&voffset=0&hoffset=1&',
-    })
-    // check for custom icon
-    // check for content
-    if(props.address || props.schoolname) {
-      // set custom content
-     let infoWindow = new google.maps.InfoWindow({
-       content: `<h5 style="margin:0;padding:0;">${props.schoolname} </h5>`+props.address
-     });
-     marker.addListener('click', () => {
-      infoWindow.open(this.map, marker);
-     })
-    }
+        let markerLabel = props.schoolname.split(' ')
+        let bLetter = markerLabel[0].split('')
+
+        const marker = new google.maps.Marker({
+          position: props.coords,
+          map: this.map,
+          icon: 'https://cdn.mapmarker.io/api/v1/pin?size=50&background=%23FFFFFF&icon=fa-car&color=%239F0500&voffset=0&hoffset=1&',
+        })
+        // check for custom icon
+        // check for content
+        if (props.address || props.schoolname) {
+          // set custom content
+          let infoWindow = new google.maps.InfoWindow({
+            content: `<h5 style="margin:0;padding:0;">${props.schoolname} </h5>` + props.address+'<hr>' + response.routes[0].legs[0].distance.text + ' away.'
+          });
+          marker.addListener('click', () => {
+            infoWindow.open(this.map, marker);
+          })
+        }
+
+      } else {
+        console.log('Directions request failed due to ' + status);
+      }
+    });
+
+
 
   }
-  addInfoWindow(marker, content){
+  addInfoWindow(marker, content) {
     let infoWindow = new google.maps.InfoWindow({
       content: content
     });
@@ -787,26 +817,26 @@ this.getlocation();
     });
   }
   // get every driving school, doesn't matter the location
-  async getusers(){
+  async getusers() {
     this.loaderAnimate = true;
-   await this.db.collection('drivingschools').onSnapshot(async snapshot => {
+    await this.db.collection('drivingschools').onSnapshot(async snapshot => {
 
 
       this.users = [];
       this.markers = [];
       this.userReviews = []
-      snapshot.forEach( async doc => {
+      snapshot.forEach(async doc => {
         this.users.push(doc.data());
         // this.addMarker(doc.data());
 
         this.markers.push(doc.data());
       })
       this.loaderAnimate = false;
-     setTimeout( async () => {
-      await this.markers.forEach( async element => {
-        this.addMarker(element);
-      })
-     }, 1000)
+      setTimeout(async () => {
+        await this.markers.forEach(async element => {
+          this.addMarker(element);
+        })
+      }, 1000)
 
     })
   }
@@ -820,28 +850,24 @@ this.getlocation();
 
     })
   }
-  async getfilterdusers(){
+  async getfilterdusers() {
     this.loaderAnimate = true;
     await this.db.collection('drivingschools').where('city', '==', this.filterby).onSnapshot(async snapshot => {
 
-       this.users = [];
-       this.markers = []
-       snapshot.forEach( async doc => {
+      this.users = [];
+      this.markers = []
+      snapshot.forEach(async doc => {
 
-         this.users.push(doc.data());
+        this.users.push(doc.data());
         //  this.addMarker(doc.data());
 
-         this.markers.push(doc.data());
-       })
-       this.loaderAnimate = false;
-      await this.markers.forEach( async element => {
-         this.addMarker(element);
-       })
-     })
-   }
-  clearMarker(event) {
-    for (let i = 0; i < this.users.length; i++) {
-    }
+        this.markers.push(doc.data());
+      })
+      this.loaderAnimate = false;
+      await this.markers.forEach(async element => {
+        this.addMarker(element);
+      })
+    })
   }
   call(school) {
 
@@ -849,7 +875,7 @@ this.getlocation();
       message: `Call ${school.schoolname}?`,
       buttons: [{
         text: 'Call',
-        handler: ()=>{
+        handler: () => {
           this.callNumber.callNumber(school.cellnumber, true).then(res => {
           }).catch(err => {
           })
