@@ -51,7 +51,9 @@ export class HomePage {
     desc: '',
     content: '',
     image: '',
-    cost: null
+    cost: null,
+    address: '',
+    average: 0
   }
   code08packs = []
   code10packs = []
