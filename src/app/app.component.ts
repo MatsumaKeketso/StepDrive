@@ -34,6 +34,12 @@ export class MyApp {
     public alertCtrl: AlertController,
     public app: App) {
     statusBar.backgroundColorByHexString('#D28B2B');
+    this.network.onchange().subscribe((res)=>{
+      console.log('Network changed to ', res);
+
+    }, err => {
+      console.log('Network errored to ', err);
+    })
 
     platform.ready().then(async () => {
       this.disconnectSubscription = this.network.onDisconnect().subscribe(() => {
@@ -48,7 +54,6 @@ export class MyApp {
         }).present()
       });
       this.connectSubscription = this.network.onConnect().subscribe(() => {
-        console.log('network connected!');
         // We just got a connection but we need to wait briefly
          // before we determine the connection type. Might need to wait.
         // prior to doing any api requests as well.
@@ -85,6 +90,16 @@ export class MyApp {
             }).present()
           }
         }, 30000);
+      }, err => {
+        this.alertCtrl.create({
+          message: 'App requires network.',
+          buttons:[{
+            text: "Close App",
+            handler: () => {
+              this.stopNetworkWatch();
+            }
+          }]
+        }).present()
       });
       let checkDownLinkSpeed = this.network.downlinkMax
       setTimeout(()=> {
