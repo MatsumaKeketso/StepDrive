@@ -73,7 +73,7 @@ export class ContactPage {
     lng: 0,
     lat: 0
   }
-  userProfile = {} as UserProfile
+  userProfile = {}
   placeSearch
   autocomplete;
   geocoder = new google.maps.Geocoder;
