@@ -562,7 +562,7 @@ console.log(this.request);
     var notificationObj = {
       headings: {en:" NEW BOOKING ALERT! "},
       small_icon : '../src/assets/Untitled-1.jpg',
-      contents: { en:  this.userProfile.name + ", Has made a booking with you. Open the app to see the request details." },
+      contents: { en:  this.userProfile + ", Has made a booking with you. Open the app to see the request details." },
       include_player_ids: [tokenId],
     }
     this.oneSignal.postNotification(notificationObj).then(res => {
