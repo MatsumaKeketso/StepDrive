@@ -103,7 +103,6 @@ export class ProfilePage {
       })
       this.initialiseTips();
       this.getBooking();
-      this.pushNotification();
     })
 
 
@@ -178,7 +177,7 @@ export class ProfilePage {
     this.showTips = false;
   }
 
-  pushNotification() {
+  pushNotification(TokenID) {
     this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res => {
 
       res.forEach(doc => {

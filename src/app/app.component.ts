@@ -108,10 +108,6 @@ export class MyApp {
           }]
         }).present()
       });
-      let checkDownLinkSpeed = this.network.downlinkMax
-      setTimeout(()=> {
-        console.log(checkDownLinkSpeed);
-      }, 3000);
 
       this.initialiseApp();
       firebase.initializeApp(firebaseConfig);

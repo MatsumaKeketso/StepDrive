@@ -5,7 +5,7 @@ import * as firebase from 'firebase'
 import { Question1Page } from '../question1/question1';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from '@ionic/storage';
-import * as moment from 'moment'
+import { OneSignal } from '@ionic-native/onesignal';
 declare var google;
 @Component({
   selector: 'page-contact',
@@ -41,7 +41,8 @@ export class ContactPage {
       number: null,
       code: null,
       amount: null
-    }
+    },
+    tokenId: null
   }
   dummyAddress = ''
   // validation, date picker always current date
@@ -72,13 +73,18 @@ export class ContactPage {
     lng: 0,
     lat: 0
   }
+  userProfile = {} as UserProfile
   placeSearch
   autocomplete;
   geocoder = new google.maps.Geocoder;
   infowindow = new google.maps.InfoWindow;
-  constructor(public navCtrl: NavController,public geolocation: Geolocation, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController,public store: Storage) {
+  constructor(public navCtrl: NavController,public geolocation: Geolocation, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController,public store: Storage, public oneSignal: OneSignal) {
   }
   ionViewDidLoad() {
+    this.oneSignal.getIds().then((userID) => {
+      console.log("user ID ", userID);
+      this.request.tokenId = userID.userId;
+    })
     this.initAutocomplete();
     this.getAddress();
     // sets the date picker to today's time
@@ -111,6 +117,9 @@ export class ContactPage {
     this.request.datecreated = date.toDateString();
 
     firebase.auth().onAuthStateChanged(res => {
+      this.db.collection('users').doc(res.uid).get().then(res => {
+        this.userProfile = res.data();
+      })
       console.log('User', res);
       // set the user id
       this.request.uid = res.uid;
@@ -375,49 +384,54 @@ export class ContactPage {
 
     this.loaderAnimate = true;
     // create the booking with an auto generated id
-    this.db.collection('bookings').add(this.request).then(async res => {
-      let address = {
-        location: this.request.location,
-        placeid: this.request.location.placeid
-      }
-      this.db.collection('users').doc(this.request.uid).set(address, {merge: true}).then(res => {
+      this.db.collection('bookings').add(this.request).then(async res => {
+        let address = {
+          location: this.request.location,
+          placeid: this.request.location.placeid
+        }
+        this.createNotification(this.navParams.data.school.tokenId)
+        this.db.collection('users').doc(this.request.uid).set(address, {merge: true}).then(res => {
+          this.loaderAnimate = false;
+          this.navCtrl.push(Question1Page ,{request: this.request, school: this.navParams.data});
+        }).catch( async err=> {
+          const alerter = await this.alertCtrl.create({
+            message: "Something went wrong. We couldn't save your address somehow.",
+            buttons: [
+              {text: 'Okay'}
+            ]
+          })
+          alerter.present();
+        })
+      }).catch(async err => {
         this.loaderAnimate = false;
-        this.navCtrl.push(Question1Page ,{request: this.request, school: this.navParams.data});
-      }).catch( async err=> {
-        const alerter = await this.alertCtrl.create({
-          message: "Something went wrong. We couldn't save your address somehow.",
+        const alerter = this.alertCtrl.create({
+          message: 'Something went wrong. Please try again later.',
           buttons: [
             {text: 'Okay'}
           ]
         })
         alerter.present();
       })
-    }).catch(async err => {
-      this.loaderAnimate = false;
-      const alerter = this.alertCtrl.create({
-        message: 'Something went wrong. Please try again later.',
-        buttons: [
-          {text: 'Okay'}
-        ]
-      })
-      alerter.present();
-    })
+
+
   }
   async justRequest() {
     this.loaderAnimate = true;
-    this.db.collection('bookings').add(this.request).then(async res => {
-      this.loaderAnimate = false;
-      this.navCtrl.push(Question1Page, {request: this.request, school: this.navParams.data});
-    }).catch(async err => {
-      this.loaderAnimate = false;
-      const alerter = this.alertCtrl.create({
-        message: 'Something went wrong. Please try again later.',
-        buttons: [
-          {text: 'Okay'}
-        ]
+      this.db.collection('bookings').add(this.request).then(async res => {
+        this.loaderAnimate = false;
+        this.navCtrl.push(Question1Page, {request: this.request, school: this.navParams.data});
+        this.createNotification(this.navParams.data.school.tokenId)
+      }).catch(async err => {
+        this.loaderAnimate = false;
+        const alerter = this.alertCtrl.create({
+          message: 'Something went wrong. Please try again later.',
+          buttons: [
+            {text: 'Okay'}
+          ]
+        })
+        alerter.present();
       })
-      alerter.present();
-    })
+
   }
   checkAddress(){
     console.log(this.request.location.address);
@@ -544,6 +558,17 @@ this.addressokay = true;
 console.log(this.request);
 
   }
+  createNotification(tokenId) {
+    var notificationObj = {
+      headings: {en:" NEW BOOKING ALERT! "},
+      small_icon : '../src/assets/Untitled-1.jpg',
+      contents: { en:  this.userProfile.name + ", Has made a booking with you. Open the app to see the request details." },
+      include_player_ids: [tokenId],
+    }
+    this.oneSignal.postNotification(notificationObj).then(res => {
+     console.log('After push notifcation sent: ' +res);
+    })
+  }
   // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.
   geolocate() {
@@ -575,4 +600,18 @@ console.log(this.request);
     console.log(ev);
 
   }
+}
+export interface UserProfile {
+  image: string;
+  location: {
+    address:string
+    lat: number
+    lng: number
+    placeid: string
+  }
+  name: string;
+  phone: any
+  placeid: string;
+  surname: string;
+  uid: any;
 }
