@@ -9,7 +9,7 @@ import { ScreenOrientation } from "@ionic-native/screen-orientation";
 import { Storage } from '@ionic/storage';
 import { LoginPage } from '../pages/login/login';
 import {google} from 'google-maps';
-
+import { OneSignal } from '@ionic-native/onesignal';
 import { TabsPage } from '../pages/tabs/tabs';
 import { Network } from '@ionic-native/network';
 import { YouPage } from '../pages/you/you';
@@ -25,9 +25,12 @@ export class MyApp {
     timePeriodToExit = 2000;
     disconnectSubscription;
     connectSubscription;
+    signal_app_id:string ='d0d13732-1fec-4508-b72b-86eaa0c62aa4';
+    firebase_id:string='580007341136';
   constructor(public platform: Platform,
     public statusBar: StatusBar,
     private screenOrien: ScreenOrientation,
+    private oneSignal: OneSignal,
     public store: Storage,
     public toastCtrl: ToastController,
     public network: Network,
@@ -42,6 +45,10 @@ export class MyApp {
     })
 
     platform.ready().then(async () => {
+      if(this.platform.is('cordova')){
+        this.setupPush()
+      }
+
       this.disconnectSubscription = this.network.onDisconnect().subscribe(() => {
         this.alertCtrl.create({
           message: 'Network was disconnected.',
@@ -159,5 +166,21 @@ export class MyApp {
                 this.lastTimeBackPress = new Date().getTime();
                   }
   });
+  }
+  setupPush(){
+    this.oneSignal.startInit(this.signal_app_id, this.firebase_id);
+     this.oneSignal.getIds().then((userID) => {
+        console.log("user ID ", userID);
+      })
+      this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+      this.oneSignal.handleNotificationReceived().subscribe((res) => {
+        // do something when notification is received
+        console.log(res);
+      });
+      this.oneSignal.handleNotificationOpened().subscribe((res) => {
+        // do something when a notification is opened
+        console.log(res);
+      });
+      this.oneSignal.endInit();
   }
 }

@@ -32,6 +32,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { LocalNotifications } from "@ionic-native/local-notifications";
 import { Network } from '@ionic-native/network';
 import { Device } from "@ionic-native/device";
+import { OneSignal } from '@ionic-native/onesignal';
 @NgModule({
   declarations: [
     MyApp,
@@ -92,7 +93,8 @@ import { Device } from "@ionic-native/device";
     LocalNotifications,
     AndroidPermissions,
     Network,
-    Device
+    Device,
+    OneSignal
   ]
 })
 export class AppModule {}
