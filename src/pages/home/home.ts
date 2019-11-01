@@ -12,7 +12,6 @@ import { Subject } from 'rxjs/Subject';
 import { SplashScreen } from '@ionic-native/splash-screen';
 declare var google: google;
 import { Device } from "@ionic-native/device";
-import { File } from "@ionic-native/file";
 
 
 
@@ -106,7 +105,7 @@ export class HomePage {
   directionsService = new google.maps.DirectionsService;
   directionsRenderer = new google.maps.DirectionsRenderer;
   tempQuesQs = []
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController, private callNumber: CallNumber, public appCtrl: App, public renderer: Renderer2, public plt: Platform, public elementref: ElementRef, public keyboard: Keyboard, private androudPermissions: AndroidPermissions, public splashscreen: SplashScreen, private device: Device, public file: File) {
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController, private callNumber: CallNumber, public appCtrl: App, public renderer: Renderer2, public plt: Platform, public elementref: ElementRef, public keyboard: Keyboard, private androudPermissions: AndroidPermissions, public splashscreen: SplashScreen, private device: Device) {
     this.deviceVersion = device.version
 
   }
