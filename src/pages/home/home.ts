@@ -12,6 +12,10 @@ import { Subject } from 'rxjs/Subject';
 import { SplashScreen } from '@ionic-native/splash-screen';
 declare var google: google;
 import { Device } from "@ionic-native/device";
+import { File } from "@ionic-native/file";
+
+
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -53,7 +57,17 @@ export class HomePage {
     image: '',
     cost: null,
     address: '',
-    average: 0
+    average: 0,
+    packages: {
+      code01: new Array,
+      code01Price: 0,
+      code08: new Array,
+      code08Price: 0,
+      code10: new Array,
+      code10Price: 0,
+      code14: new Array,
+      code14Price: 0,
+    }
   }
   code08packs = []
   code10packs = []
@@ -91,7 +105,8 @@ export class HomePage {
   deviceVersion: any;
   directionsService = new google.maps.DirectionsService;
   directionsRenderer = new google.maps.DirectionsRenderer;
-  constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController, private callNumber: CallNumber, public appCtrl: App, public renderer: Renderer2, public plt: Platform, public elementref: ElementRef, public keyboard: Keyboard, private androudPermissions: AndroidPermissions, public splashscreen: SplashScreen, private device: Device) {
+  tempQuesQs = []
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public store: Storage, public alertCtrl: AlertController, private callNumber: CallNumber, public appCtrl: App, public renderer: Renderer2, public plt: Platform, public elementref: ElementRef, public keyboard: Keyboard, private androudPermissions: AndroidPermissions, public splashscreen: SplashScreen, private device: Device, public file: File) {
     this.deviceVersion = device.version
 
   }
@@ -208,7 +223,7 @@ export class HomePage {
     // this.code01packs = data.packages[0].code01;
 
     if (this.licenseCode == 'code08') {
-      this.school.cost = this.activePack[1].price
+      this.school.cost = this.school.packages.code08Price
       setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '100%');
         this.renderer.setStyle(this.code10[0], 'width', '0px');
@@ -222,7 +237,7 @@ export class HomePage {
       })
     } else if (this.licenseCode == 'code10') {
 
-      this.school.cost = this.activePack[2].price
+      this.school.cost =this.school.packages.code10Price
       setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '0px');
         this.renderer.setStyle(this.code10[0], 'width', '100%');
@@ -235,7 +250,7 @@ export class HomePage {
       })
     } else if (this.licenseCode == 'code14') {
 
-      this.school.cost = this.activePack[3].price
+      this.school.cost = this.school.packages.code14Price
       setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '0px');
         this.renderer.setStyle(this.code10[0], 'width', '0px');
@@ -249,7 +264,7 @@ export class HomePage {
       })
     } else if (this.licenseCode == 'code01') {
 
-      this.school.cost = this.activePack[0].price
+      this.school.cost = this.school.packages.code01Price
       setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '0px');
         this.renderer.setStyle(this.code10[0], 'width', '0px');
@@ -332,19 +347,21 @@ export class HomePage {
     }
   }
   viewSchool(data) {
+    console.log(data);
+
     this.getReviews(data.schooluid);
     this.school = data;
     this.code08packs = []
     this.code10packs = []
     this.code14packs = []
     this.code01packs = []
-    this.code08packs = data.packages[1].code08;
-    this.code10packs = data.packages[2].code10;
-    this.code14packs = data.packages[3].code14;
-    this.code01packs = data.packages[0].code01;
+    this.code08packs = data.packages.code08;
+    this.code10packs = data.packages.code10;
+    this.code14packs = data.packages.code14;
+    this.code01packs = data.packages.code01;
     this.activePack = data.packages
     this.about = !this.about;
-    this.school.cost = this.activePack[0].price
+    this.school.cost = data.packages.code08Price;
     let elements = document.getElementsByClassName("tabbar");
     if (this.about) {
 

@@ -559,7 +559,7 @@ console.log(this.request);
 
   }
   createNotification(tokenId) {
-    var notificationObj = {
+    let notificationObj = {
       headings: {en:"StepDrive BOOKING ALERT"},
       small_icon : '../src/assets/Untitled-1.jpg',
       contents: { en:  this.userProfile + ", Has made a booking with you. Open the app to see the request details." },

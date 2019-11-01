@@ -79,7 +79,7 @@
         </div>
         <button ion-button >Send Review</button>
       </div>
-    
+
         <div id="infor" class="information" >
           <div class="s-image">
             <div class="a-back">
@@ -124,35 +124,35 @@
         <div class="lesson-cont">
           <!-- CODE 01 -->
           <div class="code01">
-              <p *ngIf="code01packs.length==0" id="nopacks" >This Driving School does not provide code 01 lessons.</p>
+              <p *ngIf="!code01packs" id="nopacks" >This Driving School does not provide code 01 lessons.</p>
               <div class="lesson" *ngFor="let pack of code01packs" (click)="requestLesson(school, pack, $event, 'Package')">
                 <h4>{{pack.name}}</h4>
-                <p >Costs R{{pack.cost}}.00 <br> includes {{pack.number}} lessons</p>
+                <p >Costs R{{pack.amount}}.00 <br> includes {{pack.number}} lessons</p>
               </div>
             </div>
           <!-- CODE O8 -->
             <div class="code08">
-                <p *ngIf="code08packs.length==0" id="nopacks">This Driving School does not provide code 08 lessons.</p>
+                <p *ngIf="!code08packs" id="nopacks">This Driving School does not provide code 08 lessons.</p>
               <div class="lesson" *ngFor="let pack of code08packs" (click)="requestLesson(school, pack, $event, 'Package')">
 
                   <h3>{{pack.name}}</h3>
-                  <p >Costs R{{pack.cost}}.00 <br> includes {{pack.number}} lessons</p>
+                  <p >Costs R{{pack.amount}}.00 <br> includes {{pack.number}} lessons</p>
               </div>
             </div>
             <!-- CODE 10 -->
             <div class="code10">
-                <p *ngIf="code10packs.length==0" id="nopacks">This Driving School does not provide code 10 lessons.</p>
+                <p *ngIf="!code10packs" id="nopacks">This Driving School does not provide code 10 lessons.</p>
               <div class="lesson" *ngFor="let pack of code10packs" (click)="requestLesson(school, pack, $event, 'Package')">
                   <h3>{{pack.name}}</h3>
-                  <p >Costs R{{pack.cost}}.00 <br> includes {{pack.number}} lessons</p>
+                  <p >Costs R{{pack.amount}}.00 <br> includes {{pack.number}} lessons</p>
               </div>
             </div>
             <!-- CODE 14 -->
             <div class="code14">
-                <p *ngIf="code14packs.length==0" id="nopacks">This Driving School does not provide code 14 lessons.</p>
+                <p *ngIf="!code14packs" id="nopacks">This Driving School does not provide code 14 lessons.</p>
               <div class="lesson" *ngFor="let pack of code14packs" (click)="requestLesson(school, pack, $event, 'Package')">
                 <h3>{{pack.name}} </h3>
-                <p >Costs R{{pack.cost}}.00 <br> includes {{pack.number}} lessons</p>
+                <p >Costs R{{pack.amount}}.00 <br> includes {{pack.number}} lessons</p>
               </div>
             </div>
 

@@ -177,21 +177,6 @@ export class ProfilePage {
     this.showTips = false;
   }
 
-  pushNotification(TokenID) {
-    this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot(res => {
-
-      res.forEach(doc => {
-        if ((doc.data().confirmed == 'accepted') || (doc.data().confirmed == 'rejected') && (!doc.data().notified)) {
-          this.localNot.schedule({
-            id: 1,
-            title: 'StepDrive',
-            text: `One of the driving instructors responded to your request.`
-          })
-          this.db.collection('bookings').doc(doc.id).update({notified: true})
-        }
-      })
-    })
-  }
   popReview(school) {
     let createdDate = new Date(school.datein);
 
@@ -224,10 +209,10 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
     let data = {   }
     // loader.present()
    await this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot( async res => {
-      this.request = []
+      this.request.length  =0
      await res.forEach(async rDoc => {
        await this.db.collection('drivingschools').where('schooluid', '==', rDoc.data().schooluid).get().then( async school => {
-          await school.forEach(sDoc => {
+          await school.forEach(async sDoc => {
             data = {
               // school data
               allday: sDoc.data().allday,
@@ -252,7 +237,8 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
               dateout: rDoc.data().dateout,
               schooluid: rDoc.data().schooluid,
               uid: rDoc.data().uid,
-              docid: rDoc.id
+              docid: rDoc.id,
+              tokenId: rDoc.data().tokenId
              }
             this.request.push(data);
             data ={}
@@ -260,6 +246,11 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
             this.loaderAnimate = false;
         // this.more = this.request.indexOf()
         this.count += 1;
+
+        // check if the date in of the request is more than todays date by i day and ask if the user attended the lesson
+        // notify them about the reviews then update the notified field
+
+        // check
         setTimeout(()=>{
 
         }, 0)
@@ -278,6 +269,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // loader.dismiss()
       setTimeout(()=> {
         this.loaderAnimate = false;
+        this.checkExpiredBooking()
       }, 1000)
       // console.log('Reqs: ', this.request);
     })
@@ -286,12 +278,120 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
   // check the checkout dates
   // delete the expired ones and
   // delete them
-  checkBookingExpiary() {
-    for (let i = 0; i < this.request.length; i++) {
-      console.log(this.request[i]);
+  checkExpiredBooking() {
+    this.request.forEach(async element => {
+              // Check if the request has been replied after 2 days of the date in request
+              let requestDocument = new Date(element.datein); // turns the string date to the normal date without time
+              let newDate = new Date() // creates today date
+              let todayDate = new Date(newDate.toDateString()); // converts the date to string
+              let normalDate = new Date(todayDate); // turns the string date to the normal date without time
+              if(requestDocument < normalDate) {
+                  console.log("The given date"+requestDocument+" is Future Date"+element.schoolname);
+                  if (element.confirmed == 'accepted') {
+                    // the notified must be false
+                    if (!element.notified) {
+                      // update the notified field to true after presenting the alert
+                     let alerter = await this.alertCtrl.create({
+                        title: `Hi ${this.user.name}`,
+                        message: 'Did you enjoy your Learning experience from '+element.schoolname+'?',
+                        buttons:[{
+                          text: "I didn't go.",
+                          handler: ()=> {
+                           let alerter = this.alertCtrl.create({
+                              title: "It's Okay!",
+                              message: "We hope nothing bad kept you from becoming one of South Africa's awesome motorist. But here's the good news, after your next session feel free to comeback and talk about your learning experience to other aspiring drivers.",
+                              buttons: [{
+                                text: 'Okay',
+                                handler: ()=> {
+                                  this.db.collection('bookings').doc(element.docid).update({notified: true});
+                                }
+                              }]
+                            })
+                            alerter.present();
+                          }
+                        }, {
+                          text: "Yes definitely.",
+                          handler:async ()=> {
+                           let alerter = await this.alertCtrl.create({
+                              title: 'Awesome!',
+                              message: 'In order for our driving instructors to improve their services, please take a moment of your time and review this driving school. Your feedback is of high importance. <br> <br> <i>Click on the blue button on your booking card, rate the service and send a review.</i>',
+                              buttons: [{
+                                text: 'Okay',
+                                handler: ()=>{
+                                  this.db.collection('bookings').doc(element.docid).update({notified: true});
+                                }
+                              }]
+                            })
+                            alerter.present();
+                          }
+                        }]
+                      })
+                      alerter.present();
+                    }
+                  }
+                  if (element.confirmed == 'rejected' && !element.notified) {
+                    // say something about the rejected booking
+                 let alerter =   await this.alertCtrl.create({
+                      title: `Hey ${this.user.name}`,
+                      message: "You booking has been rejected by this instructor. You can always go back to the map and look for another one, it's best to make more than 1 booking with different driving schools for cases such as these. <br> <br> <i>*Note: you can delete booking to keep your space clean.</i>",
+                      buttons: [{
+                        text: 'Okay',
+                        handler: ()=>{
+                          this.db.collection('bookings').doc(element.id).update({notified: true});
+                        }
+                      }]
+                    })
+                    alerter.present();
+                  }
+              }
+              else
+              if (element.confirmed == 'rejected' && !element.notified) {
+                // say something about the rejected booking
+             let alerter =   await this.alertCtrl.create({
+                  title: `Hey ${this.user.name}`,
+                  message: "You booking has been rejected by this instructor. You can always go back to the map and look for another one, it's best to make more than 1 booking with different driving schools for cases such as these. <br> <br> <i>*Note: you can delete booking to keep your space clean.</i>",
+                  buttons: [{
+                    text: 'Okay',
+                    handler: ()=>{
+                      this.db.collection('bookings').doc(element.docid).update({notified: true});
+                    }
+                  },{
+                    text: 'Remove Request',
+                    handler: () => {
+                      this.db.collection('bookings').doc(element.docid).delete().then(res => {
+                      this.getBooking()
+                      })
+                    }
+                  }]
+                })
+                alerter.present();
+              }
+              {
+                  let cals = normalDate.getTime() - requestDocument.getTime()
+                  console.log('day difference', cals / (1000 * 3600 * 24));
 
 
-    }
+              }
+    })
+    this.checkRejectedRequest()
+  }
+  checkRejectedRequest() {
+    this.request.forEach(async element => {
+      if (element.confirmed == 'rejected' && !element.notified) {
+        // say something about the rejected booking
+     let alerter =   await this.alertCtrl.create({
+          title: `Hey ${this.user.name}`,
+          message: "You booking has been rejected by this instructor. You can always go back to the map and look for another one, it's best to make more than 1 booking with different driving schools for cases such as these. <br> <br> <i>*Note: you can delete booking to keep your space clean.</i>",
+          buttons: [{
+            text: 'Okay',
+            handler: ()=>{
+              this.db.collection('bookings').doc(element.docid).update({notified: true});
+            }
+          }]
+        })
+        alerter.present();
+      }
+    });
   }
   showMore(index) {
     this.more.cond = !this.more
