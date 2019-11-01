@@ -33,6 +33,7 @@ import { LocalNotifications } from "@ionic-native/local-notifications";
 import { Network } from '@ionic-native/network';
 import { Device } from "@ionic-native/device";
 import { OneSignal } from '@ionic-native/onesignal';
+import { File } from "@ionic-native/file";
 @NgModule({
   declarations: [
     MyApp,
@@ -94,7 +95,8 @@ import { OneSignal } from '@ionic-native/onesignal';
     AndroidPermissions,
     Network,
     Device,
-    OneSignal
+    OneSignal,
+    File
   ]
 })
 export class AppModule {}
