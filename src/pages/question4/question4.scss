@@ -1,5 +1,34 @@
 page-question4 {
-
+  .middlebutton {
+    position: absolute;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50px);
+    height: 110px;
+    z-index: 800;
+    display: flex;
+    overflow: hidden;
+    .fabContainer {
+      height: 120px;
+      background: #1E1E1E;
+      margin: 0px auto;
+      border-radius: 200px 200px 0px 0px;
+    }
+    .box {
+      margin-top: 95%;
+      width: 20px;
+      height: 20px;
+      background: red;
+    }
+    .left {
+      background: url(../../assets/left_curve.svg);
+      background-size: 100% 100%;
+    }
+    .right {
+      background: url(../../assets/right_curve.svg);
+      background-size: 100% 100%;
+    }
+  }
   .container {
     width: 100vw;
     height: 100%;
