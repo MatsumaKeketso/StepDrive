@@ -102,6 +102,7 @@ export class ProfilePage {
 
         }
       })
+      this.request.length = 0
       this.initialiseTips();
       this.getBooking();
     })
@@ -210,7 +211,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
     let data = {   }
     // loader.present()
    await this.db.collection('bookings').where('uid', '==', this.user.uid).get().then( async res => {
-      this.request.length  =0
+    this.request = []
      await res.forEach(async rDoc => {
        await this.db.collection('drivingschools').where('schooluid', '==', rDoc.data().schooluid).get().then( async school => {
           await school.forEach(async sDoc => {
@@ -239,7 +240,8 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
               schooluid: rDoc.data().schooluid,
               uid: rDoc.data().uid,
               docid: rDoc.id,
-              tokenId: rDoc.data().tokenId
+              tokenId: rDoc.data().tokenId,
+              notified: rDoc.data().notified
              }
             this.request.push(data);
             data ={}
@@ -325,7 +327,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                                 text: 'Okay',
                                 handler: ()=>{
                                   this.alertPresented = false;
-                                  this.db.collection('bookings').doc(element.docid).update({notified: true});
+                                  this.db.collection('bookings').doc(element.docid).update({notified: true})
                                 }
                               }]
                             })
@@ -344,8 +346,13 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                   }
                   
               }
-              if (element.confirmed == 'rejected' && !element.notified) {
-                // say something about the rejected booking
+              console.log(element);
+              
+              if (element.confirmed == 'rejected') {
+                if (element.notified == false) {
+                  console.log(element);
+                  
+                   // say something about the rejected booking
                 let alerter =   await this.alertCtrl.create({
                   title: `Hey ${this.user.name}`,
                   message: "You booking has been rejected by this instructor. You can always go back to the map and look for another one, it's best to make more than 1 booking with different driving schools for cases such as these. <br> <br> <i>*Note: you can delete booking to keep your space clean.</i>",
@@ -353,7 +360,9 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                     text: 'Okay',
                     handler: ()=>{
                       this.alertPresented = false;
-                      this.db.collection('bookings').doc(element.docid).update({notified: true});
+                      this.db.collection('bookings').doc(element.docid).update({notified: true}).then(res => {
+                        console.log('updated notified', element.docid);
+                      })
                     }
                   },{
                     text: 'Remove Request',
@@ -366,6 +375,8 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                   }]
                 })
                 alerter.present();
+                }
+               
                   }
     })
   }
@@ -382,7 +393,10 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
               console.log('Okay ', element);
 
               this.alertPresented = false;
-              this.db.collection('bookings').doc(element.docid).update({notified: true});
+              this.db.collection('bookings').doc(element.docid).update({notified: true}).then(res => {
+                console.log('updated notified');
+                
+              })
             }
           }]
         })

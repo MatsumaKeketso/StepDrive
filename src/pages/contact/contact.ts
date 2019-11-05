@@ -81,10 +81,10 @@ export class ContactPage {
   constructor(public navCtrl: NavController,public geolocation: Geolocation, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController,public store: Storage, public oneSignal: OneSignal) {
   }
   ionViewDidLoad() {
-    this.oneSignal.getIds().then((userID) => {
-      console.log("user ID ", userID);
-      this.request.tokenId = userID.userId;
-    })
+    // this.oneSignal.getIds().then((userID) => {
+    //   console.log("user ID ", userID);
+    //   this.request.tokenId = userID.userId;
+    // })
     this.initAutocomplete();
     this.getAddress();
     // sets the date picker to today's time
