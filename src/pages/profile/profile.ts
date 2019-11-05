@@ -62,7 +62,7 @@ export class ProfilePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, private store: Storage, public plt: Platform, public localNot: LocalNotifications, public element: ElementRef, public renderer: Renderer2, public keyb: Keyboard, public popoverCtrl: PopoverController) {}
   // get the request of the user
   // get the schooldata where they made the request
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     // this.getReviews();
     // check if all the elemnts exist
 
@@ -208,7 +208,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
     let data = {   }
     // loader.present()
-   await this.db.collection('bookings').where('uid', '==', this.user.uid).onSnapshot( async res => {
+   await this.db.collection('bookings').where('uid', '==', this.user.uid).get().then( async res => {
       this.request.length  =0
      await res.forEach(async rDoc => {
        await this.db.collection('drivingschools').where('schooluid', '==', rDoc.data().schooluid).get().then( async school => {
@@ -269,6 +269,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // loader.dismiss()
       setTimeout(()=> {
         this.loaderAnimate = false;
+      
         this.checkExpiredBooking()
       }, 1000)
       // console.log('Reqs: ', this.request);
@@ -276,9 +277,9 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
   }
   // iterate over all the bookings and
   // check the checkout dates
-  // delete the expired ones and
+  // check the expired ones and
   // delete them
-  checkExpiredBooking() {
+  async checkExpiredBooking() {
     this.request.forEach(async element => {
               // Check if the request has been replied after 2 days of the date in request
               let requestDocument = new Date(element.datein); // turns the string date to the normal date without time
@@ -296,7 +297,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                         message: 'Did you enjoy your Learning experience from '+element.schoolname+'?',
                         buttons:[{
                           text: "I didn't go.",
-                          handler: ()=> {
+                          handler: (data)=> {
                            let alerter = this.alertCtrl.create({
                               title: "It's Okay!",
                               message: "We hope nothing bad kept you from becoming one of South Africa's awesome motorist. But here's the good news, after your next session feel free to comeback and talk about your learning experience to other aspiring drivers.",
@@ -329,25 +330,11 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                       alerter.present();
                     }
                   }
-                  if (element.confirmed == 'rejected' && !element.notified) {
-                    // say something about the rejected booking
-                 let alerter =   await this.alertCtrl.create({
-                      title: `Hey ${this.user.name}`,
-                      message: "You booking has been rejected by this instructor. You can always go back to the map and look for another one, it's best to make more than 1 booking with different driving schools for cases such as these. <br> <br> <i>*Note: you can delete booking to keep your space clean.</i>",
-                      buttons: [{
-                        text: 'Okay',
-                        handler: ()=>{
-                          this.db.collection('bookings').doc(element.id).update({notified: true});
-                        }
-                      }]
-                    })
-                    alerter.present();
-                  }
+                  
               }
-              else
               if (element.confirmed == 'rejected' && !element.notified) {
                 // say something about the rejected booking
-             let alerter =   await this.alertCtrl.create({
+                let alerter =   await this.alertCtrl.create({
                   title: `Hey ${this.user.name}`,
                   message: "You booking has been rejected by this instructor. You can always go back to the map and look for another one, it's best to make more than 1 booking with different driving schools for cases such as these. <br> <br> <i>*Note: you can delete booking to keep your space clean.</i>",
                   buttons: [{
@@ -365,15 +352,8 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                   }]
                 })
                 alerter.present();
-              }
-              {
-                  let cals = normalDate.getTime() - requestDocument.getTime()
-                  console.log('day difference', cals / (1000 * 3600 * 24));
-
-
-              }
+                  }
     })
-    this.checkRejectedRequest()
   }
   checkRejectedRequest() {
     this.request.forEach(async element => {
