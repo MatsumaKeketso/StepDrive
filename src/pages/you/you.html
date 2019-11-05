@@ -35,7 +35,7 @@
                     </div>
                     <div class="input">
                         <p>Number</p>
-                        <input (click)="checkkeyboard()" type="tel" formControlName="phone" [(ngModel)]="user.phone">
+                        <input (click)="checkkeyboard()" type="tel" formControlName="phone" maxlength="10" minlength="10"  [(ngModel)]="user.phone">
                       </div>
             </div>
               </form>

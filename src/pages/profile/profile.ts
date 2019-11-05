@@ -59,6 +59,7 @@ export class ProfilePage {
   revDateValidation: any
   reviewDiv: any;
   feedbackDiv: any;
+  alertPresented = false
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, private store: Storage, public plt: Platform, public localNot: LocalNotifications, public element: ElementRef, public renderer: Renderer2, public keyb: Keyboard, public popoverCtrl: PopoverController) {}
   // get the request of the user
   // get the schooldata where they made the request
@@ -304,11 +305,15 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                               buttons: [{
                                 text: 'Okay',
                                 handler: ()=> {
+                                  this.alertPresented = false;
                                   this.db.collection('bookings').doc(element.docid).update({notified: true});
                                 }
                               }]
                             })
-                            alerter.present();
+                            if (this.alertPresented==false){
+                              this.alertPresented = true;
+                              alerter.present();
+                            }
                           }
                         }, {
                           text: "Yes definitely.",
@@ -319,15 +324,22 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                               buttons: [{
                                 text: 'Okay',
                                 handler: ()=>{
+                                  this.alertPresented = false;
                                   this.db.collection('bookings').doc(element.docid).update({notified: true});
                                 }
                               }]
                             })
-                            alerter.present();
+                            if (this.alertPresented==false){
+                              this.alertPresented = true;
+                              alerter.present();
+                            }
                           }
                         }]
                       })
-                      alerter.present();
+                      if (this.alertPresented==false){
+                        this.alertPresented = true;
+                        alerter.present();
+                      }
                     }
                   }
                   
@@ -340,11 +352,13 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                   buttons: [{
                     text: 'Okay',
                     handler: ()=>{
+                      this.alertPresented = false;
                       this.db.collection('bookings').doc(element.docid).update({notified: true});
                     }
                   },{
                     text: 'Remove Request',
                     handler: () => {
+                      this.alertPresented = false;
                       this.db.collection('bookings').doc(element.docid).delete().then(res => {
                       this.getBooking()
                       })
@@ -357,7 +371,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
   }
   checkRejectedRequest() {
     this.request.forEach(async element => {
-      if (element.confirmed == 'rejected' && !element.notified) {
+      if (element.confirmed == 'rejected') {
         // say something about the rejected booking
      let alerter =   await this.alertCtrl.create({
           title: `Hey ${this.user.name}`,
@@ -365,11 +379,17 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
           buttons: [{
             text: 'Okay',
             handler: ()=>{
+              console.log('Okay ', element);
+
+              this.alertPresented = false;
               this.db.collection('bookings').doc(element.docid).update({notified: true});
             }
           }]
         })
-        alerter.present();
+        if (this.alertPresented==false){
+          this.alertPresented = true;
+          // alerter.present();
+        }
       }
     });
   }
