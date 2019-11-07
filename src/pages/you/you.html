@@ -10,7 +10,7 @@
 
   <div class="ultimate">
       <div *ngIf="!isprofile" class='container'>
-          <div class="header">
+          <div *ngIf="!moveto"  class="header">
             <h1>Manage Profile</h1>
             </div>
             <div *ngIf="!user.image" class="button">
@@ -35,12 +35,17 @@
                     </div>
                     <div class="input">
                         <p>Number</p>
-                        <input (click)="checkkeyboard()" type="tel" formControlName="phone" maxlength="10" minlength="10"  [(ngModel)]="user.phone">
+                        <input (click)="checkkeyboard()" type="tel" (keyup)="checkNumberLength($event)" formControlName="phone" maxlength="10" minlength="10"  [(ngModel)]="user.phone"> <br>
+                        <span style="color: red">{{error}}</span>
                       </div>
             </div>
               </form>
             <div class="button">
-                          <button [disabled]="user.image==null" (click)="createUser(user)">Done</button>
+              <div [ngClass]="{'doneLoader animated flipInY': doneAnimate, 'doneLoader-hide animated flipOutY': !doneAnimate}" >
+                <div style="display: flex; align-items: center; margin: auto; height: 100%;"><div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div></div>
+              </div>
+                <button *ngIf="(user.image==null)||(error)||user.phone==null" disabled='true'>Done</button>
+                          <button *ngIf="(user.image)&&(error=='')&&user.phone!=null" (click)="createUser(user)">Done</button>
                         </div>
             <div *ngIf="!keyOpen" class="image">
               <!-- <img src="../../assets/imgs/blacklogo.svg">  -->

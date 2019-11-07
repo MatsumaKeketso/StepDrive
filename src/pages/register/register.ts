@@ -65,30 +65,22 @@ user =  {} as Users;
   }
 
   createRegister(user: Users) {
-    let loading = this.loadingCtrl.create({
-      content: 'Please wait...',
-      duration: 2000
-    })
-    // loading.present();
-
 
     this.loaderAnimate = true;
     if (!user.email || !user.password) {
-      // loading.dismiss()
+
       this.loaderAnimate = false;
     } else {
        firebase.auth().createUserWithEmailAndPassword(user.email, user.password).then((result) => {
-        this.loaderAnimate = false;
-        this.navCtrl.push(YouPage);
-      // loading.dismiss()
-
-
-
-    }).catch(error => {
+           
+        setTimeout(() => {
+          this.loaderAnimate = false; 
+          this.navCtrl.setRoot(YouPage);
+        }, 1000);
+         }).catch(error => {
       let errorCode = error.code;
       let errorMessage = error.message;
       this.loaderAnimate = false;
-      // loading.dismiss()
       console.log(errorMessage);
 
       // Handle Errors here.

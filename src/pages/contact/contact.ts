@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { NavController, NavParams, LoadingController, AlertController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController, ToastController, App } from 'ionic-angular';
 import { Http } from '@angular/http';
 import * as firebase from 'firebase'
 import { Question1Page } from '../question1/question1';
@@ -78,9 +78,10 @@ export class ContactPage {
   autocomplete;
   geocoder = new google.maps.Geocoder;
   infowindow = new google.maps.InfoWindow;
-  constructor(public navCtrl: NavController,public geolocation: Geolocation, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController,public store: Storage, public oneSignal: OneSignal) {
+  constructor(public navCtrl: NavController,public geolocation: Geolocation, public navParams: NavParams, private http: Http, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController,public store: Storage, public oneSignal: OneSignal,private appCtrl: App) {
   }
   ionViewDidLoad() {
+    console.log(this.appCtrl.getRootNav());
     // this.oneSignal.getIds().then((userID) => {
     //   console.log("user ID ", userID);
     //   this.request.tokenId = userID.userId;
@@ -242,6 +243,8 @@ export class ContactPage {
         icon: 'https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/icons8-map-pin-64.png?alt=media&token=80953d82-f9c0-4b32-b8e9-dc83f9286f8b'
 
       })
+      this.infowindow.setContent('Dragg this marker to  <br> where you prefer <br> the instructor to find you.');
+      this.infowindow.open(this.map, marker);
       // add event listener
       marker.addListener('dragend', (event) => {
         // get the coords
@@ -249,6 +252,7 @@ export class ContactPage {
           lat: event.latLng.lat(),
           lng: event.latLng.lng()
         }
+       
         // geocode the coords for the address
     this.geocoder.geocode({'location': data},(results, status) =>{
       // do your stuff with the results

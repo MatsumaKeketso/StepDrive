@@ -251,6 +251,30 @@ page-contact {
         right: 0;
         // transform: rotateX(90deg);
       }
+      .closeMapFab {
+        position: fixed;
+        bottom: 5px;
+        left: 17vw;
+        z-index: 50;
+        transform: scale(1);
+        transition: 0.3s;
+        transition-timing-function: ease-out, cubic-bezier(.82, .1, .14, 1.12);
+        .fab {
+          background: linear-gradient(180deg,#767B91, #2E354E);;
+        }
+      }
+      .closeMapFab-hide {
+        position: fixed;
+        bottom: 5px;
+        left: 17vw;
+        z-index: 50;
+        transform: scale(0);
+        transition: 0.3s;
+        transition-timing-function: ease-out, cubic-bezier(.82, .1, .14, 1.12);
+        .fab {
+          background: linear-gradient(180deg,#767B91, #2E354E);;
+        }
+      }
       .done {
         transition: 0.4s;
         position: absolute;

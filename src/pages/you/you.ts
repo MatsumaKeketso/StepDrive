@@ -16,6 +16,7 @@ export class YouPage {
   db = firebase.firestore();
   storage = firebase.storage().ref();
   loaderAnimate =true;
+  doneAnimate = false;
   user = {
     name: '',
     surname: '',
@@ -42,6 +43,8 @@ export class YouPage {
   isediting = false;
   imageupload = null
   imageuploadstate = ''
+  error = ''
+  gotProfile = false;
   // profileLoader = document.getElementsByClassName('uploadImage');
   constructor(public navCtrl: NavController, public navParams: NavParams, private keyBoard: Keyboard, private renderer: Renderer2, private camera: Camera, public loadingCtrl: LoadingController, public forms: FormBuilder, public store: Storage, public toastCtrl: ToastController, private appCtrl: App,public alertCtrl: AlertController,public splashScreen: SplashScreen) {
     this.profileForm = this.forms.group({
@@ -52,23 +55,32 @@ export class YouPage {
     })
   }
   ionViewDidEnter() {
-    // get the profile
-    // progressbar.js@1.0.0 version is used
-// Docs: http://progressbarjs.readthedocs.org/en/1.0.0/
-
-
+ 
   }
-  ionViewDidLoad() {
-this.getprofile();
+  ionViewWillEnter() {
+    console.log();
+    
     firebase.auth().onAuthStateChanged(res => {
       this.note.uid = res.uid
       this.splashScreen.hide()
       this.user.uid = res.uid
+      this.getprofile()
     })
     this.store.get('homelocation').then(res => {
       this.user.location = res;
     })
     this.getnote();
+  }
+  checkNumberLength(ev) {
+    if (this.user.phone!=null) {
+      if(this.user.phone.length <= 9) {
+        this.error = 'Number must be 10 digits.'
+        console.log('invalid')
+      } else {
+        console.log('valid')
+        this.error = ''
+      }
+    }
   }
   pressEvent(event, n) {
     this.alertCtrl.create({
@@ -98,7 +110,7 @@ this.getprofile();
   }
   checkkeyboard() {
     if (this.keyBoard.isOpen()) {
-
+      this.moveto = true;
       let elements = document.querySelectorAll(".tabbar");
       this.store.set('readTips', true)
             if (elements) {
@@ -108,7 +120,7 @@ this.getprofile();
               });
             }
     } else {
-
+      this.moveto = false;
       let elements = document.querySelectorAll(".tabbar");
       this.store.set('readTips', true)
 
@@ -125,7 +137,6 @@ this.getprofile();
 
   }
   getImage() {
-
     let options: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -360,19 +371,14 @@ if (event.checked==false) {
   }
   logout() {
     firebase.auth().signOut().then(res => {
+      console.log(res);
       this.appCtrl.getRootNav().setRoot(LoginPage)
     })
   }
   getprofile() {
-    const loader = this.loadingCtrl.create({
-      content: 'Just a sec...',
-    })
-    // loader.present()
-    firebase.auth().onAuthStateChanged(user => {
-      this.user.uid = user.uid
-
-      this.db.collection('users').doc(user.uid).get().then(res => {
-        loader.dismiss();
+    if (this.gotProfile==false) {
+      console.log('called', this.note);
+      this.db.collection('users').doc(this.note.uid).get().then(res => {
 
         if (res.exists) {
           this.user.image = res.data().image
@@ -381,6 +387,7 @@ if (event.checked==false) {
         this.user.phone = res.data().phone
         this.user.surname = res.data().surname
         this.user.uid = res.data().uid
+        this.gotProfile = true;
           this.isprofile = true;
           setTimeout(()=>{
             this.loaderAnimate = false;
@@ -389,14 +396,24 @@ if (event.checked==false) {
           this.loaderAnimate = false;
         }
       })
-    })
+ 
+    }
+    
   }
   createUser() {
-    this.loaderAnimate = true;
-    firebase.auth().onAuthStateChanged(user => {
-      this.user.uid = user.uid
-      this.db.collection('users').doc(this.user.uid).set(this.user).then(res => {
-      this.db.collection('users').doc(user.uid).get().then(res => {
+    console.log('called');
+    
+    this.doneAnimate = true;
+      this.db.collection('users').doc(this.note.uid).set(this.user).then(res => {
+        this.user = {
+          name: '',
+          surname: '',
+          phone: null,
+          image: 'https://firebasestorage.googleapis.com/v0/b/step-drive-95bbe.appspot.com/o/1.png?alt=media&token=c023a9e6-a7a0-4af9-bd13-9778f2bea46d',
+          location: {},
+          uid: null
+        }
+      this.db.collection('users').doc(this.note.uid).get().then(res => {
 
         if (res.exists) {
           this.user.image = res.data().image
@@ -417,9 +434,9 @@ if (event.checked==false) {
                     elements[key].style.transition = '0.4s';
                   });
                 }
-                this.loaderAnimate = false;
+                this.doneAnimate = false;
         } else {
-          this.loaderAnimate = false;
+          this.doneAnimate = false;
           this.navCtrl.setRoot(TabsPage);
         }
         }
@@ -429,7 +446,7 @@ if (event.checked==false) {
       console.log('Profile Creation error');
 
     })
-    })
+  
   }
   editprof() {
     this.isediting = true;

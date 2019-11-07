@@ -100,6 +100,7 @@ export class HomePage {
   autoCompSearch = document.getElementsByClassName('searchbar-input');
   autocomplete: any;
   lastScrollTop = 0;
+  showCustom = false;
   tabElements = document.querySelectorAll(".tabbar");
   deviceVersion: any;
   directionsService = new google.maps.DirectionsService;
@@ -112,7 +113,6 @@ export class HomePage {
 
   ionViewDidLoad() {
     setTimeout(() => {
-      this.clearMarkers()
       this.information[0].addEventListener("scroll", (event) => {
 
         this.lastScrollTop = this.lastScrollTop + 1;
@@ -155,12 +155,6 @@ export class HomePage {
 
   }
   initAutocomplete() {
-    let node = this.db.collection('drivingschools').orderBy('South').startAt('!').endAt('SUBSTRING\uf8ff').get().then(res => {
-      res.forEach(doc => {
-        console.log('query got ...', doc);
-
-      })
-    })
     // Create the autocomplete object, restricting the search predictions to
     // geographical location types.
     this.autocomplete = new google.maps.places.Autocomplete(this.autoCompSearch[0], { types: ['geocode'] });
@@ -223,6 +217,11 @@ export class HomePage {
 
     if (this.licenseCode == 'code08') {
       this.school.cost = this.school.packages.code08Price
+      if (this.code08packs.length== 0) {
+        this.showCustom = false;
+      } else {
+        this.showCustom = true;
+      }
       setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '100%');
         this.renderer.setStyle(this.code10[0], 'width', '0px');
@@ -237,6 +236,11 @@ export class HomePage {
     } else if (this.licenseCode == 'code10') {
 
       this.school.cost =this.school.packages.code10Price
+      if (this.code10packs.length== 0) {
+        this.showCustom = false;
+      } else {
+        this.showCustom = true;
+      }
       setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '0px');
         this.renderer.setStyle(this.code10[0], 'width', '100%');
@@ -250,6 +254,11 @@ export class HomePage {
     } else if (this.licenseCode == 'code14') {
 
       this.school.cost = this.school.packages.code14Price
+      if (this.code14packs.length== 0) {
+        this.showCustom = false;
+      } else {
+        this.showCustom = true;
+      }
       setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '0px');
         this.renderer.setStyle(this.code10[0], 'width', '0px');
@@ -264,6 +273,11 @@ export class HomePage {
     } else if (this.licenseCode == 'code01') {
 
       this.school.cost = this.school.packages.code01Price
+      if (this.code01packs.length== 0) {
+        this.showCustom = false;
+      } else {
+        this.showCustom = true;
+      }
       setTimeout(() => {
         this.renderer.setStyle(this.code08[0], 'width', '0px');
         this.renderer.setStyle(this.code10[0], 'width', '0px');
@@ -358,9 +372,17 @@ export class HomePage {
     this.code10packs = data.packages.code10;
     this.code14packs = data.packages.code14;
     this.code01packs = data.packages.code01;
+    this.licenseCode = 'code01'
+    if (this.code01packs.length == 0) {
+      this.showCustom = false;
+    } else {
+      this.showCustom = true;
+    }
     this.activePack = data.packages
     this.about = !this.about;
-    this.school.cost = data.packages.code08Price;
+    this.school.cost = data.packages.code01Price;
+    console.log(this.school.cost);
+    
     let elements = document.getElementsByClassName("tabbar");
     if (this.about) {
 
@@ -794,10 +816,6 @@ export class HomePage {
       travelMode: 'DRIVING'
     }, (response, status)=> {
       if (status === 'OK') {
-        console.log(response.routes[0].legs[0].end_address, ' is ', response.routes[0].legs[0].distance.text, 'from you')
-        // this.directionsRenderer.setDirections(response);
-        // add marker
-
         let markerLabel = props.schoolname.split(' ')
         let bLetter = markerLabel[0].split('')
 
@@ -836,6 +854,7 @@ export class HomePage {
   }
   // get every driving school, doesn't matter the location
   async getusers() {
+    
     this.loaderAnimate = true;
     await this.db.collection('drivingschools').onSnapshot(async snapshot => {
 
