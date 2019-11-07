@@ -40,8 +40,8 @@
             </div>
               </form>
             <div class="button">
-                          <button [disabled]="user.image==null" (click)="createUser(user)">Done</button>
-                        </div>
+                          <button [disabled]="user.image==null&&!phone.valid" (click)="createUser(user)">Done</button>
+            </div>
             <div *ngIf="!keyOpen" class="image">
               <!-- <img src="../../assets/imgs/blacklogo.svg">  -->
             </div>

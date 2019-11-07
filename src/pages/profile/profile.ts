@@ -22,6 +22,7 @@ import {
 
 import { CoverQuizPage } from '../cover-quiz/cover-quiz';
 import {LocalNotifications } from '@ionic-native/local-notifications';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @IonicPage()
 @Component({
@@ -37,6 +38,7 @@ export class ProfilePage {
     image: null,
     name: ''
   }
+  profileForm:FormGroup
   request = []
   userReviews = []
   school = {}
@@ -60,10 +62,15 @@ export class ProfilePage {
   reviewDiv: any;
   feedbackDiv: any;
   alertPresented = false
-  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, private store: Storage, public plt: Platform, public localNot: LocalNotifications, public element: ElementRef, public renderer: Renderer2, public keyb: Keyboard, public popoverCtrl: PopoverController) {}
+  constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alertCtrl: AlertController, public toastCtrl: ToastController, private store: Storage, public plt: Platform, public localNot: LocalNotifications, public element: ElementRef, public renderer: Renderer2, public keyb: Keyboard, public popoverCtrl: PopoverController, public formBuilder: FormBuilder) {}
   // get the request of the user
   // get the schooldata where they made the request
   ionViewDidEnter() {
+    this.profileForm = this.formBuilder.group({
+      name: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      surname: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+      phone: ['', Validators.compose([Validators.maxLength(10)])]
+    })
     // this.getReviews();
     // check if all the elemnts exist
 
@@ -272,7 +279,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
       // loader.dismiss()
       setTimeout(()=> {
         this.loaderAnimate = false;
-      
+
         this.checkExpiredBooking()
       }, 1000)
       // console.log('Reqs: ', this.request);
@@ -344,14 +351,14 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                       }
                     }
                   }
-                  
+
               }
               console.log(element);
-              
+
               if (element.confirmed == 'rejected') {
                 if (element.notified == false) {
                   console.log(element);
-                  
+
                    // say something about the rejected booking
                 let alerter =   await this.alertCtrl.create({
                   title: `Hey ${this.user.name}`,
@@ -376,7 +383,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
                 })
                 alerter.present();
                 }
-               
+
                   }
     })
   }
@@ -395,7 +402,7 @@ var Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
               this.alertPresented = false;
               this.db.collection('bookings').doc(element.docid).update({notified: true}).then(res => {
                 console.log('updated notified');
-                
+
               })
             }
           }]
