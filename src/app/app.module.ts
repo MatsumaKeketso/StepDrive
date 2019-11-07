@@ -1,3 +1,6 @@
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { firebaseConfig } from './Enveronment';
+import { AngularFireModule } from '@angular/fire';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -33,6 +36,9 @@ import { LocalNotifications } from "@ionic-native/local-notifications";
 import { Network } from '@ionic-native/network';
 import { Device } from "@ionic-native/device";
 import { OneSignal } from '@ionic-native/onesignal';
+// import { AngularFireModule } from '@angular/fire';
+// import {AngularFireAuthModule} from '@angular/fire/auth';
+// AngularFireModule.initializeApp(firebaseConfig)
 @NgModule({
   declarations: [
     MyApp,
@@ -58,7 +64,10 @@ import { OneSignal } from '@ionic-native/onesignal';
     IonicModule.forRoot(MyApp),
     HttpModule,
     IonicStorageModule.forRoot(),
-    StarRatingModule
+    StarRatingModule,
+    AngularFireModule,
+    AngularFireAuthModule,
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -95,6 +104,7 @@ import { OneSignal } from '@ionic-native/onesignal';
     Network,
     Device,
     OneSignal
+    
   ]
 })
 export class AppModule {}

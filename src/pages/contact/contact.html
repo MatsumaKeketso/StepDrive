@@ -15,6 +15,9 @@
   <div [ngClass]="{'done': showMap, 'done-hide': !showMap}">
     <button [disabled]="!addressokay" *ngIf="showMap" (click)="displayMap()">Find Me here</button>
   </div>
+  <div [ngClass]="{'closeMapFab': showMap, 'closeMapFab-hide': !showMap}">
+    <button style="margin: 0 !important;" ion-fab mini (tap)="displayMap()" ><ion-icon name="close"></ion-icon></button>
+  </div>
   <div #map [ngClass]="{'map': showMap, 'map-hide': !showMap}"></div>
     <!-- <div class="logo">
         <img src="../../assets/imgs/african-american-teen-learning-to-drive-with-mom-123133825-580f95893df78c2c73b8c4ac.jpg" alt="">

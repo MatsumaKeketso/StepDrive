@@ -36,6 +36,7 @@
     "@ionic-native/sqlite": "^4.20.0",
     "@ionic-native/status-bar": "~4.20.0",
     "@ionic/storage": "2.2.0",
+    "angularfire2": "^5.2.1",
     "call-number": "1.0.1",
     "cordova-android": "8.1.0",
     "cordova-plugin-android-permissions": "1.0.0",

@@ -13,6 +13,7 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { TabsPage } from '../pages/tabs/tabs';
 import { Network } from '@ionic-native/network';
 import { YouPage } from '../pages/you/you';
+import {AngularFireAuth} from '@angular/fire/auth'
 declare var google: google;
 @Component({
   templateUrl: 'app.html'
@@ -35,6 +36,7 @@ export class MyApp {
     public toastCtrl: ToastController,
     public network: Network,
     public alertCtrl: AlertController,
+    public afAuth: AngularFireAuth, 
     public app: App) {
     statusBar.backgroundColorByHexString('#D28B2B');
     this.network.onchange().subscribe((res)=>{
@@ -110,11 +112,11 @@ export class MyApp {
       });
 
       this.initialiseApp();
-      firebase.initializeApp(firebaseConfig);
+      // firebase.initializeApp(firebaseConfig);
       // platform.backButton.subscribe(res => {
       // })
       if (platform.is('android')) {
-        screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
+        // screenOrien.lock(this.screenOrien.ORIENTATIONS.PORTRAIT);
       }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -122,11 +124,13 @@ export class MyApp {
       // this.store.clear()
       this.store.get('onboarding').then((res) => {
         if (res) {
-          firebase.auth().onAuthStateChanged(user => {
-
-            if (user) {
-              firebase.firestore().collection('users').doc(user.uid).get().then(res => {
-                if (res.exists) {
+          this.afAuth.authState.subscribe(user => {
+                if (user) {
+              firebase.firestore().collection('users').doc(user.uid).get().then(resp => {
+               
+                if (resp.exists) {
+                  // console.log('document exists', resp.data() );
+                  
                   this.rootPage = TabsPage;
                 } else {
                   this.rootPage = YouPage;
